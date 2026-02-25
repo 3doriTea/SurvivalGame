@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="未分類のソースヘッダファイル">
+      <UniqueIdentifier>{34D2D9DA-FB41-4451-A679-F881A5882E1B}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx;h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="未分類のリソースファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="未分類のJSONファイル">
+      <UniqueIdentifier>{BE73A8F9-986B-4D47-96AC-3F74D3C92002}</UniqueIdentifier>
+      <Extensions>json</Extensions>
+    </Filter>
+    <Filter Include="シェーダーファイル">
+      <UniqueIdentifier>{33373E20-418F-441D-B2F0-CECD85A90D74}</UniqueIdentifier>
+      <Extensions>hlsl</Extensions>
+    </Filter>
+    <Filter Include="シェーダーインクルードファイル">
+      <UniqueIdentifier>{5528A0A2-EDCA-4774-981C-85141C9A6908}</UniqueIdentifier>
+      <Extensions>hlsli</Extensions>
+    </Filter>
+    <Filter Include="GameBase">
+      <UniqueIdentifier>{F27FD678-F40E-4180-AC1D-8DA7ED91F9EA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library">
+      <UniqueIdentifier>{5A804DF2-62AF-4CB4-9CED-7C0CAAEBCF67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{06035042-2233-487B-B212-C52ABA1E770A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\nlohmann-json">
+      <UniqueIdentifier>{f6c98883-9023-4be6-800e-88d89f1c6625}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TheMain.cpp">
+      <Filter>Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Base\GameBase.h">
+      <Filter>GameBase</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\nlohmann-json\json_fwd.hpp">
+      <Filter>Library\nlohmann-json</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\nlohmann-json\json.hpp">
+      <Filter>Library\nlohmann-json</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
+  </ItemGroup>
+</Project>
