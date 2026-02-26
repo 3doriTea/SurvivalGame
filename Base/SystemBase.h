@@ -3,6 +3,8 @@
 namespace GameBase
 {
 	class ISystemBase;
+	template<typename T>
+	class SystemBase;
 
 	namespace SystemRegistry
 	{
@@ -17,12 +19,15 @@ namespace GameBase
 		template<typename T>
 		static size_t GetSystemId()
 		{
+			static_assert(std::is_base_of_v<SystemBase<T>, T> && std::is_base_of_v<ISystemBase, T>,
+				"T must derive from both ISystemBase and SystemBase<T>");
+
 			static size_t id{ idCounter_++ };
 			return id;
 		}
 
 		template<typename T>
-		static size_t Add(ISystemBase* _p)
+		static size_t Add(std::weak_ptr<ISystemBase> _p)
 		{
 			size_t id{ GetSystemId<T>() };
 			while (id >= pSystems_.size())
@@ -30,7 +35,7 @@ namespace GameBase
 				pSystems_.push_back(nullptr);
 			}
 
-			pSystems_.at(id) = // ここに SystemBase::pInstance_を入れたい
+			pSystems_.at(id) = _p// ここに SystemBase::pInstance_を入れたい
 
 			return id;
 		}
@@ -40,7 +45,16 @@ namespace GameBase
 	template<typename T>
 	std::weak_ptr<T> Get()
 	{
+		using namespace SystemRegistry;
 
+		size_t id{ GetSystemId() };
+		if (id >= pSystems_.size() || !pSystems_.at(id))
+		{
+			assert(false && "未登録のシステムが参照されました。");
+			return nullptr;
+		}
+
+		 return std::static_pointer_cast<T>(pSystems_.at(id));
 	}
 
 	class ISystemBase

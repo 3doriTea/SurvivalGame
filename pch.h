@@ -7,12 +7,19 @@
 // 整数値
 #include <cstdint>
 
+// 型情報
+#include <typeindex>
+
 // コレクション
 #include <vector>
 #include <map>
+#include <unordered_map>
 #include <set>
 #include <stack>
 #include <queue>
+
+// アサーション
+#include <cassert>
 
 // Windowsアプリに必要
 #include <Windows.h>
