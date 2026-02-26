@@ -55,6 +55,12 @@
     <ClInclude Include="Library\nlohmann-json\json.hpp">
       <Filter>Library\nlohmann-json</Filter>
     </ClInclude>
+    <ClInclude Include="Base\GlobalGetter.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\SystemBase.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

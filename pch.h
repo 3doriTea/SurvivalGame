@@ -4,6 +4,9 @@
 #include <string>
 #include <string_view>
 
+// 整数値
+#include <cstdint>
+
 // コレクション
 #include <vector>
 #include <map>

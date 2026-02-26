@@ -173,6 +173,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\GameBase.h" />
+    <ClInclude Include="Base\GlobalGetter.h" />
+    <ClInclude Include="Base\SystemBase.h" />
     <ClInclude Include="Library\nlohmann-json\json.hpp" />
     <ClInclude Include="Library\nlohmann-json\json_fwd.hpp" />
     <ClInclude Include="pch.h" />
