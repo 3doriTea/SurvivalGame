@@ -12,14 +12,15 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 
 namespace GameBase
 {
-	class Game
+	class Game final
 	{
 	public:
-		Game();
-		~Game();
+		Game() = default;
+		~Game() = default;
 
 		bool Start();
 		bool Update();
+		bool End();
 
 	private:
 	};

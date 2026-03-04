@@ -38,7 +38,16 @@
     <ClCompile Include="TheMain.cpp">
       <Filter>Assets</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="Base\pch.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\GameBase.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Debugger.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\System\EditorGui.cpp">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -46,19 +55,25 @@
     <ClInclude Include="Base\GameBase.h">
       <Filter>GameBase</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="Base\pch.h">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Library\nlohmann-json\json_fwd.hpp">
+    <ClInclude Include="Base\Library\nlohmann-json\json_fwd.hpp">
       <Filter>Library\nlohmann-json</Filter>
     </ClInclude>
-    <ClInclude Include="Library\nlohmann-json\json.hpp">
+    <ClInclude Include="Base\Library\nlohmann-json\json.hpp">
       <Filter>Library\nlohmann-json</Filter>
     </ClInclude>
     <ClInclude Include="Base\GlobalGetter.h">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
     <ClInclude Include="Base\SystemBase.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\System\EditorGui.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Debugger.h">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
   </ItemGroup>

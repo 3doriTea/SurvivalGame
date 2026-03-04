@@ -3,6 +3,7 @@
 // 文字列
 #include <string>
 #include <string_view>
+#include <sstream>
 
 // 整数値
 #include <cstdint>
@@ -17,6 +18,12 @@
 #include <set>
 #include <stack>
 #include <queue>
+
+// フォーマット
+#include <format>
+
+// 時間系
+#include <chrono>
 
 // アサーション
 #include <cassert>

@@ -35,7 +35,7 @@ namespace GameBase
 				pSystems_.push_back(nullptr);
 			}
 
-			pSystems_.at(id) = _p// ここに SystemBase::pInstance_を入れたい
+			pSystems_.at(id) = _p;// ここに SystemBase::pInstance_を入れたい
 
 			return id;
 		}
@@ -47,7 +47,7 @@ namespace GameBase
 	{
 		using namespace SystemRegistry;
 
-		size_t id{ GetSystemId() };
+		size_t id{ GetSystemId<T>() };
 		if (id >= pSystems_.size() || !pSystems_.at(id))
 		{
 			assert(false && "未登録のシステムが参照されました。");
@@ -62,6 +62,10 @@ namespace GameBase
 	public:
 		ISystemBase() = default;
 		virtual ~ISystemBase() = default;
+
+		virtual void Initialize() = 0;
+		virtual void Update() = 0;
+		virtual void Release() = 0;
 	};
 
 	template<typename T>
