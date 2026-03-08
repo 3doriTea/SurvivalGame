@@ -2,20 +2,12 @@
 
 extern void Main();
 
-int APIENTRY WinMain(_In_ HINSTANCE hInstance,
-	_In_opt_ HINSTANCE hPrevInstance,
-	_In_ LPSTR    lpCmdLine,
-	_In_ int       nCmdShow)
-{
-	Main();
-}
-
 namespace GameBase
 {
 	class Game final
 	{
 	public:
-		Game() = default;
+		Game();
 		~Game() = default;
 
 		bool Start();
@@ -23,6 +15,8 @@ namespace GameBase
 		bool End();
 
 	private:
+		std::vector<int> systemOrderIndices_;  // システムの順番インデックス
+		std::vector<std::type_info> systemsTypeinfo_;  // システムの型情報
 	};
 }
 

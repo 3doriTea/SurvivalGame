@@ -1,0 +1,8 @@
+{
+  "Window": {
+    "Width": 1600,
+    "Height": 900,
+    "FPS": 60,
+    "VSync": false
+  }
+}

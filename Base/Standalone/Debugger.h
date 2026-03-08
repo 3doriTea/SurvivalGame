@@ -1,4 +1,9 @@
 #pragma once
+#include <string_view>
+#include <format>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 namespace GameBase
 {
@@ -35,18 +40,20 @@ namespace GameBase
 		/// </summary>
 		/// <returns>範囲内である true / false</returns>
 		bool LoggingEnabled();
+
+		/// <summary>
+		/// ログをファイルに書き出す
+		/// </summary>
+		void LogWriteOutFile(const fs::path& _dir, const std::string_view _name);
 	}
 }
 
 template<typename ...Args>
-inline void GameBase::Debugger::LogF(std::format_string<Args...> _format, Args && ..._args)
+inline void GameBase::Debugger::LogF(std::format_string<Args...> _format, Args&& ..._args)
 {
 	if (LoggingEnabled())
 	{
-		Log(
-			std::format(
-				_format, std::forward<Args>(_args)
-				)
-			);
+		std::string content{ std::vformat(_format.get(), std::make_format_args(_args...))};
+		Log(content);
 	}
 }

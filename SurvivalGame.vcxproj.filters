@@ -44,10 +44,85 @@
     <ClCompile Include="Base\GameBase.cpp">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Base\Debugger.cpp">
+    <ClCompile Include="Base\Standalone\Debugger.cpp">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClCompile>
     <ClCompile Include="Base\System\EditorGui.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\SystemBase.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Library\imgui\imgui.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Library\imgui\imgui_demo.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Library\imgui\imgui_draw.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Library\imgui\imgui_impl_dx11.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Library\imgui\imgui_impl_win32.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Library\imgui\imgui_tables.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Library\imgui\imgui_widgets.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Standalone\Event.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\System\WindowEvent.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Standalone\ResponderEvent.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\DependencyResolver.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Standalone\FluentVector.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\System\Direct3D.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\System\GameTime.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Standalone\Utility\TimeUtil.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\System\Assets.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Standalone\CoreType\Vec2T.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\ECS\ComponentPool.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\ECS\IComponentPool.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\ComponentBase.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Component\Transform.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\System\SwapChain.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\System\MainWindow.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\System\Program.cpp">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -73,11 +148,128 @@
     <ClInclude Include="Base\System\EditorGui.h">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Debugger.h">
+    <ClInclude Include="Base\Standalone\Debugger.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\imgui\imconfig.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\imgui\imgui.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\imgui\imgui_impl_dx11.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\imgui\imgui_impl_win32.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\imgui\imgui_internal.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\imgui\imstb_rectpack.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\imgui\imstb_textedit.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\imgui\imstb_truetype.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Standalone\Event.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\System\WindowEvent.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Standalone\ResponderEvent.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\DependencyResolver.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Standalone\FluentVector.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\System\Direct3D.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\System\GameTime.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Standalone\Utility\TimeUtil.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\System\Assets.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Structure\GameConfig.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Standalone\CoreType\Vec2T.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Standalone\CoreType\Vec2.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Standalone\CoreType\Vec2Int.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Structure\GameManifest.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Standalone\CoreType\Vec3T.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Standalone\CoreType\Vec3.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Standalone\CoreType\Vec3Int.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\ECS\Entity.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\ECS\ComponentPool.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\ECS\EntityRegistry.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\ComponentBase.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Component\Transform.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\ECS\IComponentPool.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\System\SwapChain.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\System\MainWindow.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Structure\CreateWindowConfig.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\System\Program.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Structure\RefreshRate.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Standalone\Utility\ReferencePrinter.h">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
+    <None Include="Base\SystemBase.inl">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </None>
+    <None Include="Base\ComponentBase.inl">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </None>
   </ItemGroup>
 </Project>

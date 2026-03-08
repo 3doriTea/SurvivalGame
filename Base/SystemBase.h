@@ -2,83 +2,103 @@
 
 namespace GameBase
 {
+	using SystemIndex = size_t;
+
 	class ISystemBase;
-	template<typename T>
+	struct ISystemInterfaceBase;
+	template<typename T, typename InterfaceT>
 	class SystemBase;
 
 	namespace SystemRegistry
 	{
-		static inline size_t idCounter_;  // 型Idを増やすやつ
-		std::vector<std::weak_ptr<ISystemBase>> pSystems_;
+		/// <summary>
+		/// システムのインデクスカウンタ
+		/// </summary>
+		SystemIndex& IndexCounter();
+		/// <summary>
+		/// システム本体格納
+		/// </summary>
+		std::vector<std::weak_ptr<ISystemBase>>& PSystems();
+		/// <summary>
+		/// システムのインタフェース格納
+		/// </summary>
+		std::vector<std::weak_ptr<void>>& PInterfaces();
+		/// <summary>
+		/// コンストラクタ実行後に呼び出される処理
+		/// </summary>
+		std::queue<std::function<void()>>& RegisterQueue();
 
 		/// <summary>
-		/// システムIdを取得する
+		/// システムインデクスを取得する
+		/// </summary>
+		/// <typeparam name="T">システムの型</typeparam>
+		/// <returns>インデクス</returns>
+		template<typename T>
+		SystemIndex GetSystemIndex();
+
+		template<typename T>
+		size_t Add(std::weak_ptr<ISystemBase> _p);
+	}
+
+	template<typename T>
+	concept IsValidSystem = std::derived_from<T, ISystemBase> &&
+		requires{ typename T::Interface; };
+
+	/// <summary>
+	/// システムの参照をするゲッタ
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
+	template<typename T>
+	requires IsValidSystem<T>
+	typename T::Interface& Get();
+
+	namespace System
+	{
+		/// <summary>
+		/// システムの参照をするゲッタ
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
 		template<typename T>
-		static size_t GetSystemId()
-		{
-			static_assert(std::is_base_of_v<SystemBase<T>, T> && std::is_base_of_v<ISystemBase, T>,
-				"T must derive from both ISystemBase and SystemBase<T>");
-
-			static size_t id{ idCounter_++ };
-			return id;
-		}
-
-		template<typename T>
-		static size_t Add(std::weak_ptr<ISystemBase> _p)
-		{
-			size_t id{ GetSystemId<T>() };
-			while (id >= pSystems_.size())
-			{
-				pSystems_.push_back(nullptr);
-			}
-
-			pSystems_.at(id) = _p;// ここに SystemBase::pInstance_を入れたい
-
-			return id;
-		}
-
+		requires IsValidSystem<T>
+		T& Get();
 	}
 
-	template<typename T>
-	std::weak_ptr<T> Get()
+	struct ISystemInterfaceBase
 	{
-		using namespace SystemRegistry;
-
-		size_t id{ GetSystemId<T>() };
-		if (id >= pSystems_.size() || !pSystems_.at(id))
-		{
-			assert(false && "未登録のシステムが参照されました。");
-			return nullptr;
-		}
-
-		 return std::static_pointer_cast<T>(pSystems_.at(id));
-	}
+		inline ISystemInterfaceBase() = default;
+		inline virtual ~ISystemInterfaceBase() = default;
+	};
 
 	class ISystemBase
 	{
 	public:
-		ISystemBase() = default;
-		virtual ~ISystemBase() = default;
+		inline ISystemBase() = default;
+		inline virtual ~ISystemBase() = default;
 
+		virtual void OnRegisterDependencies(FluentVectorAddOnly<SystemIndex>* _registry) = 0;
 		virtual void Initialize() = 0;
 		virtual void Update() = 0;
 		virtual void Release() = 0;
 	};
 
-	template<typename T>
-	class SystemBase : public ISystemBase
+	template<typename T, typename InterfaceT>
+	class SystemBase : public ISystemBase, public InterfaceT
 	{
 	public:
-		SystemBase() = default;
-		virtual ~SystemBase() = default;
+		using Interface = InterfaceT;
+
+	public:
+		SystemBase();
+		inline virtual ~SystemBase() = default;
+
+		inline virtual void OnRegisterDependencies(
+			FluentVectorAddOnly<SystemIndex>* _pRegistry) override {}
 
 	private:
-		static std::shared_ptr<T> pInstance_;
+		static inline std::shared_ptr<T> pInstance_{ std::make_shared<T>() };
 	};
-
-	template<typename T>
-	std::shared_ptr<T> SystemBase<T>::pInstance_{ std::make_shared<T>() };
 }
+
+#include "SystemBase.inl"

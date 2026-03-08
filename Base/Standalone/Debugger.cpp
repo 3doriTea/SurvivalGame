@@ -1,4 +1,6 @@
 #include "Debugger.h"
+#include <cassert>
+#include <fstream>
 
 namespace
 {
@@ -43,14 +45,14 @@ void GameBase::Debugger::Log(const std::string_view _content)
 	}
 
 	auto now{ std::chrono::system_clock::now() };
-	logHistory_.emplace_back(std::format("[{:%H:%M:%S}] {}\n@{}\n", now, _content, scopeName_.str()));
+	logHistory_.emplace_back(std::format("@{}[{:%H:%M:%S}] {}", scopeName_.str(), now, _content));
 }
 
 void GameBase::Debugger::LogEnd()
 {
 	scopeNameStack_.pop_back();
 
-	scopeName_.str().clear();
+	scopeName_.str("");
 	for (const std::string_view name : scopeNameStack_)
 	{
 		ConcatScope(name);
@@ -61,4 +63,19 @@ bool GameBase::Debugger::LoggingEnabled()
 {
 	// スコープ名スタックがあればログ有効
 	return scopeNameStack_.size() > 0;
+}
+
+void GameBase::Debugger::LogWriteOutFile(const fs::path& _dir, const std::string_view _name)
+{
+	auto now{ std::chrono::system_clock::now() };
+	std::ofstream ofs{ _dir / std::format("{:%H-%M-%S}.log", now) };
+
+	assert(ofs.is_open() && "ファイル作成に失敗");
+
+	for (auto& log : logHistory_)
+	{
+		ofs << log << std::endl;
+	}
+
+	ofs.close();
 }

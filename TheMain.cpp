@@ -1,23 +1,34 @@
 #include <GameBase.h>
-//#include <Debugger.h>
+#include <Debugger.h>
 
 void Main()
 {
+	using Debugger::Log;
+	using Debugger::LogBegin;
+	using Debugger::LogEnd;
+
+	LogBegin("Main");
+
 	Game game{};
-	game.Start();
+	if (!game.Start())
+	{
+		Log("スタートに失敗");
+		Debugger::LogWriteOutFile("./", "");
+		return;
+	}
 
-	//using Debugger::Log;
-	//using Debugger::LogBegin;
-	//using Debugger::LogEnd;
+	Log("こんにちは");
 
-	//LogBegin("Main");
-
-	//Log("こんにちは");
-
-	//LogEnd();
-
+	LogBegin("Game");
 	while (game.Update()) {}
+	LogEnd();
 
-	game.End();
+	if (!game.End())
+	{
+		Log("終了失敗");
+	}
+
+	LogEnd();
+	Debugger::LogWriteOutFile("./", "");
 }
 
