@@ -82,6 +82,10 @@ void GameBase::System::EditorGui::Initialize()
 
 void GameBase::System::EditorGui::Update()
 {
+	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+
 	ImGui::Begin("Testing");
 
 	ImGui::Text("format string!!");

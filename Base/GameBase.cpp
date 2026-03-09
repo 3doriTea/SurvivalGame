@@ -92,13 +92,13 @@ bool GameBase::Game::Start()
 	systemOrderIndices_.resize(SystemRegistry::PSystems().size());
 	size_t i = 0;
 	Debugger::LogBegin("SystemResult");
-	/*resolver.ForEachResult([this, &i](int _systemIndex)
+	resolver.ForEachResult([this, &i](int _systemIndex)
 	{
 		systemOrderIndices_.at(i) = _systemIndex;
 		Debugger::LogF("ソート済み :{}", _systemIndex);
 		i++;
-	});*/
-#if 1
+	});
+#if 0
 	for (auto index : SystemRegistry::PSystems())
 	{
 		systemOrderIndices_.at(i) = i;
