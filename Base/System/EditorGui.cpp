@@ -82,7 +82,12 @@ void GameBase::System::EditorGui::Initialize()
 
 void GameBase::System::EditorGui::Update()
 {
-	Debugger::Log("こんにちは！更新中だよ！");
+	ImGui::Begin("Testing");
+
+	ImGui::Text("format string!!");
+
+	ImGui::End();
+	//Debugger::Log("こんにちは！更新中だよ！");
 }
 
 void GameBase::System::EditorGui::Release()
