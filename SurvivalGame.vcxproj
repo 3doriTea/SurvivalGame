@@ -324,6 +324,9 @@
     <ClInclude Include="Base\Structure\RefreshRate.h" />
     <ClInclude Include="Base\Structure\RenderItem.h" />
     <ClInclude Include="Base\Structure\RenderSurface.h" />
+    <ClInclude Include="Base\Structure\SerializedGameObject.h" />
+    <ClInclude Include="Base\Structure\SerializedId.h" />
+    <ClInclude Include="Base\Structure\SerializedScene.h" />
     <ClInclude Include="Base\SystemBase.h" />
     <ClInclude Include="Base\System\Assets.h" />
     <ClInclude Include="Base\System\Direct3D.h" />
