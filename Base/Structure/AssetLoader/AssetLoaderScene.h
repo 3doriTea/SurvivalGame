@@ -11,7 +11,7 @@ namespace GameBase
 			Debugger::LogBegin("YAML-LoaderScene");
 			try
 			{
-				/*std::vector<YAML::Node> docs{ YAML::LoadAllFromFile(_file.string()) };
+				std::vector<YAML::Node> docs{ YAML::LoadAllFromFile(_file.string()) };
 
 				for (const YAML::Node node : docs)
 				{
@@ -34,8 +34,8 @@ namespace GameBase
 						assert(false && "Unknown TAG");
 						return false;
 					}
-				}*/
-				YAML::Load("[1, 2, 3]");
+				}
+				//YAML::Load("[1, 2, 3]");
 			}
 			catch (const YAML::Exception& ex)
 			{
