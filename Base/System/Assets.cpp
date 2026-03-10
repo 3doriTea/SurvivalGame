@@ -41,6 +41,7 @@ void GameBase::System::Assets::Load()
 		}},
 		.fps = gameConfigJson.value("/Window/FPS", 60U),
 		.vSync = gameConfigJson.value("/Window/VSync", false),
+		.Windowed = gameConfigJson.value("/Window/Windowed", true)
 	};
 #pragma endregion
 

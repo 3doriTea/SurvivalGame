@@ -2,6 +2,8 @@
 #include "WindowEvent.h"
 #include "Direct3D.h"
 #include "MainWindow.h"
+#include "GameTime.h"
+#include "Renderer.h"
 
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -20,6 +22,8 @@ void GameBase::System::EditorGui::OnRegisterDependencies(FluentVectorAddOnly<Sys
 	->Add(SystemRegistry::GetSystemIndex<WindowEvent>())
 	->Add(SystemRegistry::GetSystemIndex<Direct3D>())
 	->Add(SystemRegistry::GetSystemIndex<MainWindow>())
+	->Add(SystemRegistry::GetSystemIndex<GameTime>())
+	->Add(SystemRegistry::GetSystemIndex<Renderer>())
 	;
 }
 
@@ -78,20 +82,59 @@ void GameBase::System::EditorGui::Initialize()
 		{
 			ImGui_ImplDX11_Init(_pDevice.Get(), _pContext.Get());
 		});
+
+	Get<Renderer>().OnBegin([this](Event<>& _event)
+		{
+			renderBeginEvent_ = _event.Connect([]()
+				{
+					ImGui_ImplDX11_NewFrame();
+					ImGui_ImplWin32_NewFrame();
+					ImGui::NewFrame();
+				});
+		});
+	Get<Renderer>().OnEnd([this](Event<>& _event)
+		{
+			renderEndEvent_ = _event.Connect([]()
+				{
+					ImGui::Render();
+					//const float clear_color_with_alpha[4] = { clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w };
+					//g_pd3dDeviceContext->OMSetRenderTargets(1, &g_mainRenderTargetView, nullptr);
+					//g_pd3dDeviceContext->ClearRenderTargetView(g_mainRenderTargetView, clear_color_with_alpha);
+					ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
+					ImGuiIO& io{ ImGui::GetIO() };
+					if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+					{
+						ImGui::UpdatePlatformWindows();
+						ImGui::RenderPlatformWindowsDefault();
+					}
+				});
+		});
+
+	Get<Renderer>().OnRender([this](Event<>& _event)
+		{
+			renderEvent_ = _event.Connect([]()
+				{
+					ImGui::Begin("Testing");
+
+					ImGui::Text("format string!!");
+
+					bool demo{ true };
+					ImGui::ShowDemoWindow(&demo);
+
+					ImGui::End();
+				});
+		});
 }
 
 void GameBase::System::EditorGui::Update()
 {
-	ImGui_ImplDX11_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
+	if (!Get<GameTime>().IsFrameDue())
+	{
+		return;
+	}
 
-	ImGui::Begin("Testing");
-
-	ImGui::Text("format string!!");
-
-	ImGui::End();
-	//Debugger::Log("こんにちは！更新中だよ！");
+	Debugger::Log("こんにちは！更新中だよ！");
 }
 
 void GameBase::System::EditorGui::Release()

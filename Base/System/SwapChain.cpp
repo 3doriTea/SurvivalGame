@@ -57,10 +57,12 @@ void GameBase::System::SwapChain::Initialize()
 				return;
 			}
 
-			const Vec2Int SCREEN_SIZE{ Get<Assets>().GetGameConfig().windowSize };
 
 			GameConfig gameConfig{ Get<Assets>().GetGameConfig() };
 			RefreshRate refreshRate{ gameConfig.fps };
+
+			const Vec2Int SCREEN_SIZE{ gameConfig.windowSize };
+			const bool WINDOWED{ gameConfig.Windowed };
 			
 			const DXGI_SWAP_CHAIN_DESC SWAP_CHAIN_DESC
 			{
@@ -85,7 +87,7 @@ void GameBase::System::SwapChain::Initialize()
 				.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT,  // バックバッファの使い道は画面に描画すること
 				.BufferCount = 1,  // バッファの枚数
 				.OutputWindow = Get<MainWindow>().GetHandle(),
-				.Windowed = true, /* TODO: */
+				.Windowed = WINDOWED,
 				.SwapEffect = {},
 				.Flags = NULL,
 			};

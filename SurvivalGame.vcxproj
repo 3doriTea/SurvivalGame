@@ -281,6 +281,7 @@
     <ClCompile Include="Base\System\GameTime.cpp" />
     <ClCompile Include="Base\System\MainWindow.cpp" />
     <ClCompile Include="Base\System\Program.cpp" />
+    <ClCompile Include="Base\System\Renderer.cpp" />
     <ClCompile Include="Base\System\SwapChain.cpp" />
     <ClCompile Include="Base\System\WindowEvent.cpp" />
     <ClCompile Include="TheMain.cpp" />
@@ -303,6 +304,7 @@
     <ClInclude Include="Base\Library\imgui\imstb_rectpack.h" />
     <ClInclude Include="Base\Library\imgui\imstb_textedit.h" />
     <ClInclude Include="Base\Library\imgui\imstb_truetype.h" />
+    <ClInclude Include="Base\Standalone\CoreType\Mat4x4.h" />
     <ClInclude Include="Base\Standalone\CoreType\Vec2.h" />
     <ClInclude Include="Base\Standalone\CoreType\Vec2Int.h" />
     <ClInclude Include="Base\Standalone\CoreType\Vec2T.h" />
@@ -317,7 +319,11 @@
     <ClInclude Include="Base\Structure\CreateWindowConfig.h" />
     <ClInclude Include="Base\Structure\GameConfig.h" />
     <ClInclude Include="Base\Structure\GameManifest.h" />
+    <ClInclude Include="Base\Structure\Material.h" />
+    <ClInclude Include="Base\Structure\Mesh.h" />
     <ClInclude Include="Base\Structure\RefreshRate.h" />
+    <ClInclude Include="Base\Structure\RenderItem.h" />
+    <ClInclude Include="Base\Structure\RenderSurface.h" />
     <ClInclude Include="Base\SystemBase.h" />
     <ClInclude Include="Base\System\Assets.h" />
     <ClInclude Include="Base\System\Direct3D.h" />
@@ -329,6 +335,7 @@
     <ClInclude Include="Base\System\GameTime.h" />
     <ClInclude Include="Base\System\MainWindow.h" />
     <ClInclude Include="Base\System\Program.h" />
+    <ClInclude Include="Base\System\Renderer.h" />
     <ClInclude Include="Base\System\SwapChain.h" />
     <ClInclude Include="Base\System\WindowEvent.h" />
   </ItemGroup>

@@ -41,6 +41,9 @@ namespace GameBase::System
 
 	private:
 		std::shared_ptr<void> wndProcEvent_;
+		std::shared_ptr<void> renderBeginEvent_;
+		std::shared_ptr<void> renderEvent_;
+		std::shared_ptr<void> renderEndEvent_;
 
 	};
 }

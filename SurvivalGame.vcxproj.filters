@@ -125,6 +125,9 @@
     <ClCompile Include="Base\System\Program.cpp">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Base\System\Renderer.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\GameBase.h">
@@ -260,6 +263,24 @@
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
     <ClInclude Include="Base\Standalone\Utility\ReferencePrinter.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\System\Renderer.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Structure\RenderItem.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Structure\Mesh.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Structure\Material.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Structure\RenderSurface.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Standalone\CoreType\Mat4x4.h">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
   </ItemGroup>

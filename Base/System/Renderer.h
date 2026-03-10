@@ -1,5 +1,6 @@
 #pragma once
 #include "../SystemBase.h"
+#include "Structure/RenderItem.h"
 
 
 namespace GameBase::System
@@ -13,8 +14,26 @@ namespace GameBase::System
 		IRenderer() = default;
 		virtual ~IRenderer() = default;
 
-		virtual void OnBegin(const std::function<void(Event<>&)> _callback) = 0;
-		virtual void OnEnd(const std::function<void(Event<>&)> _callback) = 0;
+		/// <summary>
+		/// 描画する前の処理を登録する
+		/// </summary>
+		/// <param name="_callback">コールバック関数 void(Event<>&)</param>
+		virtual void OnBegin(const std::function<void(Event<>&)>& _callback) = 0;
+		/// <summary>
+		/// 描画時の処理を登録する
+		/// </summary>
+		/// <param name="_callback">コールバック関数 void(Event<>&)</param>
+		virtual void OnRender(const std::function<void(Event<>&)>& _callback) = 0;
+		/// <summary>
+		/// 描画した後の処理を登録する
+		/// </summary>
+		/// <param name="_callback">コールバック関数 void(Event<>&)</param>
+		virtual void OnEnd(const std::function<void(Event<>&)>& _callback) = 0;
+		/// <summary>
+		/// 描画キューに追加する
+		/// </summary>
+		/// <param name="_renderItem">描画アイテム</param>
+		virtual void Enqueue(RenderItem&& _renderItem) = 0;
 	};
 
 	/// <summary>
@@ -44,12 +63,15 @@ namespace GameBase::System
 		/// </summary>
 		void Release() override;
 
-		void OnBegin(const std::function<void(Event<>&)> _callback) override;
-		void OnEnd(const std::function<void(Event<>&)> _callback) override;
+		void OnBegin(const std::function<void(Event<>&)>& _callback) override;
+		void OnRender(const std::function<void(Event<>&)>& _callback) override;
+		void OnEnd(const std::function<void(Event<>&)>& _callback) override;
+		void Enqueue(RenderItem&& _renderItem) override;
 
 	private:
 		Event<> beginEvent_;
 		Event<> endEvent_;
-
+		Event<> renderEvent_;
+		std::vector<RenderItem> renderQueue_;  // 描画キュー
 	};
 }

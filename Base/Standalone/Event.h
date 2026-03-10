@@ -14,6 +14,8 @@ namespace GameBase
 	template<typename ...Args>
 	class Event
 	{
+		Event(const Event& _other) = delete;             // コピーコンストラクタは消す
+		inline Event& operator=(const Event& _other) = delete;  // コピーを消す
 	public:
 		using Id = uint32_t;
 		using Handler = std::function<void(Args...)>;
@@ -25,8 +27,9 @@ namespace GameBase
 		};
 
 	public:
-		Event() : nextIdCounter_{ 0 } {};
+		Event() : nextIdCounter_{ 0 } {}
 		~Event() = default;
+
 
 		inline [[nodiscard]] std::shared_ptr<void> Connect(Handler handler)
 		{
@@ -42,7 +45,7 @@ namespace GameBase
 				})
 			};
 
-			return sentinel;
+			return std::move(sentinel);
 		}
 
 		inline void Invoke(Args... args)
