@@ -401,7 +401,16 @@
     <None Include=".editorconfig" />
     <None Include="Assets\setting.json" />
     <None Include="Base\ComponentBase.inl" />
+    <None Include="Base\Library\yaml-cpp\Debug\yaml-cppd.dll" />
+    <None Include="Base\Library\yaml-cpp\Debug\yaml-cppd.exp" />
+    <None Include="Base\Library\yaml-cpp\Debug\yaml-cppd.pdb" />
+    <None Include="Base\Library\yaml-cpp\Release\yaml-cpp.dll" />
+    <None Include="Base\Library\yaml-cpp\Release\yaml-cpp.exp" />
     <None Include="Base\SystemBase.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Base\Library\yaml-cpp\Debug\yaml-cppd.lib" />
+    <Library Include="Base\Library\yaml-cpp\Release\yaml-cpp.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

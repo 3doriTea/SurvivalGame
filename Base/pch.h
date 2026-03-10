@@ -51,8 +51,11 @@ using json = nlohmann::json;
 
 // YAML解析
 #include "Library/yaml-cpp/yaml.h"
-#pragma comment(lib, "yaml-cpp-sandbox")
-
+#ifdef _DEBUG
+#pragma comment(lib, "yaml-cppd.lib")
+#else
+#pragma comment(lib, "yaml-cpp.lib")
+#endif
 // ImGui
 #define IMGUI_DEFINE_MATH_OPERATORS
 #include "Library/imgui/imgui.h"

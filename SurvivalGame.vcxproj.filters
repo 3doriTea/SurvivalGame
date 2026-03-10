@@ -430,5 +430,14 @@
     <None Include="Assets\setting.json">
       <Filter>Assets</Filter>
     </None>
+    <None Include="Base\Library\yaml-cpp\Debug\yaml-cppd.dll" />
+    <None Include="Base\Library\yaml-cpp\Debug\yaml-cppd.exp" />
+    <None Include="Base\Library\yaml-cpp\Debug\yaml-cppd.pdb" />
+    <None Include="Base\Library\yaml-cpp\Release\yaml-cpp.dll" />
+    <None Include="Base\Library\yaml-cpp\Release\yaml-cpp.exp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Base\Library\yaml-cpp\Debug\yaml-cppd.lib" />
+    <Library Include="Base\Library\yaml-cpp\Release\yaml-cpp.lib" />
   </ItemGroup>
 </Project>
