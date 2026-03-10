@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !gbc! GameBase::Component::
+%TAG !gb! GameBase::
+
+--- !gb!GameObject
+Id: 101
+GameObject:
+  name: Player
+  components:
+  - component: {fileId: 1001}
+  - component: {fileId: 1002}
+
+--- !PlayerController
+Id: 1001
+PlayerController:
+
+--- !gb!Prefab
