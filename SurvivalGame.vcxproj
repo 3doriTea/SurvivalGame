@@ -90,7 +90,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir)Base;$(ProjectDir)Base\Standalone;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Base;$(ProjectDir)Base\Standalone;$(ProjectDir)Base\Library</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
@@ -112,7 +112,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir)Base;$(ProjectDir)Base\Standalone;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Base;$(ProjectDir)Base\Standalone;$(ProjectDir)Base\Library</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
@@ -132,7 +132,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir)Base;$(ProjectDir)Base\Standalone;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Base;$(ProjectDir)Base\Standalone;$(ProjectDir)Base\Library</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
@@ -154,7 +154,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir)Base;$(ProjectDir)Base\Standalone;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Base;$(ProjectDir)Base\Standalone;$(ProjectDir)Base\Library</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
@@ -260,6 +260,20 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Base\Standalone\Utility\StringUtil.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="Base\Standalone\Utility\TimeUtil.cpp">
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </ForcedIncludeFiles>
@@ -304,6 +318,44 @@
     <ClInclude Include="Base\Library\imgui\imstb_rectpack.h" />
     <ClInclude Include="Base\Library\imgui\imstb_textedit.h" />
     <ClInclude Include="Base\Library\imgui\imstb_truetype.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\anchor.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\binary.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\contrib\anchordict.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\contrib\graphbuilder.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\depthguard.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\dll.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\emitfromevents.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\emitter.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\emitterdef.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\emittermanip.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\emitterstyle.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\eventhandler.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\exceptions.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\fptostring.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\mark.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\node\convert.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\node\detail\impl.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\node\detail\iterator.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\node\detail\iterator_fwd.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\node\detail\memory.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\node\detail\node.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\node\detail\node_data.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\node\detail\node_iterator.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\node\detail\node_ref.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\node\emit.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\node\impl.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\node\iterator.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\node\node.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\node\parse.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\node\ptr.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\node\type.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\noexcept.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\null.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\ostream_wrapper.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\parser.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\stlemitter.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\traits.h" />
+    <ClInclude Include="Base\Library\yaml-cpp\yaml.h" />
     <ClInclude Include="Base\Standalone\CoreType\Mat4x4.h" />
     <ClInclude Include="Base\Standalone\CoreType\Vec2.h" />
     <ClInclude Include="Base\Standalone\CoreType\Vec2Int.h" />
@@ -315,10 +367,13 @@
     <ClInclude Include="Base\Standalone\FluentVector.h" />
     <ClInclude Include="Base\Standalone\ResponderEvent.h" />
     <ClInclude Include="Base\Standalone\Utility\ReferencePrinter.h" />
+    <ClInclude Include="Base\Standalone\Utility\StringUtil.h" />
     <ClInclude Include="Base\Standalone\Utility\TimeUtil.h" />
+    <ClInclude Include="Base\Structure\AssetLoader\AssetLoaderScene.h" />
     <ClInclude Include="Base\Structure\CreateWindowConfig.h" />
     <ClInclude Include="Base\Structure\GameConfig.h" />
     <ClInclude Include="Base\Structure\GameManifest.h" />
+    <ClInclude Include="Base\Structure\IAssetLoader.h" />
     <ClInclude Include="Base\Structure\Material.h" />
     <ClInclude Include="Base\Structure\Mesh.h" />
     <ClInclude Include="Base\Structure\RefreshRate.h" />
@@ -344,6 +399,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
+    <None Include="Assets\setting.json" />
     <None Include="Base\ComponentBase.inl" />
     <None Include="Base\SystemBase.inl" />
   </ItemGroup>

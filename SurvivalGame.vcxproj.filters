@@ -128,6 +128,9 @@
     <ClCompile Include="Base\System\Renderer.cpp">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Base\Standalone\Utility\StringUtil.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\GameBase.h">
@@ -292,6 +295,129 @@
     <ClInclude Include="Base\Structure\SerializedId.h">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\contrib\anchordict.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\contrib\graphbuilder.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\node\detail\impl.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\node\detail\iterator.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\node\detail\iterator_fwd.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\node\detail\memory.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\node\detail\node.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\node\detail\node_data.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\node\detail\node_iterator.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\node\detail\node_ref.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\node\convert.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\node\emit.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\node\impl.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\node\iterator.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\node\node.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\node\parse.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\node\ptr.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\node\type.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\anchor.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\binary.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\depthguard.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\dll.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\emitfromevents.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\emitter.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\emitterdef.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\emittermanip.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\emitterstyle.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\eventhandler.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\exceptions.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\fptostring.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\mark.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\noexcept.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\null.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\ostream_wrapper.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\parser.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\stlemitter.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\traits.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Library\yaml-cpp\yaml.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Structure\IAssetLoader.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Structure\AssetLoader\AssetLoaderScene.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Standalone\Utility\StringUtil.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -300,6 +426,9 @@
     </None>
     <None Include="Base\ComponentBase.inl">
       <Filter>未分類のソースヘッダファイル</Filter>
+    </None>
+    <None Include="Assets\setting.json">
+      <Filter>Assets</Filter>
     </None>
   </ItemGroup>
 </Project>

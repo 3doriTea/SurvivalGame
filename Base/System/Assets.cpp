@@ -1,4 +1,5 @@
 #include "Assets.h"
+#include "Structure/AssetLoader/AssetLoaderScene.h"
 
 
 GameBase::System::Assets::Assets()
@@ -59,6 +60,29 @@ void GameBase::System::Assets::Load()
 		.developer = gameManifestJson.value("Developer", ""),
 		.copyright = gameManifestJson.value("Copyright", ""),
 	};
+#pragma endregion
+
+#pragma region yamlファイルの読み込み
+
+	AssetLoaderScene assetLoaderScene{};
+
+	Debugger::LogBegin("Load-YAML");
+	for (const fs::directory_entry& x : fs::directory_iterator{ directory_ })
+	{
+		if (fs::is_regular_file(x) == false)
+		{
+			continue;  // 普通のファイル以外は除外
+		}
+
+		if (x.path().extension() == ".yaml")
+		{
+			// 拡張子が.yamlのファイルを読み込む
+			bool succeed{ assetLoaderScene.TryLoad(x.path()) };
+
+			Debugger::LogF("{}: {}", x.path().string(), succeed ? "Sucees!" : "Feild.");
+		}
+	}
+	Debugger::LogEnd();
 #pragma endregion
 }
 

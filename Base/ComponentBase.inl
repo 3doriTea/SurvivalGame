@@ -11,15 +11,19 @@ GameBase::ComponentIndex GameBase::ComponentRegistry::GetComponentIndex()
 }
 
 template<typename T>
-size_t GameBase::ComponentRegistry::Add(std::weak_ptr<IComponentPool> _p)
+size_t GameBase::ComponentRegistry::Add(
+	std::weak_ptr<IComponentPool> _p,
+	const std::string_view _name)
 {
 	size_t index{ GetComponentIndex<T>() };
 	while (index >= PComponentPools().size())
 	{
 		PComponentPools().push_back({});
+		ComponentTypeNames().push_back({});
 	}
 
 	PComponentPools().at(index) = _p;
+	ComponentTypeNames().at(index) = _name;
 
 	return index;
 }
@@ -42,6 +46,6 @@ inline GameBase::ComponentBase<T>::ComponentBase()
 {
 	ComponentRegistry::RegisterQueue().push([]()
 	{
-		ComponentRegistry::Add<T>(pInstance_);
+		ComponentRegistry::Add<T>(pInstance_, typeid(T).name());
 	});
 }

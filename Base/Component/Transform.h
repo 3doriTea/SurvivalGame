@@ -2,7 +2,8 @@
 #include "../ComponentBase.h"
 #include "../ECS/Entity.h"
 
-namespace GameBase
+
+namespace GameBase::Component
 {
 	struct Transform : ComponentBase<Transform>
 	{

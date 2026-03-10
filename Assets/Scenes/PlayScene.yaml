@@ -1,21 +1,30 @@
 %YAML 1.1
-%TAG !gb! tag:gamebase.com,2026:
---- !gb!Scene &1
+%TAG !gbc! GameBase::Component::
+%TAG !gb! GameBase::
+
+--- !gb!Scene
 Scene:
   gameObjects:
   - gameObject: {fileId: 101}
---- !gb!GameObject &101
+
+--- !gbc!Camera
+Id: 1002
+Camera:
+  far: 0.1
+  near: 1000.0
+
+--- !gbc!GameObject
+Id: 101
 GameObject:
   name: Main Camera
   components:
-  - component: {fileId: 0}
---- !gb!Transform &1001
+  - component: {fileId: 1001}
+  - component: {fileId: 1002}
+
+--- !gbc!Transform
+Id: 1001
 Transform:
   position: {x: 0.0, y: 0.0, z: -10.0}
   rotation: {x: 0.0, y: 0.0, z: 0.0}
   scale:    {x: 1.0, y: 1.0, z: 1.0}
   parent:   {fileId: 0}
---- !gb!Camera &1002
-Camera:
-  far: 0.1
-  near: 1000.0

@@ -1,5 +1,6 @@
 #include "Transform.h"
 
-GameBase::Transform::Transform()
+
+GameBase::Component::Transform::Transform()
 {
 }

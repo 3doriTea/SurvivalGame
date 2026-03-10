@@ -49,6 +49,10 @@
 #include "Library/nlohmann-json/json_fwd.hpp"
 using json = nlohmann::json;
 
+// YAML解析
+#include "Library/yaml-cpp/yaml.h"
+#pragma comment(lib, "yaml-cpp-sandbox")
+
 // ImGui
 #define IMGUI_DEFINE_MATH_OPERATORS
 #include "Library/imgui/imgui.h"
@@ -73,6 +77,7 @@ namespace fs = std::filesystem;
 #include <CoreType/Mat4x4.h>
 
 #include <Utility/TimeUtil.h>
+#include <Utility/StringUtil.h>
 
 #include <Debugger.h>
 #include <Event.h>
