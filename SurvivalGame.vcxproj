@@ -300,6 +300,7 @@
     <ClCompile Include="Base\System\Direct3D.cpp" />
     <ClCompile Include="Base\System\EditorGui.cpp" />
     <ClCompile Include="Base\System\GameTime.cpp" />
+    <ClCompile Include="Base\System\Input.cpp" />
     <ClCompile Include="Base\System\MainWindow.cpp" />
     <ClCompile Include="Base\System\Program.cpp" />
     <ClCompile Include="Base\System\Renderer.cpp" />
@@ -326,6 +327,7 @@
     <ClInclude Include="Base\Library\imgui\imstb_rectpack.h" />
     <ClInclude Include="Base\Library\imgui\imstb_textedit.h" />
     <ClInclude Include="Base\Library\imgui\imstb_truetype.h" />
+    <ClInclude Include="Base\Standalone\Constant\KeyCode.h" />
     <ClInclude Include="Base\Standalone\CoreType\Mat4x4.h" />
     <ClInclude Include="Base\Standalone\CoreType\Vec2.h" />
     <ClInclude Include="Base\Standalone\CoreType\Vec2Int.h" />
@@ -361,6 +363,7 @@
     <ClInclude Include="Base\Library\nlohmann-json\json_fwd.hpp" />
     <ClInclude Include="Base\pch.h" />
     <ClInclude Include="Base\System\GameTime.h" />
+    <ClInclude Include="Base\System\Input.h" />
     <ClInclude Include="Base\System\MainWindow.h" />
     <ClInclude Include="Base\System\Program.h" />
     <ClInclude Include="Base\System\Renderer.h" />

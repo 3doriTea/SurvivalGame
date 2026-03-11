@@ -39,6 +39,9 @@
 // アサーション
 #include <cassert>
 
+// デバイス入力系
+#include <dinput.h>
+#include <Xinput.h>
 
 // Windowsアプリに必要
 #include <Windows.h>
@@ -86,3 +89,5 @@ namespace fs = std::filesystem;
 #include <Event.h>
 #include <ResponderEvent.h>
 #include <FluentVector.h>
+
+#include "Constant/KeyCode.h"
