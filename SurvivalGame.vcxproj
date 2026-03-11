@@ -177,6 +177,7 @@
     <ClCompile Include="Base\Component\Transform.cpp" />
     <ClCompile Include="Base\DependencyResolver.cpp" />
     <ClCompile Include="Base\ECS\ComponentPool.cpp" />
+    <ClCompile Include="Base\ECS\EntityRegistry.cpp" />
     <ClCompile Include="Base\ECS\IComponentPool.cpp" />
     <ClCompile Include="Base\GameBase.cpp" />
     <ClCompile Include="Base\Library\imgui\imgui.cpp" />
@@ -308,6 +309,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\ComponentBase.h" />
+    <ClInclude Include="Base\ComponentIndex.h" />
     <ClInclude Include="Base\Component\Transform.h" />
     <ClInclude Include="Base\DependencyResolver.h" />
     <ClInclude Include="Base\ECS\ComponentPool.h" />

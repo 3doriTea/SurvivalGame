@@ -1,12 +1,11 @@
 #pragma once
 #include "ECS/IComponentPool.h"
 #include "ECS/ComponentPool.h"
+#include "ComponentIndex.h"
 
 
 namespace GameBase
 {
-	using ComponentIndex = size_t;
-
 	template<typename T>
 	class ComponentBase;
 

@@ -14,7 +14,7 @@ namespace GameBase
 		using Signature = std::bitset<COMPONENT_TYPE_MAX>;
 
 	public:
-		EntityRegistry();
+		EntityRegistry(const EntityVersion _version);
 		~EntityRegistry() = default;
 
 		/// <summary>
@@ -23,7 +23,17 @@ namespace GameBase
 		/// <returns>作成されたエンティティ</returns>
 		Entity CreateEntity();
 
+		/// <summary>
+		/// エンティティにコンポーネントを追加する
+		/// </summary>
+		/// <param name="_entity">エンティティ</param>
+		/// <param name="_type"></param>
 		void AddComponent(const Entity _entity, ComponentType _type);
+		/// <summary>
+		/// エンティティからコンポーネントを削除する
+		/// </summary>
+		/// <param name="_entity">エンティティ</param>
+		/// <param name="_type"></param>
 		void RemoveComponent(const Entity _entity, ComponentType _type);
 
 		/// <summary>
@@ -38,6 +48,10 @@ namespace GameBase
 				== _mask;
 		}
 
+		/// <summary>
+		/// 総エンティティ数を取得する
+		/// </summary>
+		/// <returns>総エンティティ数</returns>
 		inline size_t TotalEntitiesCount() const { return entityCounter_; }
 
 	private:

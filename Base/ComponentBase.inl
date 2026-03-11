@@ -44,8 +44,16 @@ GameBase::ComponentPool<T>& GameBase::Get()
 template<typename T>
 inline GameBase::ComponentBase<T>::ComponentBase()
 {
-	ComponentRegistry::RegisterQueue().push([]()
+	static bool once
 	{
-		ComponentRegistry::Add<T>(pInstance_, typeid(T).name());
-	});
+		([]() -> bool
+			{
+				ComponentRegistry::RegisterQueue().push([]()
+				{
+					ComponentRegistry::Add<T>(pInstance_, typeid(T).name());
+				});
+
+				return true;
+			}) ()
+	};
 }
