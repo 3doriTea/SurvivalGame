@@ -67,6 +67,9 @@ using json = nlohmann::json;
 #include <DirectXMath.h>
 #pragma comment(lib, "d3d11.lib")
 
+// XAudio2
+#include <xaudio2.h>
+
 // ComPtr
 #include <wrl/client.h>
 

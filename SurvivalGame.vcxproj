@@ -354,6 +354,8 @@
     <ClInclude Include="Base\Structure\SerializedScene.h" />
     <ClInclude Include="Base\SystemBase.h" />
     <ClInclude Include="Base\System\Assets.h" />
+    <ClInclude Include="Base\System\Audio.h" />
+    <ClInclude Include="Base\System\Audio3D.h" />
     <ClInclude Include="Base\System\Direct3D.h" />
     <ClInclude Include="Base\System\EditorGui.h" />
     <ClInclude Include="Base\Standalone\Debugger.h" />
