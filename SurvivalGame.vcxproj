@@ -298,6 +298,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Base\Structure\AssetLoader\YamlLoader.cpp" />
     <ClCompile Include="Base\SystemBase.cpp" />
     <ClCompile Include="Base\System\Assets.cpp" />
     <ClCompile Include="Base\System\Direct3D.cpp" />
@@ -348,6 +349,7 @@
     <ClInclude Include="Base\Standalone\Utility\StringUtil.h" />
     <ClInclude Include="Base\Standalone\Utility\TimeUtil.h" />
     <ClInclude Include="Base\Structure\AssetLoader\AssetLoaderScene.h" />
+    <ClInclude Include="Base\Structure\AssetLoader\YamlLoader.h" />
     <ClInclude Include="Base\Structure\CreateWindowConfig.h" />
     <ClInclude Include="Base\Structure\GameConfig.h" />
     <ClInclude Include="Base\Structure\GameManifest.h" />

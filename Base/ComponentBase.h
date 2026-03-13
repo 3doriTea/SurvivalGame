@@ -47,7 +47,8 @@ namespace GameBase
 		// NOTE: コンポーネントの登録にのみ使うため、VTableは不要
 		inline /*virtual*/ ~ComponentBase() = default;
 
-
+		virtual void OnLoad(const YAML::Node& _node) = 0;
+		virtual void OnSave(YAML::Emitter& _emitter) = 0;
 
 	private:
 		static inline std::shared_ptr<ComponentPool<T>> pInstance_

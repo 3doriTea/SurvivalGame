@@ -2,6 +2,7 @@
 #include "../SystemBase.h"
 #include "../DependencyResolver.h"
 #include "../Standalone/Utility/ReferencePrinter.h"
+#include "../Structure/AssetLoader/YamlLoader.h"
 
 
 GameBase::World::World(const EntityVersion _version) :
@@ -15,7 +16,7 @@ bool GameBase::World::TryLoadScene(const fs::path& _sceneFile)
 
 	// TODO: ファイルから読み込む
 
-	const std::string SCENE_NAME{ _sceneFile.filename().string() };
+	const std::string SCENE_NAME{ _sceneFile.stem().string() };
 
 	Debugger::LogBegin("LoadScene:" + SCENE_NAME);
 
@@ -141,6 +142,16 @@ bool GameBase::World::TryLoadScene(const fs::path& _sceneFile)
 	Debugger::LogWriteOutFile("./", "dumpSystemList");
 
 	Debugger::LogEnd();
+
+	YamlLoader loader{};
+
+	loader.OnNode([](
+		const std::string& _tag,
+		const std::string& _sceneName,
+		const YAML::Node& _node)
+	{
+		
+	});
 
 	return true;
 }

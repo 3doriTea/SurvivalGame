@@ -4,9 +4,14 @@
 
 namespace GameBase::Component
 {
+	/// <summary>
+	/// コンポーネント : カメラ
+	/// </summary>
 	struct Camera : ComponentBase<Camera>
 	{
 		Camera();
+		void OnLoad(const YAML::Node& _node) override;
+		void OnSave(YAML::Emitter& _emitter) override;
 
 		float nearZ;        // ファークリップ平面の距離
 		float farZ;         // ニヤークリップ平面の距離
