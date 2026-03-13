@@ -24,8 +24,7 @@ namespace GameBase
 	{
 		Entity entity{ _entity };
 		entity >>= sizeof(EntityIndex) * 8;
-		entity = static_cast<EntityVersion>(entity);
-		return entity;
+		return static_cast<EntityVersion>(entity);
 	}
 
 	/// <summary>
