@@ -1,17 +1,15 @@
 #pragma once
 #include "Entity.h"
+#include "View.h"
+#include "Signature.h"
 
 
 namespace GameBase
 {
-	enum ComponentType : uint32_t
-	{
-		COMPONENT_TYPE_MAX = 64,
-	};
-
 	class EntityRegistry
 	{
-		using Signature = std::bitset<COMPONENT_TYPE_MAX>;
+		template<typename ...ComponentsT>
+		friend class View;
 
 	public:
 		EntityRegistry(const EntityVersion _version);
@@ -22,6 +20,19 @@ namespace GameBase
 		/// </summary>
 		/// <returns>作成されたエンティティ</returns>
 		Entity CreateEntity();
+
+		template<typename T>
+		T& GetComponent(const Entity _entity)
+		{
+			return GetComponent<T>(GetIndex(_entity));
+		}
+
+		template<typename T>
+		T& GetComponent(const EntityIndex _entityIndex)
+		{
+			size_t index{ ComponentRegistry::GetComponentIndex<T>() };
+			return Get<T>().Get(index);
+		}
 
 		/// <summary>
 		/// エンティティにコンポーネントを追加する
@@ -47,12 +58,29 @@ namespace GameBase
 			return (entitySignatures_[static_cast<EntityIndex>(_entity)] & _mask)
 				== _mask;
 		}
+		/// <summary>
+		/// コンポーネントマスクに一致するか
+		/// </summary>
+		/// <param name="_entity">エンティティ</param>
+		/// <param name="_mask">コンポーネントマスク</param>
+		/// <returns>一致する true / false</returns>
+		inline bool MatchComponents(const EntityIndex _entityIndex, const Signature& _mask) const
+		{
+			return (entitySignatures_[_entityIndex] & _mask)
+				== _mask;
+		}
 
 		/// <summary>
 		/// 総エンティティ数を取得する
 		/// </summary>
 		/// <returns>総エンティティ数</returns>
 		inline size_t TotalEntitiesCount() const { return entityCounter_; }
+
+		template<typename ...Args>
+		inline View<Args...> GetView()
+		{
+			return View<Args...>{ *this };
+		}
 
 	private:
 		const EntityVersion VERSION_;  // このレジストリのエンティティバージョン

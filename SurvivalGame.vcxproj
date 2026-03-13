@@ -179,6 +179,8 @@
     <ClCompile Include="Base\ECS\ComponentPool.cpp" />
     <ClCompile Include="Base\ECS\EntityRegistry.cpp" />
     <ClCompile Include="Base\ECS\IComponentPool.cpp" />
+    <ClCompile Include="Base\ECS\View.cpp" />
+    <ClCompile Include="Base\ECS\World.cpp" />
     <ClCompile Include="Base\GameBase.cpp" />
     <ClCompile Include="Base\Library\imgui\imgui.cpp" />
     <ClCompile Include="Base\Library\imgui\imgui_demo.cpp" />
@@ -300,6 +302,7 @@
     <ClCompile Include="Base\System\Direct3D.cpp" />
     <ClCompile Include="Base\System\EditorGui.cpp" />
     <ClCompile Include="Base\System\GameTime.cpp" />
+    <ClCompile Include="Base\System\Input.cpp" />
     <ClCompile Include="Base\System\MainWindow.cpp" />
     <ClCompile Include="Base\System\Program.cpp" />
     <ClCompile Include="Base\System\Renderer.cpp" />
@@ -316,6 +319,9 @@
     <ClInclude Include="Base\ECS\Entity.h" />
     <ClInclude Include="Base\ECS\EntityRegistry.h" />
     <ClInclude Include="Base\ECS\IComponentPool.h" />
+    <ClInclude Include="Base\ECS\Signature.h" />
+    <ClInclude Include="Base\ECS\View.h" />
+    <ClInclude Include="Base\ECS\World.h" />
     <ClInclude Include="Base\GameBase.h" />
     <ClInclude Include="Base\GlobalGetter.h" />
     <ClInclude Include="Base\Library\imgui\imconfig.h" />
@@ -326,6 +332,7 @@
     <ClInclude Include="Base\Library\imgui\imstb_rectpack.h" />
     <ClInclude Include="Base\Library\imgui\imstb_textedit.h" />
     <ClInclude Include="Base\Library\imgui\imstb_truetype.h" />
+    <ClInclude Include="Base\Standalone\Constant\KeyCode.h" />
     <ClInclude Include="Base\Standalone\CoreType\Mat4x4.h" />
     <ClInclude Include="Base\Standalone\CoreType\Vec2.h" />
     <ClInclude Include="Base\Standalone\CoreType\Vec2Int.h" />
@@ -363,6 +370,7 @@
     <ClInclude Include="Base\Library\nlohmann-json\json_fwd.hpp" />
     <ClInclude Include="Base\pch.h" />
     <ClInclude Include="Base\System\GameTime.h" />
+    <ClInclude Include="Base\System\Input.h" />
     <ClInclude Include="Base\System\MainWindow.h" />
     <ClInclude Include="Base\System\Program.h" />
     <ClInclude Include="Base\System\Renderer.h" />
@@ -373,6 +381,7 @@
     <None Include=".editorconfig" />
     <None Include="Assets\setting.json" />
     <None Include="Base\ComponentBase.inl" />
+    <None Include="Base\ECS\View.inl" />
     <None Include="Base\SystemBase.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

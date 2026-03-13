@@ -51,7 +51,7 @@ namespace GameBase
 		/// コンポーネントを削除する
 		/// </summary>
 		/// <param name="_entityIndex">エンティティのインデクス</param>
-		void Remove(const EntityIndex _entityIndex)
+		void Remove(const EntityIndex _entityIndex) override
 		{
 			if (Has(_entityIndex) == false)
 			{

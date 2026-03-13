@@ -131,6 +131,15 @@
     <ClCompile Include="Base\Standalone\Utility\StringUtil.cpp">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Base\ECS\EntityRegistry.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\ECS\View.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\ECS\World.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\GameBase.h">
@@ -304,6 +313,18 @@
     <ClInclude Include="Base\Standalone\Utility\StringUtil.h">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Base\ComponentIndex.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\ECS\View.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\ECS\World.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\ECS\Signature.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -315,6 +336,9 @@
     </None>
     <None Include="Assets\setting.json">
       <Filter>Assets</Filter>
+    </None>
+    <None Include="Base\ECS\View.inl">
+      <Filter>未分類のソースヘッダファイル</Filter>
     </None>
   </ItemGroup>
 </Project>
