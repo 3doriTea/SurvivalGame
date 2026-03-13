@@ -25,7 +25,7 @@ bool GameBase::Game::Start()
 	Debugger::LogBegin("GameBase::Game::Start");
 
 	// TODO: デフォルトシーン読み込み
-	MakeScene();
+	MoveScene("");
 
 	Debugger::LogEnd();
 	return true;
