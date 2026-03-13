@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "EntityRegistry.h"
 
 
@@ -11,9 +10,8 @@ GameBase::Entity GameBase::EntityRegistry::CreateEntity()
 {
 	EntityIndex index{ entityCounter_++ };
 	EntityVersion version{ VERSION_ };
-	Entity created
-	{};
-	return ;
+	Entity created{ MakeEntity(index, version) };
+	return created;
 }
 
 void GameBase::EntityRegistry::AddComponent(const Entity _entity, ComponentType _type)
