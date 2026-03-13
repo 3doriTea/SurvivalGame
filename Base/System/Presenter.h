@@ -14,10 +14,10 @@ namespace GameBase::System
 	/// <summary>
 	/// システムインタフェース: 
 	/// </summary>
-	struct ISwapChain : ISystemInterfaceBase
+	struct IPresenter : ISystemInterfaceBase
 	{
-		ISwapChain() = default;
-		virtual ~ISwapChain() = default;
+		IPresenter() = default;
+		virtual ~IPresenter() = default;
 
 		virtual void BeginDraw() = 0;
 		virtual void EndDraw() = 0;
@@ -28,11 +28,11 @@ namespace GameBase::System
 	/// <summary>
 	/// システム: 
 	/// </summary>
-	class SwapChain : public SystemBase<SwapChain, ISwapChain>
+	class Presenter : public SystemBase<Presenter, IPresenter>
 	{
 	public:
-		SwapChain();
-		~SwapChain();
+		Presenter();
+		~Presenter();
 
 		// 利用する参照があるときに使用
 		void OnRegisterDependencies(FluentVectorAddOnly<SystemIndex>* _registry) override;

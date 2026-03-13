@@ -174,6 +174,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Base\ComponentBase.cpp" />
+    <ClCompile Include="Base\Component\Camera.cpp" />
     <ClCompile Include="Base\Component\Transform.cpp" />
     <ClCompile Include="Base\DependencyResolver.cpp" />
     <ClCompile Include="Base\ECS\ComponentPool.cpp" />
@@ -305,13 +306,14 @@
     <ClCompile Include="Base\System\MainWindow.cpp" />
     <ClCompile Include="Base\System\Program.cpp" />
     <ClCompile Include="Base\System\Renderer.cpp" />
-    <ClCompile Include="Base\System\SwapChain.cpp" />
+    <ClCompile Include="Base\System\Presenter.cpp" />
     <ClCompile Include="Base\System\WindowEvent.cpp" />
     <ClCompile Include="TheMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\ComponentBase.h" />
     <ClInclude Include="Base\ComponentIndex.h" />
+    <ClInclude Include="Base\Component\Camera.h" />
     <ClInclude Include="Base\Component\Transform.h" />
     <ClInclude Include="Base\DependencyResolver.h" />
     <ClInclude Include="Base\ECS\ComponentPool.h" />
@@ -332,6 +334,7 @@
     <ClInclude Include="Base\Library\imgui\imstb_textedit.h" />
     <ClInclude Include="Base\Library\imgui\imstb_truetype.h" />
     <ClInclude Include="Base\Standalone\CoreType\Mat4x4.h" />
+    <ClInclude Include="Base\Standalone\CoreType\Quaternion.h" />
     <ClInclude Include="Base\Standalone\CoreType\Vec2.h" />
     <ClInclude Include="Base\Standalone\CoreType\Vec2Int.h" />
     <ClInclude Include="Base\Standalone\CoreType\Vec2T.h" />
@@ -369,7 +372,7 @@
     <ClInclude Include="Base\System\MainWindow.h" />
     <ClInclude Include="Base\System\Program.h" />
     <ClInclude Include="Base\System\Renderer.h" />
-    <ClInclude Include="Base\System\SwapChain.h" />
+    <ClInclude Include="Base\System\Presenter.h" />
     <ClInclude Include="Base\System\WindowEvent.h" />
   </ItemGroup>
   <ItemGroup>

@@ -73,6 +73,7 @@ using json = nlohmann::json;
 using Microsoft::WRL::ComPtr;
 namespace fs = std::filesystem;
 
+#include <CoreType/Quaternion.h>
 #include <CoreType/Vec2.h>
 #include <CoreType/Vec2Int.h>
 #include <CoreType/Vec3.h>

@@ -10,7 +10,7 @@ namespace GameBase::Component
 		Transform();
 
 		Vec3 position;
-		DirectX::XMFLOAT4 rotation;
+		Quaternion rotation;
 		Vec3 scale;
 		Entity parent;
 	};

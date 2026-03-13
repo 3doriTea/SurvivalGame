@@ -1,19 +1,19 @@
-#include "SwapChain.h"
+#include "Presenter.h"
 #include "Direct3D.h"
 #include "Assets.h"
 #include "MainWindow.h"
 #include "Structure/RefreshRate.h"
 
 
-GameBase::System::SwapChain::SwapChain()
+GameBase::System::Presenter::Presenter()
 {
 }
 
-GameBase::System::SwapChain::~SwapChain()
+GameBase::System::Presenter::~Presenter()
 {
 }
 
-void GameBase::System::SwapChain::OnRegisterDependencies(FluentVectorAddOnly<SystemIndex>* _registry)
+void GameBase::System::Presenter::OnRegisterDependencies(FluentVectorAddOnly<SystemIndex>* _registry)
 {
 	_registry
 	->Add(SystemRegistry::GetSystemIndex<Direct3D>())
@@ -22,7 +22,7 @@ void GameBase::System::SwapChain::OnRegisterDependencies(FluentVectorAddOnly<Sys
 	;
 }
 
-void GameBase::System::SwapChain::Initialize()
+void GameBase::System::Presenter::Initialize()
 {
 	bool failed{ true };
 	Get<Direct3D>().Ref(
@@ -105,22 +105,22 @@ void GameBase::System::SwapChain::Initialize()
 		});
 }
 
-void GameBase::System::SwapChain::Update()
+void GameBase::System::Presenter::Update()
 {
 }
 
-void GameBase::System::SwapChain::Release()
+void GameBase::System::Presenter::Release()
 {
 }
 
-void GameBase::System::SwapChain::BeginDraw()
+void GameBase::System::Presenter::BeginDraw()
 {
 }
 
-void GameBase::System::SwapChain::EndDraw()
+void GameBase::System::Presenter::EndDraw()
 {
 }
 
-void GameBase::System::SwapChain::Ref(const std::function<void(const ComPtr<ID3D11RenderTargetView>&)> _callback)
+void GameBase::System::Presenter::Ref(const std::function<void(const ComPtr<ID3D11RenderTargetView>&)> _callback)
 {
 }
