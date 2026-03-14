@@ -75,11 +75,11 @@ void GameBase::System::MainWindow::Create(const CreateWindowConfig& _config)
 	};
 
 	ATOM atom{ RegisterClassEx(&WNDCLASSEX_DESC) };
-	assert(atom != 0 && "ウィンドウクラス登録に失敗");
+	GB_ASSERT(atom != 0 && "ウィンドウクラス登録に失敗");
 
 	RECT windowRect{ 0, 0, _config.windowScreenSize.x, _config.windowScreenSize.y };
 	BOOL succeed{ AdjustWindowRectEx(&windowRect, _config.clientStyle, _config.hasMenu, _config.clientStyleEx) };
-	assert(succeed && "クライアント領域を考慮したウィンドウサイズ計算に失敗");
+	GB_ASSERT(succeed && "クライアント領域を考慮したウィンドウサイズ計算に失敗");
 
 	Vec2Int windowSize
 	{
@@ -106,8 +106,8 @@ void GameBase::System::MainWindow::Create(const CreateWindowConfig& _config)
 	DWORD error;
 	error = GetLastError();
 
-	assert(hWnd != nullptr && "ウィンドウの作成に失敗");
-	assert(IsWindow(hWnd) && "ウィンドウではないハンドルが作られている");
+	GB_ASSERT(hWnd != nullptr && "ウィンドウの作成に失敗");
+	GB_ASSERT(IsWindow(hWnd) && "ウィンドウではないハンドルが作られている");
 
 	ShowWindow(hWnd, SW_SHOWDEFAULT);  // ウィンドウを表示
 

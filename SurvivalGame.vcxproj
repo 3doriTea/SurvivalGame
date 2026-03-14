@@ -190,6 +190,7 @@
     <ClCompile Include="Base\Library\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="Base\Library\imgui\imgui_tables.cpp" />
     <ClCompile Include="Base\Library\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Base\ScriptBase.cpp" />
     <ClCompile Include="Base\Standalone\CoreType\Vec2T.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -312,6 +313,7 @@
     <ClCompile Include="TheMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Assets\Scripts\PlayerController.h" />
     <ClInclude Include="Base\ComponentBase.h" />
     <ClInclude Include="Base\ComponentIndex.h" />
     <ClInclude Include="Base\Component\Camera.h" />
@@ -334,6 +336,8 @@
     <ClInclude Include="Base\Library\imgui\imstb_rectpack.h" />
     <ClInclude Include="Base\Library\imgui\imstb_textedit.h" />
     <ClInclude Include="Base\Library\imgui\imstb_truetype.h" />
+    <ClInclude Include="Base\ScriptBase.h" />
+    <ClInclude Include="Base\Standalone\CoreType\Color.h" />
     <ClInclude Include="Base\Standalone\CoreType\Mat4x4.h" />
     <ClInclude Include="Base\Standalone\CoreType\Quaternion.h" />
     <ClInclude Include="Base\Standalone\CoreType\Vec2.h" />
@@ -345,6 +349,7 @@
     <ClInclude Include="Base\Standalone\Event.h" />
     <ClInclude Include="Base\Standalone\FluentVector.h" />
     <ClInclude Include="Base\Standalone\ResponderEvent.h" />
+    <ClInclude Include="Base\Standalone\Utility\Assert.h" />
     <ClInclude Include="Base\Standalone\Utility\ReferencePrinter.h" />
     <ClInclude Include="Base\Standalone\Utility\StringUtil.h" />
     <ClInclude Include="Base\Standalone\Utility\TimeUtil.h" />
@@ -382,6 +387,7 @@
     <None Include="Assets\setting.json" />
     <None Include="Base\ComponentBase.inl" />
     <None Include="Base\ECS\View.inl" />
+    <None Include="Base\ScriptBase.inl" />
     <None Include="Base\SystemBase.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

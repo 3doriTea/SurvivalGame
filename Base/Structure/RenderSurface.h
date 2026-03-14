@@ -1,9 +1,11 @@
 #pragma once
+#include "RefreshRate.h"
+
 
 namespace GameBase
 {
 	/// <summary>
-	/// 描画画面に関する情報
+	/// 描画画面
 	/// </summary>
 	struct RenderSurface
 	{
@@ -13,8 +15,10 @@ namespace GameBase
 		ComPtr<ID3D11DepthStencilView> pDepthStencilView;  // 深度バッファへアクセスするやつ
 
 		D3D11_VIEWPORT viewport;  // ビューポート
-		uint32_t width;           // 横幅
-		uint32_t height;          // 高さ
+		Vec2Int size;             // サイズ
+		RefreshRate refreshRate;  // 更新頻度
+		bool windowed;            // ウィンドウモードであるか
+		HWND hWnd;                // ウィンドウハンドル
 	};
 }
 

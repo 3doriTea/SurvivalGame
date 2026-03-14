@@ -31,7 +31,7 @@ namespace GameBase
 					}
 					else
 					{
-						assert(false && "Unknown TAG");
+						GB_ASSERT(false && "Unknown TAG");
 						return false;
 					}
 				}

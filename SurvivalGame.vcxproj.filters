@@ -116,9 +116,6 @@
     <ClCompile Include="Base\Component\Transform.cpp">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Base\System\SwapChain.cpp">
-      <Filter>未分類のソースヘッダファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Base\System\MainWindow.cpp">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClCompile>
@@ -138,6 +135,18 @@
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClCompile>
     <ClCompile Include="Base\ECS\World.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Component\Camera.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Structure\AssetLoader\YamlLoader.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\System\Presenter.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\ScriptBase.cpp">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -259,9 +268,6 @@
     <ClInclude Include="Base\ECS\IComponentPool.h">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Base\System\SwapChain.h">
-      <Filter>未分類のソースヘッダファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Base\System\MainWindow.h">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
@@ -325,6 +331,30 @@
     <ClInclude Include="Base\ECS\Signature.h">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Base\Component\Camera.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Standalone\CoreType\Quaternion.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Structure\AssetLoader\YamlLoader.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\System\Presenter.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Standalone\CoreType\Color.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Assets\Scripts\PlayerController.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\ScriptBase.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Standalone\Utility\Assert.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -338,6 +368,9 @@
       <Filter>Assets</Filter>
     </None>
     <None Include="Base\ECS\View.inl">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </None>
+    <None Include="Base\ScriptBase.inl">
       <Filter>未分類のソースヘッダファイル</Filter>
     </None>
   </ItemGroup>

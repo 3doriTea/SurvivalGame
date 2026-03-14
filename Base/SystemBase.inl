@@ -21,10 +21,10 @@ size_t GameBase::SystemRegistry::Add(std::weak_ptr<ISystemBase> _p)
 	PSystems().at(index) = _p;// ここに SystemBase::pInstance_を入れたい
 
 	auto spBase{ _p.lock() };
-	assert(spBase && "システムベースのシェアポインタにアクセスできなかった");
+	GB_ASSERT(spBase && "システムベースのシェアポインタにアクセスできなかった");
 
 	auto sp{ std::static_pointer_cast<T>(spBase) };
-	assert(sp && "T型のシェアポインタにアクセスできなかった");
+	GB_ASSERT(sp && "T型のシェアポインタにアクセスできなかった");
 
 	PInterfaces().at(index) = std::static_pointer_cast<typename T::Interface>(sp);
 
@@ -39,7 +39,7 @@ typename T::Interface& GameBase::Get()
 	size_t index{ GetSystemIndex<T>() };
 
 	auto sp{ PInterfaces()[index].lock() };
-	assert(sp && "システムインタフェースのシェアポインタ取得に失敗");
+	GB_ASSERT(sp && "システムインタフェースのシェアポインタ取得に失敗");
 
 	return *static_cast<T::Interface*>(sp.get());
 }
@@ -52,7 +52,7 @@ T& GameBase::System::Get()
 	size_t index{ GetSystemIndex<T>() };
 
 	auto sp{ PSystems()[index].lock() };
-	assert(sp && "システムインタフェースのシェアポインタ取得に失敗");
+	GB_ASSERT(sp && "システムインタフェースのシェアポインタ取得に失敗");
 
 	return *std::static_pointer_cast<T>(sp).get();
 }

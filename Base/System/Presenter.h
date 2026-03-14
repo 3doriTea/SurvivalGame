@@ -1,5 +1,6 @@
 #pragma once
 #include "../SystemBase.h"
+#include "Structure/RenderSurface.h"
 
 
 namespace GameBase::System
@@ -57,19 +58,31 @@ namespace GameBase::System
 		void Ref(const std::function<void(const ComPtr<ID3D11RenderTargetView>&)> _callback) override;
 
 	private:
+		/// <summary>
+		/// 描画画面を作成する
+		/// </summary>
+		/// <param name="_pRenderSurface">作成された描画画面のポインタ渡し</param>
+		/// <returns>作成された描画画面</returns>
+		bool TryCreateRenderSurface(RenderSurface* _pRenderSurface);
+
+		/// <summary>
+		/// 描画する描画画面をセットする
+		/// </summary>
+		/// <param name="renderSurface"></param>
+		void SetRenderSurface(RenderSurface& _renderSurface);
+
+	private:
 		ComPtr<IDXGIDevice> pDXGIDevice_;    // DXGIのデバイス
 		ComPtr<IDXGIAdapter> pDXGIAdapter_;  // DXGIのアダプター
 		ComPtr<IDXGIFactory> pDXGIFactory_;  // DXGIのファクトリー
 
-		ComPtr<IDXGISwapChain> pSwapChain_;  // スワップチェーン
-
-		ComPtr<ID3D11RenderTargetView> pRenderTargetView_;  // レンダーターゲットビュー
-		ComPtr<ID3D11Texture2D> pDepthBuffer_;              // 深度バッファ
-		ComPtr<ID3D11DepthStencilView> pDepthStencilView_;  // 震度ステンシルビュー
-
 		FLOAT clearDepthValue_;    // 深度バッファをクリアするときの値
 		UINT clearStencilValue_;   // 深度バッファをクリアするときの値
 
+		Color backgroundColor_;  // 背景色
+
 		PresentSyncInterval syncInterval_;  // present関数の引数にわたす値 VSyncなどの設定
+
+		RenderSurface renderSurface_;  // 描画対象
 	};
 }
