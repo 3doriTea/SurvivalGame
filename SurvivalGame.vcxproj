@@ -310,6 +310,7 @@
     <ClCompile Include="Base\System\Program.cpp" />
     <ClCompile Include="Base\System\Renderer.cpp" />
     <ClCompile Include="Base\System\Presenter.cpp" />
+    <ClCompile Include="Base\System\ShaderCompiler.cpp" />
     <ClCompile Include="Base\System\WindowEvent.cpp" />
     <ClCompile Include="TheMain.cpp" />
   </ItemGroup>
@@ -355,6 +356,7 @@
     <ClInclude Include="Base\Standalone\Utility\ReferencePrinter.h" />
     <ClInclude Include="Base\Standalone\Utility\StringUtil.h" />
     <ClInclude Include="Base\Standalone\Utility\TimeUtil.h" />
+    <ClInclude Include="Base\Structure\AssetFilter.h" />
     <ClInclude Include="Base\Structure\AssetLoader\AssetLoaderScene.h" />
     <ClInclude Include="Base\Structure\AssetLoader\YamlLoader.h" />
     <ClInclude Include="Base\Structure\CreateWindowConfig.h" />
@@ -383,6 +385,7 @@
     <ClInclude Include="Base\System\Program.h" />
     <ClInclude Include="Base\System\Renderer.h" />
     <ClInclude Include="Base\System\Presenter.h" />
+    <ClInclude Include="Base\System\ShaderCompiler.h" />
     <ClInclude Include="Base\System\WindowEvent.h" />
   </ItemGroup>
   <ItemGroup>

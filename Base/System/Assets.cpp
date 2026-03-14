@@ -84,6 +84,24 @@ void GameBase::System::Assets::Load()
 	}
 	Debugger::LogEnd();
 #pragma endregion
+
+#pragma region Assetsフォルダ内を走査
+	for (const fs::directory_entry& x : fs::recursive_directory_iterator{ directory_ })
+	{
+		// 普通のファイルのときのみ
+		if (fs::is_regular_file(x))
+		{
+			if (x.path().extension() == ".hlsl")
+			{
+				typeToFilesPath_[AssetsType::Shader].push_back(x.path());
+			}
+			if (x.path().extension() == ".hlsli")
+			{
+				typeToFilesPath_[AssetsType::ShaderInclude].push_back(x.path());
+			}
+		}
+	}
+#pragma endregion
 }
 
 json GameBase::System::Assets::FetchJson(const fs::path& _file)
@@ -106,4 +124,9 @@ json GameBase::System::Assets::FetchJson(const fs::path& _file)
 	ifs >> j;
 
 	return std::move(j);
+}
+
+void GameBase::System::Assets::Ref(const std::function<void(const std::vector<fs::path>&)>& _callback, const AssetsType _type)
+{
+	_callback(typeToFilesPath_[_type]);
 }
