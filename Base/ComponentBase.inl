@@ -36,7 +36,7 @@ GameBase::ComponentPool<T>& GameBase::Get()
 	size_t index{ GetComponentIndex<T>() };
 
 	auto sp{ PComponentPools()[index].lock() };
-	assert(sp && "コンポーネントインタフェースのシェアポインタ取得に失敗");
+	GB_ASSERT(sp && "コンポーネントインタフェースのシェアポインタ取得に失敗");
 
 	return *static_cast<ComponentPool<T>*>(sp.get());
 }

@@ -4,8 +4,13 @@
 
 namespace GameBase::Component
 {
+	/// <summary>
+	/// コンポーネント : 
+	/// </summary>
 	struct XXX : ComponentBase<XXX>
 	{
 		XXX();
+		void OnLoad(const YAML::Node& _node) override;
+		void OnSave(YAML::Emitter& _emitter) override;
 	};
 }

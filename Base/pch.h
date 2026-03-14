@@ -37,7 +37,7 @@
 #include <chrono>
 
 // アサーション
-#include <cassert>
+//#include <cassert>
 
 // デバイス入力系
 #include <dinput.h>
@@ -76,6 +76,8 @@ using json = nlohmann::json;
 using Microsoft::WRL::ComPtr;
 namespace fs = std::filesystem;
 
+#include <CoreType/Color.h>
+#include <CoreType/Quaternion.h>
 #include <CoreType/Vec2.h>
 #include <CoreType/Vec2Int.h>
 #include <CoreType/Vec3.h>
@@ -86,6 +88,10 @@ namespace fs = std::filesystem;
 #include <Utility/StringUtil.h>
 
 #include <Debugger.h>
+
+// 独自アサーション
+#include "Standalone/Utility/Assert.h"
+
 #include <Event.h>
 #include <ResponderEvent.h>
 #include <FluentVector.h>

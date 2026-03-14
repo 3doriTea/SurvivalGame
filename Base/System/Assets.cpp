@@ -91,14 +91,14 @@ json GameBase::System::Assets::FetchJson(const fs::path& _file)
 	fs::path jsonFile{ directory_ / _file };
 	if (fs::is_regular_file(jsonFile) == false)
 	{
-		assert(false && "JSONファイルが見つからなかった");
+		GB_ASSERT(false && "JSONファイルが見つからなかった");
 		return {};
 	}
 
 	std::ifstream ifs{ jsonFile };
 	if (!ifs)
 	{
-		assert(false && "JSONファイルの読み込みに失敗");
+		GB_ASSERT(false && "JSONファイルの読み込みに失敗");
 		return {};
 	}
 

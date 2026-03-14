@@ -67,6 +67,5 @@ namespace GameBase::System
 		Vec2Int clientSize_;
 		Vec2Int windowSize_;
 		HWND handle_;
-
 	};
 }

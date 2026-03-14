@@ -24,12 +24,12 @@ void GameBase::System::GameTime::Initialize()
 {
 	MMRESULT result{};
 	result = timeBeginPeriod(Util::PERIOD_MILLI);
-	assert(result == TIMERR_NOERROR
+	GB_ASSERT(result == TIMERR_NOERROR
 		&& "時間解像度の開始に失敗");
 
 	BOOL succeed{};
 	succeed = QueryPerformanceCounter(&previousMicro_);
-	assert(succeed && "CPU時間の取得に失敗");
+	GB_ASSERT(succeed && "CPU時間の取得に失敗");
 
 	fps_ = Get<Assets>().GetGameConfig().fps;
 }
@@ -38,7 +38,7 @@ void GameBase::System::GameTime::Update()
 {
 	BOOL succeed{};
 	succeed = QueryPerformanceCounter(&currentMicro_);
-	assert(succeed && "CPU時間の取得に失敗");
+	GB_ASSERT(succeed && "CPU時間の取得に失敗");
 
 	if (succeed == FALSE)
 	{

@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include "GameTime.h"
+#include "Presenter.h"
 
 
 GameBase::System::Renderer::Renderer()
@@ -14,6 +15,7 @@ void GameBase::System::Renderer::OnRegisterDependencies(FluentVectorAddOnly<Syst
 {
 	_registry
 		->Add(SystemRegistry::GetSystemIndex<GameTime>())
+		->Add(SystemRegistry::GetSystemIndex<Presenter>())
 		;
 }
 
@@ -43,6 +45,12 @@ void GameBase::System::Renderer::Update()
 
 	// レンダーキューの処理をする
 	// 各ウィンドウ分、カメラ別で描画していく
+
+	Get<Presenter>().BeginDraw();
+
+
+
+	Get<Presenter>().EndDraw();
 
 	endEvent_.Invoke();
 
