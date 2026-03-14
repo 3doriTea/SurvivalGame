@@ -43,10 +43,14 @@
 #include <dinput.h>
 #include <Xinput.h>
 
+#pragma comment(lib, "dxguid.lib")
+#pragma comment(lib, "dinput8.lib")
+#pragma comment(lib, "xinput.lib")
+
 // Windowsアプリに必要
 #include <Windows.h>
 #include <mmsystem.h>
-#pragma comment(lib, "winmm.lib")
+#pragma comment(lib, "WinMM.lib")
 
 // JSON解析
 #include "Library/nlohmann-json/json_fwd.hpp"

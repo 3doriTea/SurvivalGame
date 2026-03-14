@@ -65,21 +65,45 @@ namespace GameBase::System
 		bool IsPressDown(const KeyCode _keyCode) override;
 		bool IsPressUp(const KeyCode _keyCode) override;
 	private:
-		struct
-		{
-			// 現フレームでのキーボード状態
-			KeyBoardStateArray stateCurr_;
-			// 前フレームでのキーボード状態
-			KeyBoardStateArray statePrev_;
-		} keyBoard;  // キーボードデバイスの情報
+		// Direct Input 使ういんたフェース
+		ComPtr<IDirectInput8> pDirectInput_;
 
 		struct
 		{
+			// デバイスインタフェースインタフェース
+			ComPtr<IDirectInputDevice8> pDevice;
+
+			// 現フレームでのキーボード状態
+			KeyBoardStateArray stateCurr;
+			// 前フレームでのキーボード状態
+			KeyBoardStateArray statePrev;
+		} keyBoard_;  // キーボードデバイスの情報
+
+		struct
+		{
+			// デバイスインタフェースインタフェース
+			ComPtr<IDirectInputDevice8> pDevice;
+
 			// 現フレームでのマウス座標
-			Vec2Int positionCurr_;
+			Vec2Int positionCurr;
 			// 前フレームでのマウス座標
-			Vec2Int positionPrev_;
-			//DIMOUSESTATE
-		} mouse;  // マウスデバイスの情報
+			Vec2Int positionPrev;
+			// 現フレームでのマウス入力
+			DIMOUSESTATE stateCurr;
+			// 前フレームでのマウス入力
+			DIMOUSESTATE statePrev;
+			// 現フレームでのマウス座標
+			Vec2Int mousePositionCurr;
+			// 前フレームでのマウス座標
+			Vec2Int mousePositionPrev;
+		} mouse_;  // マウスデバイスの情報
+
+		struct
+		{
+			// 現フレームでのゲームパッド状態
+			XINPUT_STATE padStateCurr;
+			// 前フレームでのゲームパッド状態
+			XINPUT_STATE padStatePrev;
+		} controller_;  // ゲームコントローラ ゲームパッド
 	};
 }

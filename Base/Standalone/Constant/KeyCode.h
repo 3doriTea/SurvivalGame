@@ -7,7 +7,7 @@ namespace GameBase
 	/// <summary>
 	/// キーボードの識別番号
 	/// </summary>
-	enum struct KeyCode
+	enum struct KeyCode : uint32_t
 	{
 		Escape = 0x01,
 		Alpha1 = 0x02,

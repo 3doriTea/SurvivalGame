@@ -1,5 +1,6 @@
 #include <GameBase.h>
 #include <Debugger.h>
+#include <System/Input.h>
 
 void Main()
 {
@@ -20,7 +21,14 @@ void Main()
 	Log("こんにちは");
 
 	LogBegin("Game");
-	while (game.Update()) {}
+	while (game.Update())
+	{
+		if (Get<System::Input>().IsPressDown(KeyCode::Escape)
+			&& Get<System::Input>().IsPress(KeyCode::LeftShift))
+		{
+			break;
+		}
+	}
 	LogEnd();
 
 	if (!game.End())
