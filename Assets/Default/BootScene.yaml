@@ -19,7 +19,7 @@ GameObject:
 Id: 1002
 Camera:
   far: 0.1
-  near: 1000.0  
+  near: 1000.0
 
 --- !gbc!Transform
 Id: 1001
@@ -28,10 +28,3 @@ Transform:
   rotation: {x: 0.0, y: 0.0, z: 0.0}
   scale:    {x: 1.0, y: 1.0, z: 1.0}
   parent:   {fileId: 0}
-
---- !gbc!PrefabInstance
-PrefabInstance:
-  name: Player
-  TransformParent: {fileId: 0}
-  SourcePrefab: {path: Prefab/Player.yaml}
-

@@ -74,6 +74,10 @@ using json = nlohmann::json;
 #include <DirectXMath.h>
 #pragma comment(lib, "d3d11.lib")
 
+// シェーダコンパイラ
+#include <d3dcompiler.h>
+#pragma comment(lib, "D3DCompiler.lib")
+
 // ComPtr
 #include <wrl/client.h>
 
@@ -87,9 +91,11 @@ namespace fs = std::filesystem;
 #include <CoreType/Vec3.h>
 #include <CoreType/Vec3Int.h>
 #include <CoreType/Mat4x4.h>
+#include <CoreType/Handle.h>
 
 #include <Utility/TimeUtil.h>
 #include <Utility/StringUtil.h>
+#include <Utility/FlyweightFactory.h>
 
 #include <Debugger.h>
 

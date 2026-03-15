@@ -11,31 +11,24 @@ GameBase::Component::Transform::Transform():
 
 void GameBase::Component::Transform::OnLoad(const YAML::Node& _node)
 {
-	if (_node["Transform"])
-	{
-		const YAML::Node& component{ _node["Transform"] };
-		position.x = component["position"]["x"].as<float>();
-		position.y = component["position"]["y"].as<float>();
-		position.z = component["position"]["z"].as<float>();
+	position.x = _node["position"]["x"].as<float>(position.x);
+	position.y = _node["position"]["y"].as<float>(position.y);
+	position.z = _node["position"]["z"].as<float>(position.z);
 
-		rotation.x = component["rotation"]["x"].as<float>();
-		rotation.y = component["rotation"]["y"].as<float>();
-		rotation.z = component["rotation"]["z"].as<float>();
-		rotation.w = component["rotation"]["w"].as<float>();
+	rotation.x = _node["rotation"]["x"].as<float>(rotation.x);
+	rotation.y = _node["rotation"]["y"].as<float>(rotation.y);
+	rotation.z = _node["rotation"]["z"].as<float>(rotation.z);
+	rotation.w = _node["rotation"]["w"].as<float>(rotation.w);
 
-		scale.x = component["scale"]["x"].as<float>();
-		scale.y = component["scale"]["y"].as<float>();
-		scale.z = component["scale"]["z"].as<float>();
+	scale.x = _node["scale"]["x"].as<float>(scale.x);
+	scale.y = _node["scale"]["y"].as<float>(scale.y);
+	scale.z = _node["scale"]["z"].as<float>(scale.z);
 
-		parent = component["parent"].as<EntityIndex>();
-	}
+	parent = _node["parent"].as<EntityIndex>(0);
 }
 
 void GameBase::Component::Transform::OnSave(YAML::Emitter & _emitter)
 {
-	_emitter << YAML::Key << "Camera";
-	_emitter << YAML::Value << YAML::BeginMap;
-
 	_emitter << YAML::Key << "position";
 	_emitter << YAML::Value << YAML::BeginMap;
 	_emitter << YAML::Key << "x" << YAML::Value << position.x;
@@ -59,7 +52,4 @@ void GameBase::Component::Transform::OnSave(YAML::Emitter & _emitter)
 	_emitter << YAML::EndMap;
 
 	_emitter << YAML::Key << "parent" << YAML::Value << parent;
-
-	_emitter << YAML::EndMap;
-	_emitter << YAML::EndDoc;
 }

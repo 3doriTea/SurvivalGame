@@ -1,4 +1,8 @@
 #include "GameBase.h"
+#include "GameEvent.h"
+
+#include "GameEvent/GameExit.h"
+#include "GameEvent/ChangeScene.h"
 
 
 #define WINDOWS
@@ -24,8 +28,9 @@ bool GameBase::Game::Start()
 {
 	Debugger::LogBegin("GameBase::Game::Start");
 
-	// TODO: デフォルトシーン読み込み
-	MoveScene("");
+	//// TODO: デフォルトシーン読み込み
+	MoveScene(fs::current_path() / "Assets/Default/BootScene.yaml");
+	//MakeScene(true);
 
 	Debugger::LogEnd();
 	return true;
@@ -33,11 +38,29 @@ bool GameBase::Game::Start()
 
 bool GameBase::Game::Update()
 {
+	if (GameEvent::TryErase<GameEvent::GameExit>())
+	{
+		return false;
+	}
+
 	if (!pWorld_)
 	{
 		return false;
 	}
-	return pWorld_.get()->Update();
+
+	bool runnable{ pWorld_.get()->Update() };
+	if (runnable == false)
+	{
+		return false;
+	}
+
+	// シーン遷移イベントの処理
+	GameEvent::TryErase<GameEvent::ChangeScene>([this](GameEvent::ChangeScene& _event)
+	{
+		MoveScene(_event.nextSceneFile);
+	});
+
+	return true;
 }
 
 bool GameBase::Game::End()
@@ -49,17 +72,21 @@ bool GameBase::Game::End()
 	return pWorld_.get()->Release();
 }
 
-void GameBase::Game::MakeScene()
+void GameBase::Game::MakeScene(const bool _reloadSystems)
 {
 	versionCounter_++;  // バージョンを上げる
 	pWorld_ = std::make_unique<World>(versionCounter_);
+	if (_reloadSystems)
+	{
+		pWorld_.get()->TryReloadSystems();
+	}
 }
 
 void GameBase::Game::MoveScene(const fs::path& _sceneFile)
 {
 	if (!pWorld_)
 	{
-		MakeScene();  // ワールドがないなら作る
+		MakeScene(true);  // ワールドがないなら作る
 	}
 
 	bool succeed{ pWorld_->TryLoadScene(_sceneFile) };

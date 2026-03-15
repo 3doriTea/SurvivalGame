@@ -13,11 +13,22 @@ namespace GameBase
 		World(const EntityVersion _version);
 		~World() = default;
 
-		bool TryLoadScene(const fs::path& _sceneFile);
+		/// <summary>
+		/// シーンを読み込む
+		/// </summary>
+		/// <param name="_sceneFile">シーンファイル</param>
+		/// <param name="_initializeSystem">システムを初期化する</param>
+		/// <returns>読み込みに成功 true / false</returns>
+		bool TryLoadScene(const fs::path& _sceneFile, const bool _initializeSystem = false);
 
 		bool Update();
 
 		bool Release();
+
+		/// <summary>
+		/// システムをリロードする
+		/// </summary>
+		bool TryReloadSystems();
 
 	private:
 		const EntityVersion VERSION_;                // エンティティに付与するバージョン情報

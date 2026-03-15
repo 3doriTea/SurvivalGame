@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -102,6 +102,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)Base\Library\yaml-cpp\lib\d</AdditionalLibraryDirectories>
     </Link>
+    <FxCompile>
+      <EntryPointName>VS</EntryPointName>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -125,6 +131,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)Base\Library\yaml-cpp\lib\r</AdditionalLibraryDirectories>
     </Link>
+    <FxCompile>
+      <EntryPointName>VS</EntryPointName>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -147,6 +159,12 @@
       <AdditionalLibraryDirectories>$(ProjectDir)Base\Library\yaml-cpp\lib\d</AdditionalLibraryDirectories>
       <AdditionalDependencies>yaml-cppd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <FxCompile>
+      <EntryPointName>VS</EntryPointName>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -171,9 +189,16 @@
       <AdditionalLibraryDirectories>$(ProjectDir)Base\Library\yaml-cpp\lib\r</AdditionalLibraryDirectories>
       <AdditionalDependencies>yaml-cpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <FxCompile>
+      <EntryPointName>VS</EntryPointName>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Base\ComponentBase.cpp" />
+    <ClCompile Include="Base\ComponentRegistry.cpp" />
     <ClCompile Include="Base\Component\Camera.cpp" />
     <ClCompile Include="Base\Component\Transform.cpp" />
     <ClCompile Include="Base\DependencyResolver.cpp" />
@@ -183,6 +208,7 @@
     <ClCompile Include="Base\ECS\View.cpp" />
     <ClCompile Include="Base\ECS\World.cpp" />
     <ClCompile Include="Base\GameBase.cpp" />
+    <ClCompile Include="Base\GameEvent.cpp" />
     <ClCompile Include="Base\Library\imgui\imgui.cpp" />
     <ClCompile Include="Base\Library\imgui\imgui_demo.cpp" />
     <ClCompile Include="Base\Library\imgui\imgui_draw.cpp" />
@@ -271,6 +297,20 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Base\Standalone\Utility\FlyweightFactory.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="Base\Standalone\Utility\StringUtil.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -310,6 +350,7 @@
     <ClCompile Include="Base\System\Program.cpp" />
     <ClCompile Include="Base\System\Renderer.cpp" />
     <ClCompile Include="Base\System\Presenter.cpp" />
+    <ClCompile Include="Base\System\SceneManager.cpp" />
     <ClCompile Include="Base\System\ShaderCompiler.cpp" />
     <ClCompile Include="Base\System\WindowEvent.cpp" />
     <ClCompile Include="TheMain.cpp" />
@@ -318,17 +359,22 @@
     <ClInclude Include="Assets\Scripts\PlayerController.h" />
     <ClInclude Include="Base\ComponentBase.h" />
     <ClInclude Include="Base\ComponentIndex.h" />
+    <ClInclude Include="Base\ComponentRegistry.h" />
     <ClInclude Include="Base\Component\Camera.h" />
     <ClInclude Include="Base\Component\Transform.h" />
     <ClInclude Include="Base\DependencyResolver.h" />
     <ClInclude Include="Base\ECS\ComponentPool.h" />
     <ClInclude Include="Base\ECS\Entity.h" />
     <ClInclude Include="Base\ECS\EntityRegistry.h" />
+    <ClInclude Include="Base\ECS\IComponentBase.h" />
     <ClInclude Include="Base\ECS\IComponentPool.h" />
     <ClInclude Include="Base\ECS\Signature.h" />
     <ClInclude Include="Base\ECS\View.h" />
     <ClInclude Include="Base\ECS\World.h" />
     <ClInclude Include="Base\GameBase.h" />
+    <ClInclude Include="Base\GameEvent.h" />
+    <ClInclude Include="Base\GameEvent\ChangeScene.h" />
+    <ClInclude Include="Base\GameEvent\GameExit.h" />
     <ClInclude Include="Base\GlobalGetter.h" />
     <ClInclude Include="Base\Library\imgui\imconfig.h" />
     <ClInclude Include="Base\Library\imgui\imgui.h" />
@@ -341,6 +387,7 @@
     <ClInclude Include="Base\ScriptBase.h" />
     <ClInclude Include="Base\Standalone\CoreType\Color.h" />
     <ClInclude Include="Base\Standalone\Constant\KeyCode.h" />
+    <ClInclude Include="Base\Standalone\CoreType\Handle.h" />
     <ClInclude Include="Base\Standalone\CoreType\Mat4x4.h" />
     <ClInclude Include="Base\Standalone\CoreType\Quaternion.h" />
     <ClInclude Include="Base\Standalone\CoreType\Vec2.h" />
@@ -353,6 +400,7 @@
     <ClInclude Include="Base\Standalone\FluentVector.h" />
     <ClInclude Include="Base\Standalone\ResponderEvent.h" />
     <ClInclude Include="Base\Standalone\Utility\Assert.h" />
+    <ClInclude Include="Base\Standalone\Utility\FlyweightFactory.h" />
     <ClInclude Include="Base\Standalone\Utility\ReferencePrinter.h" />
     <ClInclude Include="Base\Standalone\Utility\StringUtil.h" />
     <ClInclude Include="Base\Standalone\Utility\TimeUtil.h" />
@@ -362,15 +410,24 @@
     <ClInclude Include="Base\Structure\CreateWindowConfig.h" />
     <ClInclude Include="Base\Structure\GameConfig.h" />
     <ClInclude Include="Base\Structure\GameManifest.h" />
+    <ClInclude Include="Base\Structure\GameObject.h" />
     <ClInclude Include="Base\Structure\IAssetLoader.h" />
     <ClInclude Include="Base\Structure\Material.h" />
     <ClInclude Include="Base\Structure\Mesh.h" />
+    <ClInclude Include="Base\Structure\RasterizerConfig.h" />
     <ClInclude Include="Base\Structure\RefreshRate.h" />
     <ClInclude Include="Base\Structure\RenderItem.h" />
     <ClInclude Include="Base\Structure\RenderSurface.h" />
+    <ClInclude Include="Base\Structure\Schema\FileIdSchema.h" />
+    <ClInclude Include="Base\Structure\Schema\GameComponentSchema.h" />
+    <ClInclude Include="Base\Structure\Schema\GameObjectSchema.h" />
+    <ClInclude Include="Base\Structure\Schema\GameSceneSchema.h" />
+    <ClInclude Include="Base\Structure\Schema\YamlSchema.h" />
     <ClInclude Include="Base\Structure\SerializedGameObject.h" />
     <ClInclude Include="Base\Structure\SerializedId.h" />
     <ClInclude Include="Base\Structure\SerializedScene.h" />
+    <ClInclude Include="Base\Structure\Shader.h" />
+    <ClInclude Include="Base\Structure\ShaderCompileConfig.h" />
     <ClInclude Include="Base\SystemBase.h" />
     <ClInclude Include="Base\System\Assets.h" />
     <ClInclude Include="Base\System\Direct3D.h" />
@@ -385,6 +442,7 @@
     <ClInclude Include="Base\System\Program.h" />
     <ClInclude Include="Base\System\Renderer.h" />
     <ClInclude Include="Base\System\Presenter.h" />
+    <ClInclude Include="Base\System\SceneManager.h" />
     <ClInclude Include="Base\System\ShaderCompiler.h" />
     <ClInclude Include="Base\System\WindowEvent.h" />
   </ItemGroup>
@@ -392,9 +450,16 @@
     <None Include=".editorconfig" />
     <None Include="Assets\setting.json" />
     <None Include="Base\ComponentBase.inl" />
+    <None Include="Base\ComponentRegistry.inl" />
+    <None Include="Base\ECS\ComponentPool.inl" />
     <None Include="Base\ECS\View.inl" />
+    <None Include="Base\GameEvent.inl" />
     <None Include="Base\ScriptBase.inl" />
+    <None Include="Base\Standalone\Utility\FlyweightFactory.inl" />
     <None Include="Base\SystemBase.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Assets\Shaders\Simple2D.hlsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

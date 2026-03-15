@@ -37,3 +37,22 @@ namespace GameBase
 		return static_cast<EntityIndex>(_entity);
 	}
 }
+
+namespace YAML
+{
+	/*template<>
+	struct convert<GameBase::EntityIndex>
+	{
+		inline static Node encode(const GameBase::EntityIndex& _rhs)
+		{
+			Node node{ static_cast<int>(_rhs) };
+			return node;
+		}
+
+		inline static bool decode(const Node& _node, GameBase::EntityIndex& _rhs)
+		{
+			_rhs = static_cast<GameBase::EntityIndex>(_node.as<int>());
+			return true;
+		}
+	};*/
+}

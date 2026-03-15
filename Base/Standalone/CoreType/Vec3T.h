@@ -55,7 +55,7 @@ namespace GameBase
 		}
 
 		template<typename U, typename DirectXMathU>
-		inline Vec3T(const Vec3T<U, DirectXMathU>&& _other) noexcept :
+		inline Vec3T(Vec3T<U, DirectXMathU>&& _other) noexcept :
 			Vec3T{ _other.x, _other.y, _other.z }
 		{
 			_other.x = 0;

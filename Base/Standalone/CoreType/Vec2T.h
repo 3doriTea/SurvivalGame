@@ -51,9 +51,11 @@ namespace GameBase
 		}
 
 		template<typename U, typename DirectXMathU>
-		inline Vec2T(const Vec2T<U, DirectXMathU>&& _other) noexcept :
+		inline Vec2T(Vec2T<U, DirectXMathU>&& _other) noexcept :
 			Vec2T{ _other.x, _other.y }
 		{
+			_other.x = 0;
+			_other.y = 0;
 		}
 
 		template<typename U, typename DirectXMathU>

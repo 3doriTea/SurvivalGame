@@ -22,7 +22,7 @@ namespace GameBase::System
 		/// フレーム更新のタイミングであるか
 		/// </summary>
 		/// <returns>フレーム更新タイミング true / false</returns>
-		virtual float IsFrameDue() const = 0;
+		virtual bool IsFrameDue() const = 0;
 	};
 
 	/// <summary>
@@ -53,7 +53,7 @@ namespace GameBase::System
 		void Release() override;
 
 		inline float DeltaTime() const override { return deltaTimeSec_; }
-		inline float IsFrameDue() const override { return isFrameDue_; }
+		inline bool IsFrameDue() const override { return isFrameDue_; }
 
 	private:
 		bool isFrameDue_;              // フレーム更新のタイミングであるか

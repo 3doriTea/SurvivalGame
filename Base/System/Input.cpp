@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "GameTime.h"
 #include "MainWindow.h"
+#include <GameEvent/GameExit.h>
 
 
 GameBase::System::Input::Input() :
@@ -110,7 +111,7 @@ void GameBase::System::Input::Update()
 		keyBoard_.statePrev = keyBoard_.stateCurr;
 
 		keyBoard_.pDevice.Get()->GetDeviceState(
-			keyBoard_.stateCurr.size(),
+			static_cast<DWORD>(keyBoard_.stateCurr.size()),
 			keyBoard_.stateCurr.data());
 	}
 
@@ -124,6 +125,11 @@ void GameBase::System::Input::Update()
 		mouse_.pDevice.Get()->GetDeviceState(
 			sizeof(mouse_.stateCurr),
 			&mouse_.statePrev);
+	}
+
+	if (IsPress(KeyCode::R))
+	{
+		GameEvent::Emplace<GameEvent::GameExit>();
 	}
 }
 

@@ -20,7 +20,7 @@ namespace GameBase
 		/// <summary>
 		/// シーンを作る
 		/// </summary>
-		void MakeScene();
+		void MakeScene(const bool _reloadSystems = false);
 		/// <summary>
 		/// シーンを読み込み込む
 		/// </summary>
@@ -36,5 +36,5 @@ namespace GameBase
 		EntityVersion versionCounter_;  // バージョンカウンタ
 	};
 }
-
+// TODO: ゲーム側にリクエストを出す、リクエストを確認しシーン遷移やゲーム終了などを行うものをつくうる
 using namespace GameBase;

@@ -68,7 +68,7 @@ bool GameBase::Debugger::LoggingEnabled()
 void GameBase::Debugger::LogWriteOutFile(const fs::path& _dir, const std::string_view _name)
 {
 	auto now{ std::chrono::system_clock::now() };
-	std::ofstream ofs{ _dir / std::format("{:%H-%M-%S}.log", now) };
+	std::ofstream ofs{ _dir / std::format("{}{:%H-%M-%S}.log", _name, now) };
 
 	assert(ofs.is_open() && "ファイル作成に失敗");
 

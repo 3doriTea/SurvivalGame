@@ -3,6 +3,9 @@
 #include "../DependencyResolver.h"
 #include "../Standalone/Utility/ReferencePrinter.h"
 #include "../Structure/AssetLoader/YamlLoader.h"
+#include "../ComponentBase.h"
+#include "../Structure/Schema/YamlSchema.h"
+
 
 
 GameBase::World::World(const EntityVersion _version) :
@@ -10,7 +13,9 @@ GameBase::World::World(const EntityVersion _version) :
 	systemOrderIndices_{}
 {}
 
-bool GameBase::World::TryLoadScene(const fs::path& _sceneFile)
+bool GameBase::World::TryLoadScene(
+	const fs::path& _sceneFile,
+	const bool _initializeSystem)
 {
 	pRegistry_ = std::make_unique<EntityRegistry>(VERSION_);
 
@@ -20,6 +25,182 @@ bool GameBase::World::TryLoadScene(const fs::path& _sceneFile)
 
 	Debugger::LogBegin("LoadScene:" + SCENE_NAME);
 
+	if (_initializeSystem)
+	{
+		if (bool succeed{ TryReloadSystems() };
+			succeed == false)
+		{
+			return false;
+		}
+	}
+
+	Schema::YamlSchema yaml{};
+
+#pragma region シーンのYAMLファイル読み込み
+	YamlLoader loader{};
+	loader.OnNode([&yaml](
+		const std::string& _tag,
+		const std::string& _sceneName,
+		const YAML::Node& _node)
+	{
+		using namespace Schema;
+
+		Debugger::LogF("tag:{}, scene:{}", _tag, _sceneName);
+
+		try
+		{
+			if (_tag == "GameBase::Scene")
+			{
+				GameScene gameScene{};
+				gameScene.name = _sceneName;
+
+				const YAML::Node& gameObjects{ _node["Scene"]["gameObjects"] };
+				for (const YAML::Node& gameObject : gameObjects)
+				{
+					gameScene.gameObjects.push_back(gameObject["gameObject"]["fileId"].as<FileId>());
+				}
+
+				yaml.gameScenes.push_back(gameScene);
+			}
+			else if (_tag == "GameBase::GameObject")
+			{
+				GameObject gameObject{};
+				gameObject.self = _node["Id"].as<FileId>();
+				gameObject.name = _node["GameObject"]["name"].as<std::string>();
+				const YAML::Node& components{ _node["GameObject"]["components"] };
+				for (const YAML::Node& component : components)
+				{
+					gameObject.gameComponents.push_back(component["component"]["fileId"].as<FileId>());
+				}
+
+				yaml.gameObjects.push_back(gameObject);
+			}
+			else if (std::string componentTag{ "GameBase::Component::" };
+				StringUtil::StartWith(_tag, componentTag))
+			{
+				std::string_view tag{ _tag };
+				std::string_view componentName{ tag.substr(componentTag.size()) };
+
+				GameComponent gameComponent{};
+				gameComponent.self = _node["Id"].as<FileId>();
+				gameComponent.tag = _tag;
+				gameComponent.node = _node[componentName];
+
+				yaml.gameComponents.push_back(gameComponent);
+			}
+			else
+			{
+				GB_ASSERT(false && "知らないタグ", _tag);
+			}
+		}
+		catch (const YAML::Exception& ex)
+		{
+			GB_ASSERT(false && "読み取り例外", ex.what());
+		}
+	});
+
+	bool succeed{ loader.TryLoad(_sceneFile) };
+	GB_ASSERT(succeed);
+
+	Debugger::LogWriteOutFile("./", "__YAMLLLLLLL");
+#pragma endregion
+
+#pragma region EntityComponent配置していく
+	// コンポーネントの Id to ポインタ を作る
+	std::map<Schema::FileId, Schema::GameComponent*> fileIdToComponent{};
+
+	for (auto& component : yaml.gameComponents)
+	{
+		// FileIdの連想配列に追加、あればエラー
+		GB_ASSERT(fileIdToComponent.count(component.self) == 0
+			&& "コンポーネントのFileIdに重複がある",
+			std::format("component tag:{}, >>id:{}<<, there",
+				component.tag,
+				component.self,
+				fileIdToComponent.at(component.self)->tag));
+
+		fileIdToComponent.emplace(component.self, &component);
+	}
+
+	// エンティティを作っていく
+	for (auto& gameObject : yaml.gameObjects)
+	{
+		Entity entity{ pRegistry_.get()->CreateEntity() };
+
+		for (const Schema::FileId componentId : gameObject.gameComponents)
+		{
+			GB_ASSERT(fileIdToComponent.count(componentId) > 0
+				&& "ゲームオブジェクトが存在しないコンポーネントFileIdを参照している",
+				std::format("object:{}, unknown comp fileId:{}", gameObject.name, componentId));
+
+			Schema::GameComponent& component{ *fileIdToComponent.at(componentId) };
+
+			ComponentIndex index{ ComponentRegistry::GetComponentIndex("struct " + component.tag) };
+			IComponentBase& registryComponent{ pRegistry_.get()->AddComponent(entity, index) };
+			try
+			{
+				registryComponent.OnLoad(component.node);
+			}
+			catch (const YAML::Exception& ex)
+			{
+				GB_ASSERT(false && "コンポーネントの読み取りに失敗",
+					std::format("component:{} why->{}", component.tag, ex.what()));
+				return false;
+			}
+		}
+	}
+#pragma endregion
+
+	const auto& test = ComponentRegistry::PComponentPools();
+
+	return true;
+}
+
+bool GameBase::World::Update()
+{
+	auto pSystems{ SystemRegistry::PSystems() };
+
+	for (const int index : systemOrderIndices_)
+	{
+		if (auto pSystem{ pSystems[index].lock() })
+		{
+			pSystem->Update();
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool GameBase::World::Release()
+{
+	auto pSystems{ SystemRegistry::PSystems() };
+
+	// NOTE: 初期化とは逆の順番に解放していく
+	for (auto itr = systemOrderIndices_.rbegin();
+		itr != systemOrderIndices_.rend();
+		itr++)
+	{
+		if (auto pSystem{ pSystems.at(*itr).lock() })
+		{
+			pSystem->Release();
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool GameBase::World::TryReloadSystems()
+{
+	Debugger::LogBegin("TryReloadSystems");
+
 #pragma region コンストラクタ呼び出し後に登録していく
 	Debugger::LogBegin("ConstructorFunc");
 	while (SystemRegistry::RegisterQueue().size() > 0)
@@ -27,6 +208,12 @@ bool GameBase::World::TryLoadScene(const fs::path& _sceneFile)
 		// TODO: ここにシーン名入れてシステム除外処理を追加する
 		SystemRegistry::RegisterQueue().front()();
 		SystemRegistry::RegisterQueue().pop();
+	}
+
+	while (ComponentRegistry::RegisterQueue().size() > 0)
+	{
+		ComponentRegistry::RegisterQueue().front()();
+		ComponentRegistry::RegisterQueue().pop();
 	}
 	Debugger::LogEnd();
 #pragma endregion
@@ -95,6 +282,7 @@ bool GameBase::World::TryLoadScene(const fs::path& _sceneFile)
 		});
 	std::reverse(systemOrderIndices_.begin(), systemOrderIndices_.end());
 	Debugger::LogEnd();
+
 	Debugger::LogBegin("SystemRequired");
 	Debugger::LogF("{}", ss.str());
 	Debugger::LogEnd();
@@ -142,57 +330,6 @@ bool GameBase::World::TryLoadScene(const fs::path& _sceneFile)
 	Debugger::LogWriteOutFile("./", "dumpSystemList");
 
 	Debugger::LogEnd();
-
-	YamlLoader loader{};
-
-	loader.OnNode([](
-		const std::string& _tag,
-		const std::string& _sceneName,
-		const YAML::Node& _node)
-	{
-		
-	});
-
-	return true;
-}
-
-bool GameBase::World::Update()
-{
-	auto pSystems{ SystemRegistry::PSystems() };
-
-	for (const int index : systemOrderIndices_)
-	{
-		if (auto pSystem{ pSystems[index].lock() })
-		{
-			pSystem->Update();
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	return true;
-}
-
-bool GameBase::World::Release()
-{
-	auto pSystems{ SystemRegistry::PSystems() };
-
-	// NOTE: 初期化とは逆の順番に解放していく
-	for (auto itr = systemOrderIndices_.rbegin();
-		itr != systemOrderIndices_.rend();
-		itr++)
-	{
-		if (auto pSystem{ pSystems.at(*itr).lock() })
-		{
-			pSystem->Release();
-		}
-		else
-		{
-			return false;
-		}
-	}
 
 	return true;
 }

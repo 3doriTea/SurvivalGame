@@ -34,8 +34,9 @@ namespace GameBase
 						GB_ASSERT(false && "Unknown TAG");
 						return false;
 					}
+
+					
 				}
-				//YAML::Load("[1, 2, 3]");
 			}
 			catch (const YAML::Exception& ex)
 			{

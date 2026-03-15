@@ -6,6 +6,8 @@ bool GameBase::YamlLoader::TryLoad(const fs::path& _file)
 	Debugger::LogBegin("YAML-Loader");
 	try
 	{
+		YAML::Node test{ YAML::LoadFile(_file.string()) };
+
 		std::vector<YAML::Node> docs{ YAML::LoadAllFromFile(_file.string()) };
 
 		for (const YAML::Node& node : docs)
@@ -13,7 +15,9 @@ bool GameBase::YamlLoader::TryLoad(const fs::path& _file)
 			const std::string_view TAG{ node.Tag() };
 			std::stringstream name{};
 
-			if (const std::string_view TAG_REP{ "!gb!" };
+			name << TAG;
+
+			/*if (const std::string_view TAG_REP{ "!gb!" };
 				StringUtil::StartWith(TAG, TAG_REP))
 			{
 				name << "class GameBase::";
@@ -29,7 +33,7 @@ bool GameBase::YamlLoader::TryLoad(const fs::path& _file)
 			{
 				assert(false && "Unknown TAG");
 				return false;
-			}
+			}*/
 			callback(name.str(), _file.stem().string(), node);
 		}
 	}

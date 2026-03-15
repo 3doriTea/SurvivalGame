@@ -1,5 +1,7 @@
 #pragma once
 #include "../SystemBase.h"
+#include <Structure/Shader.h>
+#include <Structure/ShaderCompileConfig.h>
 
 
 namespace GameBase::System
@@ -43,6 +45,12 @@ namespace GameBase::System
 		/// </summary>
 		void Release() override;
 
+		Shader Compile(
+			const fs::path& _file,
+			const RasterizerConfig& _rasterizerConfig,
+			const ShaderCompileConfig& _config);
+
 	private:
+		FlyweightFactory<Shader, ShaderHandle> shaders_;
 	};
 }

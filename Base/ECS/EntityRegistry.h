@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "View.h"
 #include "Signature.h"
+#include "IComponentBase.h"
 
 
 namespace GameBase
@@ -39,13 +40,22 @@ namespace GameBase
 		/// </summary>
 		/// <param name="_entity">エンティティ</param>
 		/// <param name="_type"></param>
-		void AddComponent(const Entity _entity, ComponentType _type);
+		/// <returns>コンポーネントの参照ポインタ</returns>
+		IComponentBase& AddComponent(const Entity _entity, const ComponentIndex _type);
 		/// <summary>
 		/// エンティティからコンポーネントを削除する
 		/// </summary>
 		/// <param name="_entity">エンティティ</param>
 		/// <param name="_type"></param>
-		void RemoveComponent(const Entity _entity, ComponentType _type);
+		void RemoveComponent(const Entity _entity, const ComponentIndex _type);
+
+		/// <summary>
+		/// エンティティからコンポーネントを取得する
+		/// </summary>
+		/// <param name="_entity">エンティティ</param>
+		/// <param name="_entity">コンポーネントインデクス</param>
+		/// <returns>コンポーネントの参照ポインタ</returns>
+		IComponentBase& GetComponent(const Entity _entity, const ComponentIndex _type);
 
 		/// <summary>
 		/// コンポーネントマスクに一致するか

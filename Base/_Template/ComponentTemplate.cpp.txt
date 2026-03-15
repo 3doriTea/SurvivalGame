@@ -6,20 +6,10 @@ GameBase::Component::XXX::XXX() :
 
 void GameBase::Component::XXX::OnLoad(const YAML::Node& _node)
 {
-	if (_node["XXX"])
-	{
-		const YAML::Node& component{ _node["XXX"] };
-		//nearZ = component["near"].as<float>();
-	}
+	//nearZ = _node["near"].as<float>();
 }
 
 void GameBase::Component::XXX::OnSave(YAML::Emitter& _emitter)
 {
-	_emitter << YAML::Key << "XXX";
-	_emitter << YAML::Value << YAML::BeginMap;
-
 	//_emitter << YAML::Key << "near" << YAML::Value << nearZ;
-
-	_emitter << YAML::EndMap;
-	_emitter << YAML::EndDoc;
 }
