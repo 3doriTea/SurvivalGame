@@ -344,6 +344,7 @@
     <ClCompile Include="Base\System\Assets.cpp" />
     <ClCompile Include="Base\System\Direct3D.cpp" />
     <ClCompile Include="Base\System\EditorGui.cpp" />
+    <ClCompile Include="Base\System\Editor\EditorBase.cpp" />
     <ClCompile Include="Base\System\GameTime.cpp" />
     <ClCompile Include="Base\System\Input.cpp" />
     <ClCompile Include="Base\System\MainWindow.cpp" />
@@ -436,6 +437,7 @@
     <ClInclude Include="Base\Library\nlohmann-json\json.hpp" />
     <ClInclude Include="Base\Library\nlohmann-json\json_fwd.hpp" />
     <ClInclude Include="Base\pch.h" />
+    <ClInclude Include="Base\System\Editor\EditorBase.h" />
     <ClInclude Include="Base\System\GameTime.h" />
     <ClInclude Include="Base\System\Input.h" />
     <ClInclude Include="Base\System\MainWindow.h" />

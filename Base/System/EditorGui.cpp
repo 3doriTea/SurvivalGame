@@ -90,22 +90,14 @@ void GameBase::System::EditorGui::Initialize()
 
 	Get<Renderer>().OnBegin([this](Event<>& _event)
 		{
-			renderBeginEvent_ = _event.Connect([]()
+			renderBeginEvent_ = _event.Connect([this]()
 				{
 					ImGui_ImplDX11_NewFrame();
 					ImGui_ImplWin32_NewFrame();
 					ImGui::NewFrame();
 
 					// IMGUI描画コール OnGUI()を呼んで回る
-
-					ImGui::Begin("Testing");
-
-					ImGui::Text("format string!!");
-
-					bool demo{ true };
-					ImGui::ShowDemoWindow(&demo);
-
-					ImGui::End();
+					onGUIEvent_.Invoke();
 
 					ImGui::Render();
 				});
@@ -143,4 +135,9 @@ void GameBase::System::EditorGui::Release()
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
+}
+
+void GameBase::System::EditorGui::OnGUI(const std::function<void(Event<>&)>& _callback)
+{
+	_callback(onGUIEvent_);
 }

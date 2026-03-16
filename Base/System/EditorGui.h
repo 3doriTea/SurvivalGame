@@ -11,6 +11,8 @@ namespace GameBase::System
 	{
 		IEditorGui() = default;
 		virtual ~IEditorGui() = default;
+
+		virtual void OnGUI(const std::function<void(Event<>&)>& _callback) = 0;
 	};
 
 	/// <summary>
@@ -39,11 +41,14 @@ namespace GameBase::System
 		/// </summary>
 		void Release() override;
 
+		void OnGUI(const std::function<void(Event<>&)>& _callback) override;
+
 	private:
 		std::shared_ptr<void> wndProcEvent_;
 		std::shared_ptr<void> renderBeginEvent_;
 		std::shared_ptr<void> renderEvent_;
 		std::shared_ptr<void> renderEndEvent_;
 
+		Event<> onGUIEvent_;
 	};
 }

@@ -73,6 +73,8 @@ namespace GameBase::System
 		/// <param name="renderSurface"></param>
 		void SetRenderSurface(RenderSurface& _renderSurface);
 
+		// シェーダリソースビューを作る
+
 	private:
 		ComPtr<IDXGIDevice> pDXGIDevice_;    // DXGIのデバイス
 		ComPtr<IDXGIAdapter> pDXGIAdapter_;  // DXGIのアダプター

@@ -20,6 +20,7 @@ void Main()
 
 	Log("こんにちは");
 
+
 	LogBegin("Game");
 	while (game.Update())
 	{
