@@ -24,6 +24,7 @@ namespace GameBase::System
 		virtual void EndDraw() = 0;
 
 		virtual void Ref(const std::function<void(const ComPtr<ID3D11RenderTargetView>&)> _callback) = 0;
+		virtual void RestoreMainRenderTarget() = 0;
 	};
 
 	/// <summary>
@@ -56,6 +57,7 @@ namespace GameBase::System
 		void BeginDraw() override;
 		void EndDraw() override;
 		void Ref(const std::function<void(const ComPtr<ID3D11RenderTargetView>&)> _callback) override;
+		void RestoreMainRenderTarget() override;
 
 	private:
 		/// <summary>

@@ -30,6 +30,8 @@ void GameBase::System::Renderer::Update()
 		return;  // フレーム更新タイミング以外は無視
 	}
 
+	OutputDebugString(std::format("dt={}\n", Get<GameTime>().DeltaTime()).c_str());
+
 	// 描画キューをソートする
 	std::sort(
 		renderQueue_.begin(),
@@ -41,14 +43,12 @@ void GameBase::System::Renderer::Update()
 
 	beginEvent_.Invoke();
 
-	renderEvent_.Invoke();
+	Get<Presenter>().BeginDraw();
 
 	// レンダーキューの処理をする
 	// 各ウィンドウ分、カメラ別で描画していく
 
-	Get<Presenter>().BeginDraw();
-
-
+	renderEvent_.Invoke();
 
 	Get<Presenter>().EndDraw();
 

@@ -4,6 +4,7 @@
 #include "MainWindow.h"
 #include "GameTime.h"
 #include "Renderer.h"
+#include "Presenter.h"
 
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -24,6 +25,7 @@ void GameBase::System::EditorGui::OnRegisterDependencies(FluentVectorAddOnly<Sys
 	->Add(SystemRegistry::GetSystemIndex<MainWindow>())
 	->Add(SystemRegistry::GetSystemIndex<GameTime>())
 	->Add(SystemRegistry::GetSystemIndex<Renderer>())
+	->Add(SystemRegistry::GetSystemIndex<Presenter>())
 	;
 }
 
@@ -55,11 +57,13 @@ void GameBase::System::EditorGui::Initialize()
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+	io.ConfigViewportsNoAutoMerge = false;
 	/*io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;*/       // Enable Multi-Viewport / Platform Windows
 	//io.ConfigViewportsNoAutoMerge = true;
 	//io.ConfigViewportsNoTaskBarIcon = true;
 	//io.ConfigDockingAlwaysTabBar = true;
 	//io.ConfigDockingTransparentPayload = true;
+	io.ConfigWindowsMoveFromTitleBarOnly = true;
 
 	ImGui::StyleColorsDark();
 	//ImGui::StyleColorsLight();
@@ -91,31 +95,9 @@ void GameBase::System::EditorGui::Initialize()
 					ImGui_ImplDX11_NewFrame();
 					ImGui_ImplWin32_NewFrame();
 					ImGui::NewFrame();
-				});
-		});
-	Get<Renderer>().OnEnd([this](Event<>& _event)
-		{
-			renderEndEvent_ = _event.Connect([]()
-				{
-					ImGui::Render();
-					//const float clear_color_with_alpha[4] = { clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w };
-					//g_pd3dDeviceContext->OMSetRenderTargets(1, &g_mainRenderTargetView, nullptr);
-					//g_pd3dDeviceContext->ClearRenderTargetView(g_mainRenderTargetView, clear_color_with_alpha);
-					ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
-					ImGuiIO& io{ ImGui::GetIO() };
-					if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-					{
-						ImGui::UpdatePlatformWindows();
-						ImGui::RenderPlatformWindowsDefault();
-					}
-				});
-		});
+					// IMGUI描画コール OnGUI()を呼んで回る
 
-	Get<Renderer>().OnRender([this](Event<>& _event)
-		{
-			renderEvent_ = _event.Connect([]()
-				{
 					ImGui::Begin("Testing");
 
 					ImGui::Text("format string!!");
@@ -124,6 +106,24 @@ void GameBase::System::EditorGui::Initialize()
 					ImGui::ShowDemoWindow(&demo);
 
 					ImGui::End();
+
+					ImGui::Render();
+				});
+		});
+	Get<Renderer>().OnRender([this](Event<>& _event)
+		{
+			renderEndEvent_ = _event.Connect([this]()
+				{
+					ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
+					ImGuiIO& io{ ImGui::GetIO() };
+					if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+					{
+						ImGui::UpdatePlatformWindows();
+						ImGui::RenderPlatformWindowsDefault();
+
+						Get<Presenter>().RestoreMainRenderTarget();
+					}
 				});
 		});
 }

@@ -109,6 +109,17 @@ void GameBase::System::Presenter::EndDraw()
 
 void GameBase::System::Presenter::Ref(const std::function<void(const ComPtr<ID3D11RenderTargetView>&)> _callback)
 {
+	_callback(renderSurface_.pRenderTargetView);
+}
+
+void GameBase::System::Presenter::RestoreMainRenderTarget()
+{
+	Get<Direct3D>().Ref([this](const ComPtr<ID3D11DeviceContext> _pContext)
+	{
+		ID3D11RenderTargetView* rtbs[]{ renderSurface_.pRenderTargetView.Get() };
+		_pContext.Get()->OMSetRenderTargets(1, rtbs, renderSurface_.pDepthStencilView.Get());
+		_pContext.Get()->RSSetViewports(1, &renderSurface_.viewport);
+	});
 }
 
 bool GameBase::System::Presenter::TryCreateRenderSurface(RenderSurface* _pRenderSurface)
