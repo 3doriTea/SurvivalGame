@@ -151,8 +151,6 @@ bool GameBase::World::TryLoadScene(
 	}
 #pragma endregion
 
-	const auto& test = ComponentRegistry::PComponentPools();
-
 	return true;
 }
 
