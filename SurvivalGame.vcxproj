@@ -469,6 +469,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Assets\Default\InvalidShader.hlsl" />
     <FxCompile Include="Assets\Shaders\Simple2D.hlsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

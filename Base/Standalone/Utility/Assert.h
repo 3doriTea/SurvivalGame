@@ -10,9 +10,8 @@ if (!(expression))\
 {\
 	MessageBox(\
 		NULL,\
-		std::format("LastErrorCode:{}", GetLastError()).c_str(),\
-		"assertion failed!!!\r\n"\
-		#expression,\
+		std::format("Expr:{}\r\nLastErrorCode:{}", (#expression), GetLastError()).c_str(),\
+		"assertion failed!!!\r\n",\
 		MB_OK);\
 	while (true) { __debugbreak(); }\
 }
@@ -23,9 +22,8 @@ if (!(expression))\
 {\
 	MessageBox(\
 		NULL,\
-		std::format("LastErrorCode:{}\r\nMessage:{}", GetLastError(), std::string{ message }).c_str(),\
-		"assertion failed!!!\r\n"\
-		#expression,\
+		std::format("Expr:{}\r\nLastErrorCode:{}\r\nMessage:{}", #expression , GetLastError(), std::string{ message }).c_str(),\
+		"assertion failed!!!\r\n",\
 		MB_OK);\
 	while (true) { __debugbreak(); }\
 }

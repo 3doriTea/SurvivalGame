@@ -22,6 +22,8 @@ void GameBase::System::ShaderCompiler::Initialize()
 {
 	Get<Assets>().Ref([this](const std::vector<fs::path>& _filesPath)
 	{
+		shaders_.SetDefaultResource(Compile("./Assets/Default/InvalidShader.hlsl", {}, {}));
+
 		for (const auto& filePath : _filesPath)
 		{
 			shaders_.Emplace(Compile(filePath, {}, {}));

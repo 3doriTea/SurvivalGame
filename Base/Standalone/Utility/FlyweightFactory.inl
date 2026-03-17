@@ -11,6 +11,9 @@ inline HandleT GameBase::FlyweightFactory<T, HandleT>::GetOrCreate(
 	const std::function<bool(const T&)>& _matchFunc,
 	const std::function<T()>& _createFunc)
 {
+	GB_ASSERT(handleCounter_ == data_.size()
+		&& "SetDefaultResourceが呼ばれていません。");
+
 	for (auto itr = data_.begin(); itr != data_.end(); itr++)
 	{
 		if (_matchFunc(*itr))
@@ -33,12 +36,15 @@ inline HandleT GameBase::FlyweightFactory<T, HandleT>::GetOrCreate(
 template<typename T, std::unsigned_integral HandleT>
 inline HandleT GameBase::FlyweightFactory<T, HandleT>::Find(const std::function<bool(const T&)>& _matchFunc)
 {
+	GB_ASSERT(handleCounter_ == data_.size()
+		&& "SetDefaultResourceが呼ばれていません。");
+
 	for (auto itr = data_.begin(); itr != data_.end(); itr++)
 	{
 		if (_matchFunc(*itr))
 		{
 			// マッチしたならハンドル(index)を返す
-			return itr - data_.begin();
+			return static_cast<HandleT>(itr - data_.begin());
 		}
 	}
 	return 0;
@@ -47,12 +53,18 @@ inline HandleT GameBase::FlyweightFactory<T, HandleT>::Find(const std::function<
 template<typename T, std::unsigned_integral HandleT>
 inline T& GameBase::FlyweightFactory<T, HandleT>::At(const HandleT _handle)
 {
+	GB_ASSERT(handleCounter_ == data_.size()
+		&& "SetDefaultResourceが呼ばれていません。");
+
 	return data_[_handle];
 }
 
 template<typename T, std::unsigned_integral HandleT>
 inline const T& GameBase::FlyweightFactory<T, HandleT>::At(const HandleT _handle) const
 {
+	GB_ASSERT(handleCounter_ == data_.size()
+		&& "SetDefaultResourceが呼ばれていません。");
+
 	return data_[_handle];
 }
 
@@ -61,6 +73,9 @@ template<typename ...Args>
 requires std::constructible_from<T, Args...>
 inline HandleT GameBase::FlyweightFactory<T, HandleT>::Emplace(Args&& ..._args)
 {
+	GB_ASSERT(handleCounter_ == data_.size()
+		&& "SetDefaultResourceが呼ばれていません。");
+
 	data_.emplace_back(std::forward<Args>(_args)...);
 
 	return handleCounter_++;

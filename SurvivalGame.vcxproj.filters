@@ -499,5 +499,8 @@
     <FxCompile Include="Assets\Shaders\Simple2D.hlsl">
       <Filter>シェーダーファイル</Filter>
     </FxCompile>
+    <FxCompile Include="Assets\Default\InvalidShader.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
