@@ -31,7 +31,27 @@ inline HandleT GameBase::FlyweightFactory<T, HandleT>::GetOrCreate(
 }
 
 template<typename T, std::unsigned_integral HandleT>
+inline HandleT GameBase::FlyweightFactory<T, HandleT>::Find(const std::function<bool(const T&)>& _matchFunc)
+{
+	for (auto itr = data_.begin(); itr != data_.end(); itr++)
+	{
+		if (_matchFunc(*itr))
+		{
+			// マッチしたならハンドル(index)を返す
+			return itr - data_.begin();
+		}
+	}
+	return 0;
+}
+
+template<typename T, std::unsigned_integral HandleT>
 inline T& GameBase::FlyweightFactory<T, HandleT>::At(const HandleT _handle)
+{
+	return data_[_handle];
+}
+
+template<typename T, std::unsigned_integral HandleT>
+inline const T& GameBase::FlyweightFactory<T, HandleT>::At(const HandleT _handle) const
 {
 	return data_[_handle];
 }

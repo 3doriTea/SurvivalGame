@@ -340,6 +340,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Base\Structure\AssetLoader\YamlLoader.cpp" />
+    <ClCompile Include="Base\Structure\Editor\AssetsView.cpp" />
     <ClCompile Include="Base\SystemBase.cpp" />
     <ClCompile Include="Base\System\Assets.cpp" />
     <ClCompile Include="Base\System\Direct3D.cpp" />
@@ -353,6 +354,7 @@
     <ClCompile Include="Base\System\Presenter.cpp" />
     <ClCompile Include="Base\System\SceneManager.cpp" />
     <ClCompile Include="Base\System\ShaderCompiler.cpp" />
+    <ClCompile Include="Base\System\TextureRegistry.cpp" />
     <ClCompile Include="Base\System\WindowEvent.cpp" />
     <ClCompile Include="TheMain.cpp" />
   </ItemGroup>
@@ -409,6 +411,8 @@
     <ClInclude Include="Base\Structure\AssetLoader\AssetLoaderScene.h" />
     <ClInclude Include="Base\Structure\AssetLoader\YamlLoader.h" />
     <ClInclude Include="Base\Structure\CreateWindowConfig.h" />
+    <ClInclude Include="Base\Structure\Editor\AssetsView.h" />
+    <ClInclude Include="Base\Structure\Editor\IEditorView.h" />
     <ClInclude Include="Base\Structure\GameConfig.h" />
     <ClInclude Include="Base\Structure\GameManifest.h" />
     <ClInclude Include="Base\Structure\GameObject.h" />
@@ -429,6 +433,8 @@
     <ClInclude Include="Base\Structure\SerializedScene.h" />
     <ClInclude Include="Base\Structure\Shader.h" />
     <ClInclude Include="Base\Structure\ShaderCompileConfig.h" />
+    <ClInclude Include="Base\Structure\Texture.h" />
+    <ClInclude Include="Base\Structure\TextureLoadConfig.h" />
     <ClInclude Include="Base\SystemBase.h" />
     <ClInclude Include="Base\System\Assets.h" />
     <ClInclude Include="Base\System\Direct3D.h" />
@@ -446,6 +452,7 @@
     <ClInclude Include="Base\System\Presenter.h" />
     <ClInclude Include="Base\System\SceneManager.h" />
     <ClInclude Include="Base\System\ShaderCompiler.h" />
+    <ClInclude Include="Base\System\TextureRegistry.h" />
     <ClInclude Include="Base\System\WindowEvent.h" />
   </ItemGroup>
   <ItemGroup>
@@ -459,11 +466,19 @@
     <None Include="Base\ScriptBase.inl" />
     <None Include="Base\Standalone\Utility\FlyweightFactory.inl" />
     <None Include="Base\SystemBase.inl" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\Simple2D.hlsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\directxtex_desktop_win10.2025.10.28.1\build\native\directxtex_desktop_win10.targets" Condition="Exists('packages\directxtex_desktop_win10.2025.10.28.1\build\native\directxtex_desktop_win10.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>このプロジェクトは、このコンピューター上にない NuGet パッケージを参照しています。それらのパッケージをダウンロードするには、[NuGet パッケージの復元] を使用します。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。見つからないファイルは {0} です。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\directxtex_desktop_win10.2025.10.28.1\build\native\directxtex_desktop_win10.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\directxtex_desktop_win10.2025.10.28.1\build\native\directxtex_desktop_win10.targets'))" />
+  </Target>
 </Project>

@@ -1,4 +1,5 @@
 #include "WindowEvent.h"
+#include <GameEvent/GameExit.h>
 
 LRESULT WINAPI GameBase::System::WindowEvent::WndProc(HWND _hWnd, UINT _msg, WPARAM _wParam, LPARAM _lParam)
 {
@@ -30,6 +31,7 @@ void GameBase::System::WindowEvent::Initialize()
 			switch (msg)
 			{
 			case WM_DESTROY:
+				GameEvent::Emplace<GameEvent::GameExit>();
 				break;
 			default:
 				return static_cast<WndProcEventResult>(DefWindowProc(hWnd, msg, wParam, lParam));

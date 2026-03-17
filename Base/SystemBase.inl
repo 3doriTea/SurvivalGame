@@ -65,4 +65,9 @@ inline GameBase::SystemBase<T, InterfaceT>::SystemBase()
 		size_t index{ SystemRegistry::Add<T>(pInstance_) };
 		Debugger::LogF("追加 {}:{}", index, typeid(T).name());
 	});
+
+	SystemRegistry::DestructionQueue().push([]()
+	{
+		pInstance_.reset();
+	});
 }

@@ -12,7 +12,7 @@ namespace GameBase
 	/// </summary>
 	/// <typeparam name="...Args">可変長引数</typeparam>
 	template<typename ...Args>
-	class Event
+	class Event : public std::enable_shared_from_this<Event<Args...>>
 	{
 		Event(const Event& _other) = delete;             // コピーコンストラクタは消す
 		inline Event& operator=(const Event& _other) = delete;  // コピーを消す
@@ -26,26 +26,48 @@ namespace GameBase
 			Handler handler;
 		};
 
-	public:
+	protected:
+		// 直接インスタンスさせない！
 		Event() : nextIdCounter_{ 0 } {}
-		~Event() = default;
 
+	public:
+		/// <summary>
+		/// イベントを作成
+		/// </summary>
+		/// <returns></returns>
+		inline static std::shared_ptr<Event<Args...>> Create()
+		{
+			// NOTE: protected にしたため、make_sharedは使えない
+			return std::shared_ptr<Event<Args...>>{ new Event<Args...>() };
+		}
+
+	public:
+		~Event() = default;
 
 		inline [[nodiscard]] std::shared_ptr<void> Connect(Handler handler)
 		{
 			Id id{ nextIdCounter_++ };
 			slots_.push_back({ id, std::move(handler) });
 
+			// 自分自身のweak_ptrを持ってくる
+			std::weak_ptr<Event<Args...>> weakSelf
+			{
+				this->shared_from_this()
+			};
+
 			// RAIIオブジェクトを作る
 			std::shared_ptr<void> sentinel
 			{
-				std::shared_ptr<void>(nullptr, [this, id](void*)
+				std::shared_ptr<void>(nullptr, [weakSelf, id](void*)
 				{
-					Disconnect(id);
+					if (auto self{ weakSelf.lock() })
+					{
+						self.get()->Disconnect(id);
+					}
 				})
 			};
 
-			return std::move(sentinel);
+			return sentinel;
 		}
 
 		inline void Invoke(Args... args)
@@ -74,4 +96,7 @@ namespace GameBase
 		std::vector<Slot> slots_;
 		Id nextIdCounter_;
 	};
+
+	template<typename ...Args>
+	using EventSubject = std::shared_ptr<Event<Args...>>;
 }

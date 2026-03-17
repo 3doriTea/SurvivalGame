@@ -1,25 +1,32 @@
 #include "EditorBase.h"
 #include "../EditorGui.h"
+#include "../TextureRegistry.h"
+
+#include "../../Structure/Editor/AssetsView.h"
 
 
 GameBase::System::EditorBase::EditorBase()
 {}
 
 GameBase::System::EditorBase::~EditorBase()
-{}
+{
+}
 
 void GameBase::System::EditorBase::OnRegisterDependencies(FluentVectorAddOnly<SystemIndex>* _registry)
 {
 	_registry
 		->Add(SystemRegistry::GetSystemIndex<EditorGui>())
+		->Add(SystemRegistry::GetSystemIndex<TextureRegistry>())
 	;
 }
 
 void GameBase::System::EditorBase::Initialize()
 {
-	Get<EditorGui>().OnGUI([this](Event<>& _event)
+	pEditors_.emplace_back(std::make_unique<Editor::AssetsView>());
+
+	Get<EditorGui>().OnGUI([this](EventSubject<>& _event)
 	{
-		onGUIEvent_ = _event.Connect([]()
+		onGUIEvent_ = _event.get()->Connect([this]()
 		{
 				static bool opt_fullscreen = true;
 				static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
@@ -47,6 +54,11 @@ void GameBase::System::EditorBase::Initialize()
 					ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
 				}
 
+				for (const std::unique_ptr<Editor::IEditorView>& p : pEditors_)
+				{
+					p.get()->OnGUI();
+				}
+
 				ImGui::Begin("Hierarchy");
 				ImGui::Text("Object List...");
 				ImGui::End();
@@ -61,10 +73,7 @@ void GameBase::System::EditorBase::Initialize()
 				ImGui::Begin("Scene View");
 				ImGui::End();
 
-				ImGui::Begin("Assets");
-				ImGui::Text("Assets...");
-				ImGui::End();
-
+				
 
 				ImGui::End();
 		});

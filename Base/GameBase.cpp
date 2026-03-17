@@ -4,6 +4,9 @@
 #include "GameEvent/GameExit.h"
 #include "GameEvent/ChangeScene.h"
 
+#include "SystemBase.h"
+#include "ComponentBase.h"
+
 
 #define WINDOWS
 
@@ -65,11 +68,29 @@ bool GameBase::Game::Update()
 
 bool GameBase::Game::End()
 {
-	if (!pWorld_)
+	bool succeed{  };
+	if (pWorld_)
 	{
-		return false;
+		succeed = pWorld_.get()->Release();
 	}
-	return pWorld_.get()->Release();
+	else
+	{
+		succeed = false;
+	}
+
+	SystemRegistry::PInterfaces().clear();
+	SystemRegistry::PSystems().clear();
+	ComponentRegistry::PComponentPools().clear();
+
+	// 静的領域にインスタンスしたシステムたちをmain関数が終わる前に消す
+	// NOTE: プログラム終了に任せるとエラーがでる
+	while (!SystemRegistry::DestructionQueue().empty())
+	{
+		SystemRegistry::DestructionQueue().front()();
+		SystemRegistry::DestructionQueue().pop();
+	}
+
+	return succeed;
 }
 
 void GameBase::Game::MakeScene(const bool _reloadSystems)

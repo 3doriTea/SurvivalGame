@@ -1,5 +1,6 @@
 #pragma once
 #include "../SystemBase.h"
+#include "../../Structure/Editor/IEditorView.h"
 
 
 namespace GameBase::System
@@ -45,5 +46,6 @@ namespace GameBase::System
 
 	private:
 		std::shared_ptr<void> onGUIEvent_;
+		std::vector<std::unique_ptr<Editor::IEditorView>> pEditors_;
 	};
 }

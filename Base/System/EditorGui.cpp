@@ -9,7 +9,8 @@
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-GameBase::System::EditorGui::EditorGui()
+GameBase::System::EditorGui::EditorGui() :
+	onGUIEvent_{ Event<>::Create() }
 {
 }
 
@@ -88,23 +89,23 @@ void GameBase::System::EditorGui::Initialize()
 			ImGui_ImplDX11_Init(_pDevice.Get(), _pContext.Get());
 		});
 
-	Get<Renderer>().OnBegin([this](Event<>& _event)
+	Get<Renderer>().OnBegin([this](EventSubject<>& _event)
 		{
-			renderBeginEvent_ = _event.Connect([this]()
+			renderBeginEvent_ = _event.get()->Connect([this]()
 				{
 					ImGui_ImplDX11_NewFrame();
 					ImGui_ImplWin32_NewFrame();
 					ImGui::NewFrame();
 
 					// IMGUI描画コール OnGUI()を呼んで回る
-					onGUIEvent_.Invoke();
+					onGUIEvent_.get()->Invoke();
 
 					ImGui::Render();
 				});
 		});
-	Get<Renderer>().OnRender([this](Event<>& _event)
+	Get<Renderer>().OnRender([this](EventSubject<>& _event)
 		{
-			renderEndEvent_ = _event.Connect([this]()
+			renderEndEvent_ = _event.get()->Connect([this]()
 				{
 					ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
@@ -137,7 +138,7 @@ void GameBase::System::EditorGui::Release()
 	ImGui::DestroyContext();
 }
 
-void GameBase::System::EditorGui::OnGUI(const std::function<void(Event<>&)>& _callback)
+void GameBase::System::EditorGui::OnGUI(const std::function<void(EventSubject<>&)>& _callback)
 {
 	_callback(onGUIEvent_);
 }

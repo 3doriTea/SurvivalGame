@@ -170,6 +170,12 @@
     <ClCompile Include="Base\System\Editor\EditorBase.cpp">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Base\Structure\Editor\AssetsView.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\System\TextureRegistry.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\GameBase.h">
@@ -442,6 +448,21 @@
     <ClInclude Include="Base\System\Editor\EditorBase.h">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Base\Structure\Editor\IEditorView.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Structure\Editor\AssetsView.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\System\TextureRegistry.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Structure\Texture.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Structure\TextureLoadConfig.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -472,6 +493,7 @@
     <None Include="Base\ComponentRegistry.inl">
       <Filter>未分類のソースヘッダファイル</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\Simple2D.hlsl">

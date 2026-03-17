@@ -27,6 +27,7 @@ namespace GameBase
 		/// コンストラクタ実行後に呼び出される処理
 		/// </summary>
 		std::queue<std::function<void()>>& RegisterQueue();
+		std::queue<std::function<void()>>& DestructionQueue();
 
 		/// <summary>
 		/// システムインデクスを取得する

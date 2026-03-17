@@ -17,18 +17,18 @@ namespace GameBase::System
 		/// <summary>
 		/// 描画する前の処理を登録する
 		/// </summary>
-		/// <param name="_callback">コールバック関数 void(Event<>&)</param>
-		virtual void OnBegin(const std::function<void(Event<>&)>& _callback) = 0;
+		/// <param name="_callback">コールバック関数 void(EventSubject<>&)</param>
+		virtual void OnBegin(const std::function<void(EventSubject<>&)>& _callback) = 0;
 		/// <summary>
 		/// 描画時の処理を登録する
 		/// </summary>
-		/// <param name="_callback">コールバック関数 void(Event<>&)</param>
-		virtual void OnRender(const std::function<void(Event<>&)>& _callback) = 0;
+		/// <param name="_callback">コールバック関数 void(EventSubject<>&)</param>
+		virtual void OnRender(const std::function<void(EventSubject<>&)>& _callback) = 0;
 		/// <summary>
 		/// 描画した後の処理を登録する
 		/// </summary>
-		/// <param name="_callback">コールバック関数 void(Event<>&)</param>
-		virtual void OnEnd(const std::function<void(Event<>&)>& _callback) = 0;
+		/// <param name="_callback">コールバック関数 void(EventSubject<>&)</param>
+		virtual void OnEnd(const std::function<void(EventSubject<>&)>& _callback) = 0;
 		/// <summary>
 		/// 描画キューに追加する
 		/// </summary>
@@ -63,15 +63,15 @@ namespace GameBase::System
 		/// </summary>
 		void Release() override;
 
-		void OnBegin(const std::function<void(Event<>&)>& _callback) override;
-		void OnRender(const std::function<void(Event<>&)>& _callback) override;
-		void OnEnd(const std::function<void(Event<>&)>& _callback) override;
+		void OnBegin(const std::function<void(EventSubject<>&)>& _callback) override;
+		void OnRender(const std::function<void(EventSubject<>&)>& _callback) override;
+		void OnEnd(const std::function<void(EventSubject<>&)>& _callback) override;
 		void Enqueue(RenderItem&& _renderItem) override;
 
 	private:
-		Event<> beginEvent_;
-		Event<> endEvent_;
-		Event<> renderEvent_;
+		EventSubject<> beginEvent_;
+		EventSubject<> endEvent_;
+		EventSubject<> renderEvent_;
 		std::vector<RenderItem> renderQueue_;  // 描画キュー
 	};
 }

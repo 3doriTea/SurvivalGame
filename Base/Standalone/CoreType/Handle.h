@@ -11,4 +11,9 @@ namespace GameBase
 	/// シェーダハンドル
 	/// </summary>
 	using ShaderHandle = uint32_t;
+
+	/// <summary>
+	/// テクスチャハンドル
+	/// </summary>
+	using TextureHandle = uint32_t;
 }

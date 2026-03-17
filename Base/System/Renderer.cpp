@@ -3,7 +3,10 @@
 #include "Presenter.h"
 
 
-GameBase::System::Renderer::Renderer()
+GameBase::System::Renderer::Renderer() :
+	beginEvent_{ Event<>::Create() },
+	endEvent_{ Event<>::Create() },
+	renderEvent_{ Event<>::Create() }
 {
 }
 
@@ -30,8 +33,6 @@ void GameBase::System::Renderer::Update()
 		return;  // フレーム更新タイミング以外は無視
 	}
 
-	OutputDebugString(std::format("dt={}\n", Get<GameTime>().DeltaTime()).c_str());
-
 	// 描画キューをソートする
 	std::sort(
 		renderQueue_.begin(),
@@ -41,18 +42,18 @@ void GameBase::System::Renderer::Update()
 			return _left.sortKey.value > _right.sortKey.value;
 		});
 
-	beginEvent_.Invoke();
+	beginEvent_.get()->Invoke();
 
 	Get<Presenter>().BeginDraw();
 
 	// レンダーキューの処理をする
 	// 各ウィンドウ分、カメラ別で描画していく
 
-	renderEvent_.Invoke();
+	renderEvent_.get()->Invoke();
 
 	Get<Presenter>().EndDraw();
 
-	endEvent_.Invoke();
+	endEvent_.get()->Invoke();
 
 	renderQueue_.clear();
 }
@@ -61,17 +62,17 @@ void GameBase::System::Renderer::Release()
 {
 }
 
-void GameBase::System::Renderer::OnBegin(const std::function<void(Event<>&)>& _callback)
+void GameBase::System::Renderer::OnBegin(const std::function<void(EventSubject<>&)>& _callback)
 {
 	_callback(beginEvent_);
 }
 
-void GameBase::System::Renderer::OnRender(const std::function<void(Event<>&)>& _callback)
+void GameBase::System::Renderer::OnRender(const std::function<void(EventSubject<>&)>& _callback)
 {
 	_callback(renderEvent_);
 }
 
-void GameBase::System::Renderer::OnEnd(const std::function<void(Event<>&)>& _callback)
+void GameBase::System::Renderer::OnEnd(const std::function<void(EventSubject<>&)>& _callback)
 {
 	_callback(endEvent_);
 }

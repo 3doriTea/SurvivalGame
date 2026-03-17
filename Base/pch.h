@@ -78,6 +78,10 @@ using json = nlohmann::json;
 #include <d3dcompiler.h>
 #pragma comment(lib, "D3DCompiler.lib")
 
+// テクスチャ
+#include <DirectXTex.h>
+#pragma comment(lib, "DirectXTex.lib")
+
 // ComPtr
 #include <wrl/client.h>
 

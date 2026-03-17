@@ -35,6 +35,13 @@ namespace GameBase
 		HandleT GetOrCreate(const std::function<bool(const T&)>& _matchFunc, const std::function<T()>& _createFunc);
 
 		/// <summary>
+		/// 線形探索して見つける
+		/// </summary>
+		/// <param name="_matchFunc">一致判定処理bool(const T&)</param>
+		/// <returns></returns>
+		HandleT Find(const std::function<bool(const T&)>& _matchFunc);
+
+		/// <summary>
 		/// インデックス0 デフォルトのリソースを設定する
 		/// </summary>
 		/// <typeparam name="...Args">可変長引数型</typeparam>
@@ -49,6 +56,13 @@ namespace GameBase
 		/// <param name="_handle">ハンドル</param>
 		/// <returns>参照ポインタ</returns>
 		T& At(const HandleT _handle);
+
+		/// <summary>
+		/// 要素に参照する
+		/// </summary>
+		/// <param name="_handle">ハンドル</param>
+		/// <returns>参照ポインタ</returns>
+		const T& At(const HandleT _handle) const;
 
 	private:
 		std::vector<T> data_;    // ロードしたデータ

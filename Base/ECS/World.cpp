@@ -102,7 +102,7 @@ bool GameBase::World::TryLoadScene(
 	bool succeed{ loader.TryLoad(_sceneFile) };
 	GB_ASSERT(succeed);
 
-	Debugger::LogWriteOutFile("./", "__YAMLLLLLLL");
+	Debugger::LogWriteOutFile("./Logs/", "__YAMLLLLLLL");
 #pragma endregion
 
 #pragma region EntityComponent配置していく
@@ -185,6 +185,7 @@ bool GameBase::World::Release()
 		if (auto pSystem{ pSystems.at(*itr).lock() })
 		{
 			pSystem->Release();
+			pSystem.reset();
 		}
 		else
 		{
@@ -232,14 +233,14 @@ bool GameBase::World::TryReloadSystems()
 				static_cast<FluentVectorAddOnly<SystemIndex>*>(
 					&registry));
 
-			ss << "system:" << idx << "->";
+			ss << "system:" << std::setw(2) << idx << "->";
 
 			std::vector<int> dependency(registry.size());
 			size_t i{};
 			for (SystemIndex systemIndex : registry)
 			{
 				dependency.at(i) = static_cast<int>(systemIndex);
-				ss << i << ",";
+				ss << std::setw(2) << i << ",";
 				i++;
 			}
 
@@ -262,7 +263,7 @@ bool GameBase::World::TryReloadSystems()
 		Debugger::LogF("system index 依存関係エラー");
 		resolver.ForEachDeadlocked([](int _systemIndex)
 			{
-				Debugger::LogF("未解決:{}", _systemIndex);
+				Debugger::LogF("未解決:{:2}", _systemIndex);
 			});
 		Debugger::LogEnd();
 		return false;
@@ -275,7 +276,7 @@ bool GameBase::World::TryReloadSystems()
 	resolver.ForEachResult([this, &i](int _systemIndex)
 		{
 			systemOrderIndices_.at(i) = _systemIndex;
-			Debugger::LogF("ソート済み :{}", _systemIndex);
+			Debugger::LogF("ソート済み :{:2}", _systemIndex);
 			i++;
 		});
 	std::reverse(systemOrderIndices_.begin(), systemOrderIndices_.end());
@@ -325,7 +326,7 @@ bool GameBase::World::TryReloadSystems()
 	}
 #pragma endregion
 
-	Debugger::LogWriteOutFile("./", "dumpSystemList");
+	Debugger::LogWriteOutFile("./Logs/", "dumpSystemList");
 
 	Debugger::LogEnd();
 

@@ -13,7 +13,7 @@ namespace GameBase
 		for (const auto& [key, _] : _mapping)
 		{
 			keys.at(i) = key;
-			ss << key << ",";
+			ss << std::setw(2) << key << ",";
 			i++;
 		}
 		ss << std::endl;
@@ -23,21 +23,21 @@ namespace GameBase
 
 		for (const auto& [index, refers] : _mapping)
 		{
-			ss << index << " ";
+			ss << std::setw(2) << index << " ";
 
 			for (int i = 0; i < keys.size(); i++)
 			{
 				if (std::find(refers.begin(), refers.end(), keys.at(i)) != refers.end())
 				{
-					ss << "* ";
+					ss << " * ";
 				}
 				else if (line - 1 == i)
 				{
-					ss << "+ ";
+					ss << " + ";
 				}
 				else
 				{
-					ss << "  ";
+					ss << "   ";
 				}
 			}
 

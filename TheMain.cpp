@@ -2,6 +2,9 @@
 #include <Debugger.h>
 #include <System/Input.h>
 
+//#include <System/Editor/EditorBase.h>
+//template class GameBase::SystemBase<GameBase::System::EditorBase, GameBase::System::IEditorBase>;
+
 void Main()
 {
 	using Debugger::Log;
@@ -14,7 +17,7 @@ void Main()
 	if (!game.Start())
 	{
 		Log("スタートに失敗");
-		Debugger::LogWriteOutFile("./", "");
+		Debugger::LogWriteOutFile("./Logs/", "");
 		return;
 	}
 
@@ -38,6 +41,6 @@ void Main()
 	}
 
 	LogEnd();
-	Debugger::LogWriteOutFile("./", "");
+	Debugger::LogWriteOutFile("./Logs/", "");
 }
 
