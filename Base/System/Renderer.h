@@ -56,7 +56,7 @@ namespace GameBase::System
 		/// <summary>
 		/// 更新処理
 		/// </summary>
-		void Update() override;
+		void Update(EntityRegistry&) override;
 
 		/// <summary>
 		/// 終了処理

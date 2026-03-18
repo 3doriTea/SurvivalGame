@@ -74,7 +74,7 @@ void GameBase::System::Presenter::Initialize()
 	syncInterval_ = PresentSyncInterval::DEFAULT;
 }
 
-void GameBase::System::Presenter::Update()
+void GameBase::System::Presenter::Update(EntityRegistry&)
 {
 }
 

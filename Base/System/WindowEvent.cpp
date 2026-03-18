@@ -41,7 +41,7 @@ void GameBase::System::WindowEvent::Initialize()
 		});
 }
 
-void GameBase::System::WindowEvent::Update()
+void GameBase::System::WindowEvent::Update(EntityRegistry&)
 {
 	if (PeekMessage(&peekedMessage_, nullptr, 0, 0, PM_REMOVE))
 	{

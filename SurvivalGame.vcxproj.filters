@@ -176,6 +176,9 @@
     <ClCompile Include="Base\System\TextureRegistry.cpp">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Base\System\Graphic\MainCamera.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\GameBase.h">
@@ -461,6 +464,9 @@
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
     <ClInclude Include="Base\Structure\TextureLoadConfig.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\System\Graphic\MainCamera.h">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
   </ItemGroup>

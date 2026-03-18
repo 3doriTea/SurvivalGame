@@ -31,7 +31,7 @@ void GameBase::System::ShaderCompiler::Initialize()
 	}, AssetsType::Shader);
 }
 
-void GameBase::System::ShaderCompiler::Update()
+void GameBase::System::ShaderCompiler::Update(EntityRegistry&)
 {}
 
 void GameBase::System::ShaderCompiler::Release()

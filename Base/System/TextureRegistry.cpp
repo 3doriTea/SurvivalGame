@@ -22,7 +22,7 @@ void GameBase::System::TextureRegistry::Initialize()
 	registry_.SetDefaultResource(std::move(texture));
 }
 
-void GameBase::System::TextureRegistry::Update()
+void GameBase::System::TextureRegistry::Update(EntityRegistry&)
 {}
 
 void GameBase::System::TextureRegistry::Release()

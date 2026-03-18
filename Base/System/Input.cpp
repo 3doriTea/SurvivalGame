@@ -96,7 +96,7 @@ void GameBase::System::Input::Initialize()
 #pragma endregion
 }
 
-void GameBase::System::Input::Update()
+void GameBase::System::Input::Update(EntityRegistry&)
 {
 	if (Get<GameTime>().IsFrameDue() == false)
 	{

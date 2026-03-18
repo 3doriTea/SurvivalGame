@@ -47,7 +47,7 @@ void GameBase::System::MainWindow::Initialize()
 		});
 }
 
-void GameBase::System::MainWindow::Update()
+void GameBase::System::MainWindow::Update(EntityRegistry&)
 {
 }
 

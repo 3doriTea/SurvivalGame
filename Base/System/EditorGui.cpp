@@ -130,14 +130,12 @@ void GameBase::System::EditorGui::Initialize()
 		});
 }
 
-void GameBase::System::EditorGui::Update()
+void GameBase::System::EditorGui::Update(EntityRegistry&)
 {
 	if (!Get<GameTime>().IsFrameDue())
 	{
 		return;
 	}
-
-	Debugger::Log("こんにちは！更新中だよ！");
 }
 
 void GameBase::System::EditorGui::Release()

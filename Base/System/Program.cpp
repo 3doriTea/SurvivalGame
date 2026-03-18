@@ -14,7 +14,7 @@ void GameBase::System::Program::Initialize()
 	hInstance_ = GetModuleHandle(NULL);
 }
 
-void GameBase::System::Program::Update()
+void GameBase::System::Program::Update(EntityRegistry&)
 {
 }
 

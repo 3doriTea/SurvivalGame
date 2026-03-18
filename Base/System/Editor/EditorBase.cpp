@@ -80,7 +80,7 @@ void GameBase::System::EditorBase::Initialize()
 	});
 }
 
-void GameBase::System::EditorBase::Update()
+void GameBase::System::EditorBase::Update(EntityRegistry&)
 {
 }
 

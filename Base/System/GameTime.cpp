@@ -34,7 +34,7 @@ void GameBase::System::GameTime::Initialize()
 	fps_ = Get<Assets>().GetGameConfig().fps;
 }
 
-void GameBase::System::GameTime::Update()
+void GameBase::System::GameTime::Update(EntityRegistry&)
 {
 	BOOL succeed{};
 	succeed = QueryPerformanceCounter(&currentMicro_);

@@ -23,7 +23,7 @@ void GameBase::System::SceneManager::Initialize()
 	}
 }
 
-void GameBase::System::SceneManager::Update()
+void GameBase::System::SceneManager::Update(EntityRegistry&)
 {}
 
 void GameBase::System::SceneManager::Release()

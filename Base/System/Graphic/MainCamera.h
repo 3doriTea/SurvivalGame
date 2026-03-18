@@ -5,28 +5,28 @@
 namespace GameBase::System
 {
 	/// <summary>
-	/// システムインタフェース: シーンマネージャ
+	/// システムインタフェース: メインカメラ
 	/// </summary>
-	class ISceneManager : public ISystemInterfaceBase
+	class IMainCamera : public ISystemInterfaceBase
 	{
 	public:
-		ISceneManager() = default;
-		virtual ~ISceneManager() = default;
+		IMainCamera() = default;
+		virtual ~IMainCamera() = default;
 
 		//virtual void Hoge() = 0;
 	};
 
 	/// <summary>
-	/// システム: シーンマネージャ
+	/// システム: メインカメラ
 	/// </summary>
-	class SceneManager : public SystemBase<SceneManager, ISceneManager>
+	class MainCamera : public SystemBase<MainCamera, IMainCamera>
 	{
 	public:
-		SceneManager();
-		~SceneManager();
+		MainCamera();
+		~MainCamera();
 
 		// 利用する参照があるときに使用
-		void OnRegisterDependencies(FluentVectorAddOnly<SystemIndex>* _registry) override;
+		//void OnRegisterDependencies(FluentVectorAddOnly<SystemIndex>* _registry) override;
 
 		/// <summary>
 		/// 初期化処理
@@ -44,6 +44,5 @@ namespace GameBase::System
 		void Release() override;
 
 	private:
-		fs::path currentSceneFile_;  // 現在のシーンファイル
 	};
 }

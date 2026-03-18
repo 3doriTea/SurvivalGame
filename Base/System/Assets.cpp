@@ -16,7 +16,7 @@ void GameBase::System::Assets::Initialize()
 	Load();
 }
 
-void GameBase::System::Assets::Update()
+void GameBase::System::Assets::Update(EntityRegistry&)
 {
 }
 

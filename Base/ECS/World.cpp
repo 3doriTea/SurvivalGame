@@ -162,7 +162,7 @@ bool GameBase::World::Update()
 	{
 		if (auto pSystem{ pSystems[index].lock() })
 		{
-			pSystem->Update();
+			pSystem->Update(*pRegistry_.get());
 		}
 		else
 		{

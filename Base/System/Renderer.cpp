@@ -26,7 +26,7 @@ void GameBase::System::Renderer::Initialize()
 {
 }
 
-void GameBase::System::Renderer::Update()
+void GameBase::System::Renderer::Update(EntityRegistry&)
 {
 	if (!Get<GameTime>().IsFrameDue())
 	{

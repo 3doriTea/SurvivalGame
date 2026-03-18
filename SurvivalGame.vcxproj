@@ -347,6 +347,7 @@
     <ClCompile Include="Base\System\EditorGui.cpp" />
     <ClCompile Include="Base\System\Editor\EditorBase.cpp" />
     <ClCompile Include="Base\System\GameTime.cpp" />
+    <ClCompile Include="Base\System\Graphic\MainCamera.cpp" />
     <ClCompile Include="Base\System\Input.cpp" />
     <ClCompile Include="Base\System\MainWindow.cpp" />
     <ClCompile Include="Base\System\Program.cpp" />
@@ -445,6 +446,7 @@
     <ClInclude Include="Base\pch.h" />
     <ClInclude Include="Base\System\Editor\EditorBase.h" />
     <ClInclude Include="Base\System\GameTime.h" />
+    <ClInclude Include="Base\System\Graphic\MainCamera.h" />
     <ClInclude Include="Base\System\Input.h" />
     <ClInclude Include="Base\System\MainWindow.h" />
     <ClInclude Include="Base\System\Program.h" />

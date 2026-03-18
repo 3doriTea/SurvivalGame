@@ -32,7 +32,7 @@ void GameBase::System::Direct3D::Initialize()
 	GB_ASSERT(SUCCEEDED(hResult) && "D3D11CreateDeviceに失敗");
 }
 
-void GameBase::System::Direct3D::Update()
+void GameBase::System::Direct3D::Update(EntityRegistry&)
 {
 }
 

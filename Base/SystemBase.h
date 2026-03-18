@@ -1,4 +1,6 @@
 #pragma once
+#include "ECS/EntityRegistry.h"
+
 
 namespace GameBase
 {
@@ -80,7 +82,7 @@ namespace GameBase
 
 		virtual void OnRegisterDependencies(FluentVectorAddOnly<SystemIndex>* _registry) = 0;
 		virtual void Initialize() = 0;
-		virtual void Update() = 0;
+		virtual void Update(EntityRegistry&) = 0;
 		virtual void Release() = 0;
 	};
 

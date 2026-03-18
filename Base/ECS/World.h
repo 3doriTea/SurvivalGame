@@ -4,6 +4,15 @@
 
 namespace GameBase
 {
+	class IWorld
+	{
+	public:
+		inline IWorld() = default;
+		inline virtual ~IWorld() = default;
+
+		void Registry();
+	};
+
 	/// <summary>
 	/// ワールドそのもの
 	/// </summary>
