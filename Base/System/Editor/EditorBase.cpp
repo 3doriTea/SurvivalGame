@@ -5,6 +5,7 @@
 
 #include "../../Structure/Editor/AssetsView.h"
 #include "../../Structure/Editor/HierarchyView.h"
+#include "../../Structure/Editor/InspectorView.h"
 
 
 GameBase::System::EditorBase::EditorBase()
@@ -25,8 +26,9 @@ void GameBase::System::EditorBase::OnRegisterDependencies(FluentVectorAddOnly<Sy
 
 void GameBase::System::EditorBase::Initialize()
 {
-	pEditors_.emplace_back(std::make_unique<Editor::AssetsView>());
-	pEditors_.emplace_back(std::make_unique<Editor::HierarchyView>());
+	pEditors_.emplace_back(std::make_shared<Editor::AssetsView>());
+	pEditors_.emplace_back(std::make_shared<Editor::HierarchyView>());
+	pEditors_.emplace_back(std::make_shared<Editor::InspectorView>());
 
 	Get<EditorGui>().OnGUI([this](EventSubject<EntityRegistry&>& _event)
 	{
@@ -58,14 +60,27 @@ void GameBase::System::EditorBase::Initialize()
 					ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
 				}
 
-				for (const std::unique_ptr<Editor::IEditorView>& p : pEditors_)
+				bool selectedOnce{ false };
+				for (const std::shared_ptr<Editor::IEditorView>& p : pEditors_)
 				{
-					p.get()->OnGUI(_registry);
+					bool selected{ p.get()->OnGUI(_registry) };
+
+					if (selected && !selectedOnce)
+					{
+
+						selectedEvent_.Update(p, std::type_index{ typeid(*p) });
+						selectedOnce = true;
+					}
 				}
 
-				ImGui::Begin("Inspector");
-				ImGui::Text("Components...");
-				ImGui::End();
+				// なにかしらが選択された瞬間
+				if (selectedOnce)
+				{
+					for (const std::shared_ptr<Editor::IEditorView>& p : pEditors_)
+					{
+						p.get()->OnSelected(selectedEvent_);
+					}
+				}
 
 				ImGui::Begin("Game View");
 				ImGui::End();
@@ -86,3 +101,8 @@ void GameBase::System::EditorBase::Update(EntityRegistry&)
 
 void GameBase::System::EditorBase::Release()
 {}
+
+void GameBase::System::EditorBase::RefSelectedEvent(const std::function<void(Editor::SelectedEvent&)>& _callback)
+{
+	_callback(selectedEvent_);
+}

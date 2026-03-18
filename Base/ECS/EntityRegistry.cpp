@@ -17,6 +17,23 @@ GameBase::Entity GameBase::EntityRegistry::CreateEntity()
 	return created;
 }
 
+std::vector<GameBase::ComponentIndex> GameBase::EntityRegistry::GetComponentIndices(const Entity _entity)
+{
+	std::vector<ComponentIndex> indices{};
+
+	Signature signature{ entitySignatures_[GetIndex(_entity)] };
+
+	for (int i = 0; i < signature.size(); i++)
+	{
+		if (signature.test(i))
+		{
+			indices.push_back(i);
+		}
+	}
+
+	return indices;
+}
+
 GameBase::IComponentBase& GameBase::EntityRegistry::AddComponent(const Entity _entity, const ComponentIndex _type)
 {
 	entitySignatures_[GetIndex(_entity)][_type] = true;

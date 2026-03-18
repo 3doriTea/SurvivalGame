@@ -191,6 +191,15 @@
     <ClCompile Include="Base\Component\GameObject.cpp">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Base\Structure\Editor\IEditorView.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Structure\Editor\SelectedEvent.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Structure\Editor\InspectorView.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\GameBase.h">
@@ -506,6 +515,12 @@
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
     <ClInclude Include="Base\Structure\SchemaLoadBundle.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Structure\Editor\SelectedEvent.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Structure\Editor\InspectorView.h">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
   </ItemGroup>

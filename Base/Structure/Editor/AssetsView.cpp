@@ -45,8 +45,10 @@ GameBase::Editor::AssetsView::AssetsView(const Config& _config) :
 	}
 }
 
-void GameBase::Editor::AssetsView::OnGUI(EntityRegistry&)
+bool GameBase::Editor::AssetsView::OnGUI(EntityRegistry&)
 {
+	bool onSelectedEvent{ false };
+
 	cellSize_ =
 	{
 		thumbnailSize_ + padding_ + (inCellMargin_ * 2.0f),
@@ -119,6 +121,7 @@ void GameBase::Editor::AssetsView::OnGUI(EntityRegistry&)
 				selected))
 			{
 				selectedPath_ = entry.path();
+				onSelectedEvent = true;
 			}
 
 			// ダブルクリックでディレクトリに入る処理など
@@ -142,6 +145,19 @@ void GameBase::Editor::AssetsView::OnGUI(EntityRegistry&)
 
 
 	ImGui::End();
+	return onSelectedEvent;
+}
+
+void GameBase::Editor::AssetsView::OnSelected(SelectedEvent& _event)
+{
+	if (_event.TryGetEvent<AssetsView>())
+	{
+		return;  // 自分自身の選択イベントは無視
+	}
+	else
+	{
+		selectedPath_ = fs::path{};
+	}
 }
 
 bool GameBase::Editor::AssetsView::IsClickCellShow(

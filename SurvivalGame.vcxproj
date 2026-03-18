@@ -343,6 +343,9 @@
     <ClCompile Include="Base\Structure\AssetLoader\YamlLoader.cpp" />
     <ClCompile Include="Base\Structure\Editor\AssetsView.cpp" />
     <ClCompile Include="Base\Structure\Editor\HierarchyView.cpp" />
+    <ClCompile Include="Base\Structure\Editor\IEditorView.cpp" />
+    <ClCompile Include="Base\Structure\Editor\InspectorView.cpp" />
+    <ClCompile Include="Base\Structure\Editor\SelectedEvent.cpp" />
     <ClCompile Include="Base\SystemBase.cpp" />
     <ClCompile Include="Base\System\Assets.cpp" />
     <ClCompile Include="Base\System\Direct3D.cpp" />
@@ -419,6 +422,8 @@
     <ClInclude Include="Base\Structure\AssetFilter.h" />
     <ClInclude Include="Base\Structure\AssetLoader\AssetLoaderScene.h" />
     <ClInclude Include="Base\Structure\AssetLoader\YamlLoader.h" />
+    <ClInclude Include="Base\Structure\Editor\InspectorView.h" />
+    <ClInclude Include="Base\Structure\Editor\SelectedEvent.h" />
     <ClInclude Include="Base\Structure\SchemaLoadBundle.h" />
     <ClInclude Include="Base\Structure\CreateWindowConfig.h" />
     <ClInclude Include="Base\Structure\Editor\AssetsView.h" />

@@ -1,6 +1,7 @@
 #pragma once
 #include "../SystemBase.h"
 #include "../../Structure/Editor/IEditorView.h"
+#include "../../Structure/Editor/SelectedEvent.h"
 
 
 namespace GameBase::System
@@ -14,7 +15,7 @@ namespace GameBase::System
 		IEditorBase() = default;
 		virtual ~IEditorBase() = default;
 
-		//virtual void Hoge() = 0;
+		virtual void RefSelectedEvent(const std::function<void(Editor::SelectedEvent&)>& _callback) = 0;
 	};
 
 	/// <summary>
@@ -44,8 +45,12 @@ namespace GameBase::System
 		/// </summary>
 		void Release() override;
 
+		void RefSelectedEvent(const std::function<void(Editor::SelectedEvent&)>& _callback) override;
+
 	private:
+		Editor::SelectedEvent selectedEvent_;
 		std::shared_ptr<void> onGUIEvent_;
-		std::vector<std::unique_ptr<Editor::IEditorView>> pEditors_;
+		std::vector<std::shared_ptr<Editor::IEditorView>> pEditors_;
+
 	};
 }

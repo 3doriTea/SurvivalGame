@@ -23,14 +23,22 @@ namespace GameBase::Editor
 			std::vector<Object*> childs;
 		};
 	public:
-		HierarchyView() {}
+		HierarchyView();
 		inline ~HierarchyView() = default;
 
 		/// <summary>
 		/// ImGUI描画タイミング
 		/// </summary>
 		/// <param name=""></param>
-		void OnGUI(EntityRegistry&) override;
+		bool OnGUI(EntityRegistry&) override;
+
+		/// <summary>
+		/// 選択中のエンティティを取得
+		/// </summary>
+		/// <returns>選択中のエンティティ</returns>
+		Entity GetSelectedEntity() const { return selectedEntity_; }
+
+		void OnSelected(SelectedEvent& _event) override;
 
 	private:
 		/// <summary>
@@ -41,7 +49,7 @@ namespace GameBase::Editor
 
 	private:
 		std::vector<Object> objects_;
-		int selectedIndex_;
-
+		Entity selectedEntity_;
+		bool onSelectedEvent_;
 	};
 }

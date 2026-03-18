@@ -1,10 +1,16 @@
 #include "HierarchyView.h"
 #include <System/TransformCalculator.h>
+#include "SelectedEvent.h"
 
 
-void GameBase::Editor::HierarchyView::OnGUI(EntityRegistry& _registry)
+GameBase::Editor::HierarchyView::HierarchyView() :
+	selectedEntity_{ INVALID_ENTITY },
+	onSelectedEvent_{}
+{}
+
+bool GameBase::Editor::HierarchyView::OnGUI(EntityRegistry& _registry)
 {
-
+	onSelectedEvent_ = false;
 
 	ImGui::Begin("Hierarchy");
 
@@ -47,12 +53,21 @@ void GameBase::Editor::HierarchyView::OnGUI(EntityRegistry& _registry)
 		ShowObjectTree(view, obj);
 	}
 
-	/*view.ForEach([](const Entity _entity, Component::GameObject& _gameObject, Component::Transform& _transform)
-	{
-		ImGui::Text("%s", _gameObject.name);
-	});*/
-
 	ImGui::End();
+
+	return onSelectedEvent_;
+}
+
+void GameBase::Editor::HierarchyView::OnSelected(SelectedEvent& _event)
+{
+	if (_event.TryGetEvent<HierarchyView>())
+	{
+		return;  // 自分自身の選択イベントは無視
+	}
+	else
+	{
+		selectedEntity_ = INVALID_ENTITY;
+	}
 }
 
 void GameBase::Editor::HierarchyView::ShowObjectTree(ViewGameObjectTransform& _view, const Object& obj)
@@ -79,7 +94,8 @@ void GameBase::Editor::HierarchyView::ShowObjectTree(ViewGameObjectTransform& _v
 
 	if (ImGui::IsItemClicked())
 	{
-		//selectedIndex_ = 
+		selectedEntity_ = obj.entity;
+		onSelectedEvent_ = true;
 	}
 
 	if (isOpen && !obj.childs.empty())

@@ -3,6 +3,8 @@
 
 namespace GameBase::Editor
 {
+	class SelectedEvent;
+	
 	/// <summary>
 	/// エディタ上の部品インタフェース
 	/// </summary>
@@ -15,6 +17,13 @@ namespace GameBase::Editor
 		/// <summary>
 		/// ImGUI描画タイミング
 		/// </summary>
-		virtual void OnGUI(EntityRegistry&) = 0;
+		/// <returns>選択がされた true / false</returns>
+		virtual bool OnGUI(EntityRegistry&) = 0;
+
+		/// <summary>
+		/// なにかしら項目選択時のイベント
+		/// </summary>
+		/// <param name="_event">選択イベント</param>
+		inline virtual void OnSelected(SelectedEvent& _event) {}
 	};
 }
