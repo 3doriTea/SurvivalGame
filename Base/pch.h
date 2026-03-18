@@ -20,6 +20,7 @@
 #include <stack>
 #include <queue>
 #include <bitset>
+#include <unordered_set>
 
 // 関数型
 #include <functional>
@@ -96,6 +97,7 @@ namespace fs = std::filesystem;
 #include <CoreType/Vec3Int.h>
 #include <CoreType/Mat4x4.h>
 #include <CoreType/Handle.h>
+#include <CoreType/XMOperator.h>
 
 #include <Utility/TimeUtil.h>
 #include <Utility/StringUtil.h>

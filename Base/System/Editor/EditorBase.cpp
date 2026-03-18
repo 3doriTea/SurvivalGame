@@ -1,8 +1,10 @@
 #include "EditorBase.h"
 #include "../EditorGui.h"
 #include "../TextureRegistry.h"
+#include "../TransformCalculator.h"
 
 #include "../../Structure/Editor/AssetsView.h"
+#include "../../Structure/Editor/HierarchyView.h"
 
 
 GameBase::System::EditorBase::EditorBase()
@@ -17,16 +19,18 @@ void GameBase::System::EditorBase::OnRegisterDependencies(FluentVectorAddOnly<Sy
 	_registry
 		->Add(SystemRegistry::GetSystemIndex<EditorGui>())
 		->Add(SystemRegistry::GetSystemIndex<TextureRegistry>())
+		->Add(SystemRegistry::GetSystemIndex<TransformCalculator>())
 	;
 }
 
 void GameBase::System::EditorBase::Initialize()
 {
 	pEditors_.emplace_back(std::make_unique<Editor::AssetsView>());
+	pEditors_.emplace_back(std::make_unique<Editor::HierarchyView>());
 
-	Get<EditorGui>().OnGUI([this](EventSubject<>& _event)
+	Get<EditorGui>().OnGUI([this](EventSubject<EntityRegistry&>& _event)
 	{
-		onGUIEvent_ = _event.get()->Connect([this]()
+		onGUIEvent_ = _event.get()->Connect([this](EntityRegistry& _registry)
 		{
 				static bool opt_fullscreen = true;
 				static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
@@ -56,12 +60,8 @@ void GameBase::System::EditorBase::Initialize()
 
 				for (const std::unique_ptr<Editor::IEditorView>& p : pEditors_)
 				{
-					p.get()->OnGUI();
+					p.get()->OnGUI(_registry);
 				}
-
-				ImGui::Begin("Hierarchy");
-				ImGui::Text("Object List...");
-				ImGui::End();
 
 				ImGui::Begin("Inspector");
 				ImGui::Text("Components...");

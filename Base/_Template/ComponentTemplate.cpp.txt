@@ -4,12 +4,12 @@ GameBase::Component::XXX::XXX() :
 {
 }
 
-void GameBase::Component::XXX::OnLoad(const YAML::Node& _node)
+void GameBase::Component::XXX::OnLoad(const YAML::Node& _node, SchemaLoadBundle& _bundle)
 {
 	//nearZ = _node["near"].as<float>();
 }
 
-void GameBase::Component::XXX::OnSave(YAML::Emitter& _emitter)
+void GameBase::Component::XXX::OnSave(YAML::Emitter& _emitter, SchemaLoadBundle& _bundle)
 {
 	//_emitter << YAML::Key << "near" << YAML::Value << nearZ;
 }

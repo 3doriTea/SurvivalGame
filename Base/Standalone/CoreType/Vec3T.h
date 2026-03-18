@@ -18,6 +18,26 @@ namespace GameBase
 
 		inline ~Vec3T() = default;
 
+		inline operator DirectX::XMVECTOR() const noexcept
+		{
+			if constexpr (std::is_same_v<T, float>)
+			{
+				return DirectX::XMLoadFloat3(reinterpret_cast<const DirectX::XMFLOAT3*>(this));
+			}
+			else
+			{
+				return { static_cast<float>(x), static_cast<float>(y), static_cast<float>(z) };
+			}
+		}
+
+		/*inline Vec3T(DirectX::XMVECTOR&& _xmv) :
+			Vec3T{ _xmv.m128_f32[AT_X], _xmv.m128_f32[AT_Y], _xmv.m128_f32[AT_Z] }
+		{}*/
+
+		inline Vec3T(const DirectX::XMVECTOR& _xmv) :
+			Vec3T{ _xmv.m128_f32[AT_X], _xmv.m128_f32[AT_Y], _xmv.m128_f32[AT_Z] }
+		{}
+
 		inline Vec3T(Vec3TData _in) :
 			Vec3T{ _in.x, _in.y, _in.z }
 		{

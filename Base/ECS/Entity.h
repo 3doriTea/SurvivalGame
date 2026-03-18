@@ -36,6 +36,8 @@ namespace GameBase
 	{
 		return static_cast<EntityIndex>(_entity);
 	}
+
+	static inline constexpr Entity INVALID_ENTITY{ 0 };
 }
 
 namespace YAML

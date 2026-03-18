@@ -32,7 +32,7 @@ namespace GameBase
 		T& GetComponent(const EntityIndex _entityIndex)
 		{
 			size_t index{ ComponentRegistry::GetComponentIndex<T>() };
-			return Get<T>().Get(index);
+			return Get<T>().Get(_entityIndex);
 		}
 
 		/// <summary>

@@ -9,6 +9,11 @@ namespace GameBase
 	struct Quaternion : DirectX::XMFLOAT4
 	{
 		using DirectX::XMFLOAT4::XMFLOAT4;
+
+		inline operator DirectX::XMVECTOR() const noexcept
+		{
+			return DirectX::XMLoadFloat4(this);
+		}
 	};
 }
 

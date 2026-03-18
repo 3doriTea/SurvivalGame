@@ -2,6 +2,11 @@
 #include "../ComponentBase.h"
 
 
+namespace GameBase::System
+{
+	class MainCamera;
+}
+
 namespace GameBase::Component
 {
 	/// <summary>
@@ -9,9 +14,11 @@ namespace GameBase::Component
 	/// </summary>
 	struct Camera : ComponentBase<Camera>
 	{
+		friend GameBase::System::MainCamera;
+
 		Camera();
-		void OnLoad(const YAML::Node& _node) override;
-		void OnSave(YAML::Emitter& _emitter) override;
+		void OnLoad(const YAML::Node& _node, SchemaLoadBundle& _bundle) override;
+		void OnSave(YAML::Emitter& _emitter, SchemaLoadBundle& _bundle) override;
 
 		float nearZ;        // ファークリップ平面の距離
 		float farZ;         // ニヤークリップ平面の距離

@@ -1,23 +1,25 @@
 #include "Camera.h"
+#include <System/Graphic/MainCamera.h>
+
 
 GameBase::Component::Camera::Camera() :
 	nearZ{ 0.1f },
 	farZ{ 300.0f },
 	fovRadian{ DirectX::XM_PIDIV4 },
-	aspectRatio{},
+	aspectRatio{ 1600.0f / 900.0f },
 	viewMatrix{},
 	projectionMatrix{}
 {
 }
 
-void GameBase::Component::Camera::OnLoad(const YAML::Node& _node)
+void GameBase::Component::Camera::OnLoad(const YAML::Node& _node, SchemaLoadBundle& _bundle)
 {
 		nearZ = _node["near"].as<float>(nearZ);
 		farZ = _node["far"].as<float>(farZ);
 		fovRadian = _node["fov"].as<float>(fovRadian);
 }
 
-void GameBase::Component::Camera::OnSave(YAML::Emitter& _emitter)
+void GameBase::Component::Camera::OnSave(YAML::Emitter& _emitter, SchemaLoadBundle& _bundle)
 {
 	_emitter << YAML::Key << "near" << YAML::Value << nearZ;
 	_emitter << YAML::Key << "far" << YAML::Value << farZ;

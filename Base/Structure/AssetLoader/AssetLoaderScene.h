@@ -34,8 +34,6 @@ namespace GameBase
 						GB_ASSERT(false && "Unknown TAG");
 						return false;
 					}
-
-					
 				}
 			}
 			catch (const YAML::Exception& ex)

@@ -1,12 +1,13 @@
 #include "Renderer.h"
 #include "GameTime.h"
 #include "Presenter.h"
+#include "Graphic/MainCamera.h"
 
 
 GameBase::System::Renderer::Renderer() :
-	beginEvent_{ Event<>::Create() },
-	endEvent_{ Event<>::Create() },
-	renderEvent_{ Event<>::Create() }
+	beginEvent_{ Event<EntityRegistry&>::Create() },
+	endEvent_{ Event<EntityRegistry&>::Create() },
+	renderEvent_{ Event<EntityRegistry&>::Create() }
 {
 }
 
@@ -19,6 +20,7 @@ void GameBase::System::Renderer::OnRegisterDependencies(FluentVectorAddOnly<Syst
 	_registry
 		->Add(SystemRegistry::GetSystemIndex<GameTime>())
 		->Add(SystemRegistry::GetSystemIndex<Presenter>())
+		->Add(SystemRegistry::GetSystemIndex<MainCamera>())
 		;
 }
 
@@ -26,7 +28,7 @@ void GameBase::System::Renderer::Initialize()
 {
 }
 
-void GameBase::System::Renderer::Update(EntityRegistry&)
+void GameBase::System::Renderer::Update(EntityRegistry& _registry)
 {
 	if (!Get<GameTime>().IsFrameDue())
 	{
@@ -42,18 +44,23 @@ void GameBase::System::Renderer::Update(EntityRegistry&)
 			return _left.sortKey.value > _right.sortKey.value;
 		});
 
-	beginEvent_.get()->Invoke();
+	beginEvent_.get()->Invoke(_registry);
 
 	Get<Presenter>().BeginDraw();
 
 	// レンダーキューの処理をする
 	// 各ウィンドウ分、カメラ別で描画していく
 
-	renderEvent_.get()->Invoke();
+	for (auto& item : renderQueue_)
+	{
+		//item.pMaterial->
+	}
+
+	renderEvent_.get()->Invoke(_registry);
 
 	Get<Presenter>().EndDraw();
 
-	endEvent_.get()->Invoke();
+	endEvent_.get()->Invoke(_registry);
 
 	renderQueue_.clear();
 }
@@ -62,17 +69,17 @@ void GameBase::System::Renderer::Release()
 {
 }
 
-void GameBase::System::Renderer::OnBegin(const std::function<void(EventSubject<>&)>& _callback)
+void GameBase::System::Renderer::OnBegin(const std::function<void(EventSubject<EntityRegistry&>&)>& _callback)
 {
 	_callback(beginEvent_);
 }
 
-void GameBase::System::Renderer::OnRender(const std::function<void(EventSubject<>&)>& _callback)
+void GameBase::System::Renderer::OnRender(const std::function<void(EventSubject<EntityRegistry&>&)>& _callback)
 {
 	_callback(renderEvent_);
 }
 
-void GameBase::System::Renderer::OnEnd(const std::function<void(EventSubject<>&)>& _callback)
+void GameBase::System::Renderer::OnEnd(const std::function<void(EventSubject<EntityRegistry&>&)>& _callback)
 {
 	_callback(endEvent_);
 }

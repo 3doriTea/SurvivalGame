@@ -1,4 +1,6 @@
 #pragma once
+#include "Structure/SchemaLoadBundle.h"
+
 
 namespace GameBase
 {
@@ -10,7 +12,7 @@ namespace GameBase
 		inline IComponentBase() = default;
 		inline virtual ~IComponentBase() = default;
 
-		virtual void OnLoad(const YAML::Node& _node) = 0;
-		virtual void OnSave(YAML::Emitter& _emitter) = 0;
+		virtual void OnLoad(const YAML::Node& _node, SchemaLoadBundle& _bundle) = 0;
+		virtual void OnSave(YAML::Emitter& _emitter, SchemaLoadBundle& _bundle) = 0;
 	};
 }

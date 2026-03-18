@@ -1,5 +1,6 @@
 #pragma once
 #include "../SystemBase.h"
+#include "../MaterialBase.h"
 
 
 namespace GameBase::System
@@ -7,23 +8,23 @@ namespace GameBase::System
 	/// <summary>
 	/// システムインタフェース: 
 	/// </summary>
-	class IXXX : public ISystemInterfaceBase
+	class IMaterialRegistry : public ISystemInterfaceBase
 	{
 	public:
-		IXXX() = default;
-		virtual ~IXXX() = default;
+		IMaterialRegistry() = default;
+		virtual ~IMaterialRegistry() = default;
 
-		//virtual void Hoge() = 0;
+		virtual MaterialHandle Load(std::unique_ptr<MaterialBase> ) = 0;
 	};
 
 	/// <summary>
 	/// システム: 
 	/// </summary>
-	class XXX : public SystemBase<XXX, IXXX>
+	class MaterialRegistry : public SystemBase<MaterialRegistry, IMaterialRegistry>
 	{
 	public:
-		XXX();
-		~XXX();
+		MaterialRegistry();
+		~MaterialRegistry();
 
 		// 利用する参照があるときに使用
 		//void OnRegisterDependencies(FluentVectorAddOnly<SystemIndex>* _registry) override;
@@ -44,5 +45,8 @@ namespace GameBase::System
 		void Release() override;
 
 	private:
+
+		// SystemBase を介して継承されました
+		MaterialHandle Load(std::unique_ptr<MaterialBase>) override;
 	};
 }

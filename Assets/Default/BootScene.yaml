@@ -6,6 +6,7 @@
 Scene:
   gameObjects:
   - gameObject: {fileId: 101}
+  - gameObject: {fileId: 102}
 
 --- !gb!GameObject
 Id: 101
@@ -28,3 +29,20 @@ Transform:
   rotation: {x: 0.0, y: 0.0, z: 0.0}
   scale:    {x: 1.0, y: 1.0, z: 1.0}
   parent:   {fileId: 0}
+
+
+--- !gb!GameObject
+Id: 102
+GameObject:
+  name: Sub Camera
+  components:
+  - component: {fileId: 1011}
+
+--- !gbc!Transform
+Id: 1011
+Transform:
+  position: {x: 0.0, y: 0.0, z: 0.0}
+  rotation: {x: 0.0, y: 0.0, z: 0.0}
+  scale:    {x: 1.0, y: 1.0, z: 1.0}
+  parent:   {fileId: 101}
+

@@ -200,6 +200,7 @@
     <ClCompile Include="Base\ComponentBase.cpp" />
     <ClCompile Include="Base\ComponentRegistry.cpp" />
     <ClCompile Include="Base\Component\Camera.cpp" />
+    <ClCompile Include="Base\Component\GameObject.cpp" />
     <ClCompile Include="Base\Component\Transform.cpp" />
     <ClCompile Include="Base\DependencyResolver.cpp" />
     <ClCompile Include="Base\ECS\ComponentPool.cpp" />
@@ -341,6 +342,7 @@
     </ClCompile>
     <ClCompile Include="Base\Structure\AssetLoader\YamlLoader.cpp" />
     <ClCompile Include="Base\Structure\Editor\AssetsView.cpp" />
+    <ClCompile Include="Base\Structure\Editor\HierarchyView.cpp" />
     <ClCompile Include="Base\SystemBase.cpp" />
     <ClCompile Include="Base\System\Assets.cpp" />
     <ClCompile Include="Base\System\Direct3D.cpp" />
@@ -350,21 +352,25 @@
     <ClCompile Include="Base\System\Graphic\MainCamera.cpp" />
     <ClCompile Include="Base\System\Input.cpp" />
     <ClCompile Include="Base\System\MainWindow.cpp" />
+    <ClCompile Include="Base\System\MaterialRegistry.cpp" />
     <ClCompile Include="Base\System\Program.cpp" />
     <ClCompile Include="Base\System\Renderer.cpp" />
     <ClCompile Include="Base\System\Presenter.cpp" />
     <ClCompile Include="Base\System\SceneManager.cpp" />
     <ClCompile Include="Base\System\ShaderCompiler.cpp" />
     <ClCompile Include="Base\System\TextureRegistry.cpp" />
+    <ClCompile Include="Base\System\TransformCalculator.cpp" />
     <ClCompile Include="Base\System\WindowEvent.cpp" />
     <ClCompile Include="TheMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Assets\Default\InvalidMaterial.h" />
     <ClInclude Include="Assets\Scripts\PlayerController.h" />
     <ClInclude Include="Base\ComponentBase.h" />
     <ClInclude Include="Base\ComponentIndex.h" />
     <ClInclude Include="Base\ComponentRegistry.h" />
     <ClInclude Include="Base\Component\Camera.h" />
+    <ClInclude Include="Base\Component\GameObject.h" />
     <ClInclude Include="Base\Component\Transform.h" />
     <ClInclude Include="Base\DependencyResolver.h" />
     <ClInclude Include="Base\ECS\ComponentPool.h" />
@@ -388,6 +394,7 @@
     <ClInclude Include="Base\Library\imgui\imstb_rectpack.h" />
     <ClInclude Include="Base\Library\imgui\imstb_textedit.h" />
     <ClInclude Include="Base\Library\imgui\imstb_truetype.h" />
+    <ClInclude Include="Base\MaterialBase.h" />
     <ClInclude Include="Base\ScriptBase.h" />
     <ClInclude Include="Base\Standalone\CoreType\Color.h" />
     <ClInclude Include="Base\Standalone\Constant\KeyCode.h" />
@@ -400,6 +407,7 @@
     <ClInclude Include="Base\Standalone\CoreType\Vec3.h" />
     <ClInclude Include="Base\Standalone\CoreType\Vec3Int.h" />
     <ClInclude Include="Base\Standalone\CoreType\Vec3T.h" />
+    <ClInclude Include="Base\Standalone\CoreType\XMOperator.h" />
     <ClInclude Include="Base\Standalone\Event.h" />
     <ClInclude Include="Base\Standalone\FluentVector.h" />
     <ClInclude Include="Base\Standalone\ResponderEvent.h" />
@@ -411,14 +419,17 @@
     <ClInclude Include="Base\Structure\AssetFilter.h" />
     <ClInclude Include="Base\Structure\AssetLoader\AssetLoaderScene.h" />
     <ClInclude Include="Base\Structure\AssetLoader\YamlLoader.h" />
+    <ClInclude Include="Base\Structure\SchemaLoadBundle.h" />
     <ClInclude Include="Base\Structure\CreateWindowConfig.h" />
     <ClInclude Include="Base\Structure\Editor\AssetsView.h" />
+    <ClInclude Include="Base\Structure\Editor\HierarchyView.h" />
     <ClInclude Include="Base\Structure\Editor\IEditorView.h" />
     <ClInclude Include="Base\Structure\GameConfig.h" />
     <ClInclude Include="Base\Structure\GameManifest.h" />
     <ClInclude Include="Base\Structure\GameObject.h" />
     <ClInclude Include="Base\Structure\IAssetLoader.h" />
     <ClInclude Include="Base\Structure\Material.h" />
+    <ClInclude Include="Base\Structure\MaterialBase.h" />
     <ClInclude Include="Base\Structure\Mesh.h" />
     <ClInclude Include="Base\Structure\RasterizerConfig.h" />
     <ClInclude Include="Base\Structure\RefreshRate.h" />
@@ -449,12 +460,14 @@
     <ClInclude Include="Base\System\Graphic\MainCamera.h" />
     <ClInclude Include="Base\System\Input.h" />
     <ClInclude Include="Base\System\MainWindow.h" />
+    <ClInclude Include="Base\System\MaterialRegistry.h" />
     <ClInclude Include="Base\System\Program.h" />
     <ClInclude Include="Base\System\Renderer.h" />
     <ClInclude Include="Base\System\Presenter.h" />
     <ClInclude Include="Base\System\SceneManager.h" />
     <ClInclude Include="Base\System\ShaderCompiler.h" />
     <ClInclude Include="Base\System\TextureRegistry.h" />
+    <ClInclude Include="Base\System\TransformCalculator.h" />
     <ClInclude Include="Base\System\WindowEvent.h" />
   </ItemGroup>
   <ItemGroup>

@@ -5,12 +5,13 @@
 #include "GameTime.h"
 #include "Renderer.h"
 #include "Presenter.h"
+#include "../ECS/EntityRegistry.h"
 
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 GameBase::System::EditorGui::EditorGui() :
-	onGUIEvent_{ Event<>::Create() }
+	onGUIEvent_{ Event<EntityRegistry&>::Create() }
 {
 }
 
@@ -98,23 +99,23 @@ void GameBase::System::EditorGui::Initialize()
 			ImGui_ImplDX11_Init(_pDevice.Get(), _pContext.Get());
 		});
 
-	Get<Renderer>().OnBegin([this](EventSubject<>& _event)
+	Get<Renderer>().OnBegin([this](EventSubject<EntityRegistry&>& _event)
 		{
-			renderBeginEvent_ = _event.get()->Connect([this]()
+			renderBeginEvent_ = _event.get()->Connect([this](EntityRegistry& _registry)
 				{
 					ImGui_ImplDX11_NewFrame();
 					ImGui_ImplWin32_NewFrame();
 					ImGui::NewFrame();
 
 					// IMGUI描画コール OnGUI()を呼んで回る
-					onGUIEvent_.get()->Invoke();
+					onGUIEvent_.get()->Invoke(_registry);
 
 					ImGui::Render();
 				});
 		});
-	Get<Renderer>().OnRender([this](EventSubject<>& _event)
+	Get<Renderer>().OnRender([this](EventSubject<EntityRegistry&>& _event)
 		{
-			renderEndEvent_ = _event.get()->Connect([this]()
+			renderEndEvent_ = _event.get()->Connect([this](EntityRegistry&)
 				{
 					ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
@@ -145,7 +146,7 @@ void GameBase::System::EditorGui::Release()
 	ImGui::DestroyContext();
 }
 
-void GameBase::System::EditorGui::OnGUI(const std::function<void(EventSubject<>&)>& _callback)
+void GameBase::System::EditorGui::OnGUI(const std::function<void(EventSubject<EntityRegistry&>&)>& _callback)
 {
 	_callback(onGUIEvent_);
 }

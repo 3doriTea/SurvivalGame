@@ -13,7 +13,11 @@ namespace GameBase::System
 		IMainCamera() = default;
 		virtual ~IMainCamera() = default;
 
-		//virtual void Hoge() = 0;
+		/// <summary>
+		/// メインカメラのエンティティを取得する
+		/// </summary>
+		/// <returns>エンティティ</returns>
+		virtual Entity GetEntity() = 0;
 	};
 
 	/// <summary>
@@ -26,7 +30,7 @@ namespace GameBase::System
 		~MainCamera();
 
 		// 利用する参照があるときに使用
-		//void OnRegisterDependencies(FluentVectorAddOnly<SystemIndex>* _registry) override;
+		void OnRegisterDependencies(FluentVectorAddOnly<SystemIndex>* _registry) override;
 
 		/// <summary>
 		/// 初期化処理
@@ -43,6 +47,9 @@ namespace GameBase::System
 		/// </summary>
 		void Release() override;
 
+		inline Entity GetEntity() override{ return cameraEntity_; }
+
 	private:
+		Entity cameraEntity_;
 	};
 }

@@ -5,6 +5,8 @@
 #include "../Structure/AssetLoader/YamlLoader.h"
 #include "../ComponentBase.h"
 #include "../Structure/Schema/YamlSchema.h"
+#include "../Structure/SchemaLoadBundle.h"
+#include <Component/GameObject.h>
 
 
 
@@ -67,6 +69,7 @@ bool GameBase::World::TryLoadScene(
 				GameObject gameObject{};
 				gameObject.self = _node["Id"].as<FileId>();
 				gameObject.name = _node["GameObject"]["name"].as<std::string>();
+				gameObject.node = _node["GameObject"];
 				const YAML::Node& components{ _node["GameObject"]["components"] };
 				for (const YAML::Node& component : components)
 				{
@@ -122,10 +125,23 @@ bool GameBase::World::TryLoadScene(
 		fileIdToComponent.emplace(component.self, &component);
 	}
 
+	SchemaLoadBundle loadBundle{};
+	
 	// エンティティを作っていく
 	for (auto& gameObject : yaml.gameObjects)
 	{
 		Entity entity{ pRegistry_.get()->CreateEntity() };
+		gameObject.entity = entity;
+
+		loadBundle.fileIdToEntity.emplace(gameObject.self, gameObject.entity);
+
+		IComponentBase& gameObjectComponent
+		{
+			pRegistry_.get()->AddComponent(
+				entity,
+				ComponentRegistry::GetComponentIndex<Component::GameObject>())
+		};
+		gameObjectComponent.OnLoad(gameObject.node, loadBundle);
 
 		for (const Schema::FileId componentId : gameObject.gameComponents)
 		{
@@ -139,7 +155,7 @@ bool GameBase::World::TryLoadScene(
 			IComponentBase& registryComponent{ pRegistry_.get()->AddComponent(entity, index) };
 			try
 			{
-				registryComponent.OnLoad(component.node);
+				registryComponent.OnLoad(component.node, loadBundle);
 			}
 			catch (const YAML::Exception& ex)
 			{

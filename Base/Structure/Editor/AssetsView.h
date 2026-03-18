@@ -36,7 +36,7 @@ namespace GameBase::Editor
 		/// <summary>
 		/// ImGUI描画タイミング
 		/// </summary>
-		void OnGUI() override;
+		void OnGUI(EntityRegistry&) override;
 
 	private:
 		/// <summary>

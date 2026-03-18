@@ -18,8 +18,8 @@ namespace GameBase
 		inline ComponentBase() = default;
 		inline virtual ~ComponentBase() = default;
 
-		virtual void OnLoad(const YAML::Node& _node) override = 0;
-		virtual void OnSave(YAML::Emitter& _emitter) override = 0;
+		/*virtual void OnLoad(const YAML::Node& _node, SchemaLoadBundle& _bundle) override = 0;
+		virtual void OnSave(YAML::Emitter& _emitter, SchemaLoadBundle& _bundle) override = 0;*/
 
 	private:
 		inline static std::shared_ptr<ComponentPool<T>> pInstance_

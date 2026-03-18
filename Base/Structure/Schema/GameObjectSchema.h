@@ -12,6 +12,7 @@ namespace GameBase::Schema
 		Entity entity;
 		FileId self;
 		std::string name;
+		YAML::Node node;
 		std::vector<FileId> gameComponents;
 	};
 }

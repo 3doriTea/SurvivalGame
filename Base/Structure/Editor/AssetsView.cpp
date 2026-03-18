@@ -45,7 +45,7 @@ GameBase::Editor::AssetsView::AssetsView(const Config& _config) :
 	}
 }
 
-void GameBase::Editor::AssetsView::OnGUI()
+void GameBase::Editor::AssetsView::OnGUI(EntityRegistry&)
 {
 	cellSize_ =
 	{

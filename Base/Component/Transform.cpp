@@ -1,15 +1,20 @@
 #include "Transform.h"
+#include <System/TransformCalculator.h>
 
 
 GameBase::Component::Transform::Transform():
 	position{},
 	rotation{},
 	scale{},
-	parent{}
+	parent{},
+	localTranslateMatrix{},
+	localRotationMatrix{},
+	localScaleMatrix{},
+	worldMatrix{}
 {
 }
 
-void GameBase::Component::Transform::OnLoad(const YAML::Node& _node)
+void GameBase::Component::Transform::OnLoad(const YAML::Node& _node, SchemaLoadBundle& _bundle)
 {
 	position.x = _node["position"]["x"].as<float>(position.x);
 	position.y = _node["position"]["y"].as<float>(position.y);
@@ -24,10 +29,10 @@ void GameBase::Component::Transform::OnLoad(const YAML::Node& _node)
 	scale.y = _node["scale"]["y"].as<float>(scale.y);
 	scale.z = _node["scale"]["z"].as<float>(scale.z);
 
-	parent = _node["parent"].as<EntityIndex>(0);
+	parent = _bundle.fileIdToEntity.at(_node["parent"].as<Schema::FileId>(0));
 }
 
-void GameBase::Component::Transform::OnSave(YAML::Emitter & _emitter)
+void GameBase::Component::Transform::OnSave(YAML::Emitter & _emitter, SchemaLoadBundle& _bundle)
 {
 	_emitter << YAML::Key << "position";
 	_emitter << YAML::Value << YAML::BeginMap;
@@ -51,5 +56,5 @@ void GameBase::Component::Transform::OnSave(YAML::Emitter & _emitter)
 	_emitter << YAML::Key << "z" << YAML::Value << scale.x;
 	_emitter << YAML::EndMap;
 
-	_emitter << YAML::Key << "parent" << YAML::Value << parent;
+	_emitter << YAML::Key << "parent" << YAML::Value << _bundle.entityToFileId.at(parent);
 }

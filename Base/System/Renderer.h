@@ -18,17 +18,17 @@ namespace GameBase::System
 		/// 描画する前の処理を登録する
 		/// </summary>
 		/// <param name="_callback">コールバック関数 void(EventSubject<>&)</param>
-		virtual void OnBegin(const std::function<void(EventSubject<>&)>& _callback) = 0;
+		virtual void OnBegin(const std::function<void(EventSubject<EntityRegistry&>&)>& _callback) = 0;
 		/// <summary>
 		/// 描画時の処理を登録する
 		/// </summary>
 		/// <param name="_callback">コールバック関数 void(EventSubject<>&)</param>
-		virtual void OnRender(const std::function<void(EventSubject<>&)>& _callback) = 0;
+		virtual void OnRender(const std::function<void(EventSubject<EntityRegistry&>&)>& _callback) = 0;
 		/// <summary>
 		/// 描画した後の処理を登録する
 		/// </summary>
 		/// <param name="_callback">コールバック関数 void(EventSubject<>&)</param>
-		virtual void OnEnd(const std::function<void(EventSubject<>&)>& _callback) = 0;
+		virtual void OnEnd(const std::function<void(EventSubject<EntityRegistry&>&)>& _callback) = 0;
 		/// <summary>
 		/// 描画キューに追加する
 		/// </summary>
@@ -63,15 +63,15 @@ namespace GameBase::System
 		/// </summary>
 		void Release() override;
 
-		void OnBegin(const std::function<void(EventSubject<>&)>& _callback) override;
-		void OnRender(const std::function<void(EventSubject<>&)>& _callback) override;
-		void OnEnd(const std::function<void(EventSubject<>&)>& _callback) override;
+		void OnBegin(const std::function<void(EventSubject<EntityRegistry&>&)>& _callback) override;
+		void OnRender(const std::function<void(EventSubject<EntityRegistry&>&)>& _callback) override;
+		void OnEnd(const std::function<void(EventSubject<EntityRegistry&>&)>& _callback) override;
 		void Enqueue(RenderItem&& _renderItem) override;
 
 	private:
-		EventSubject<> beginEvent_;
-		EventSubject<> endEvent_;
-		EventSubject<> renderEvent_;
+		EventSubject<EntityRegistry&> beginEvent_;
+		EventSubject<EntityRegistry&> endEvent_;
+		EventSubject<EntityRegistry&> renderEvent_;
 		std::vector<RenderItem> renderQueue_;  // 描画キュー
 	};
 }

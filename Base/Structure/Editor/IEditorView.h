@@ -1,4 +1,5 @@
 #pragma once
+#include "../../ECS/EntityRegistry.h"
 
 namespace GameBase::Editor
 {
@@ -14,6 +15,6 @@ namespace GameBase::Editor
 		/// <summary>
 		/// ImGUI描画タイミング
 		/// </summary>
-		virtual void OnGUI() = 0;
+		virtual void OnGUI(EntityRegistry&) = 0;
 	};
 }
