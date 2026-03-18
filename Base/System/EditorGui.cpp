@@ -66,6 +66,15 @@ void GameBase::System::EditorGui::Initialize()
 	//io.ConfigDockingTransparentPayload = true;
 	io.ConfigWindowsMoveFromTitleBarOnly = true;
 
+	// font settings
+	ImFontConfig fontConfig{};
+	fontConfig.FontNo = 0;
+	io.Fonts->AddFontFromFileTTF(
+		"C:\\Windows\\Fonts\\meiryo.ttc",
+		18.0f,
+		&fontConfig,
+		io.Fonts->GetGlyphRangesJapanese());
+
 	ImGui::StyleColorsDark();
 	//ImGui::StyleColorsLight();
 

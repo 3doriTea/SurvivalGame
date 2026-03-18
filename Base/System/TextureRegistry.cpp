@@ -17,7 +17,9 @@ void GameBase::System::TextureRegistry::OnRegisterDependencies(FluentVectorAddOn
 
 void GameBase::System::TextureRegistry::Initialize()
 {
-	registry_.SetDefaultResource();
+	Texture texture{};
+	TryLoadTexture("./Assets/Default/InvalidTexture.png", {}, &texture);
+	registry_.SetDefaultResource(std::move(texture));
 }
 
 void GameBase::System::TextureRegistry::Update()
@@ -30,7 +32,6 @@ GameBase::TextureHandle GameBase::System::TextureRegistry::Load(
 	const fs::path& _file,
 	const TextureLoadConfig& _loadConfig)
 {
-	using namespace DirectX;
 
 	TextureHandle found
 	{
@@ -44,6 +45,33 @@ GameBase::TextureHandle GameBase::System::TextureRegistry::Load(
 	{
 		return found;
 	}
+
+	Texture texture{};
+	if (TryLoadTexture(_file, _loadConfig, &texture) == false)
+	{
+		return INVALID_HANDLE;
+	}
+	
+
+	return registry_.Emplace(std::move(texture));
+}
+
+GameBase::Vec2Int GameBase::System::TextureRegistry::GetImageSize(const TextureHandle _hTexture) const
+{
+	return registry_.At(_hTexture).imageSize;
+}
+
+void GameBase::System::TextureRegistry::RefAt(const TextureHandle _hTexture, std::function<void(const Texture&)> _callback) const
+{
+	_callback(registry_.At(_hTexture));
+}
+
+bool GameBase::System::TextureRegistry::TryLoadTexture(
+	const fs::path& _file,
+	const TextureLoadConfig& _loadConfig,
+	GameBase::Texture* _pOut)
+{
+	using namespace DirectX;
 
 	// 画像メタデータ
 	TexMetadata metadata{};
@@ -61,7 +89,7 @@ GameBase::TextureHandle GameBase::System::TextureRegistry::Load(
 	GB_ASSERT(SUCCEEDED(hResult) && "画像の読み込みに失敗");
 	if (FAILED(hResult))
 	{
-		return INVALID_HANDLE;
+		return false;
 	}
 
 	Texture texture{};
@@ -78,15 +106,15 @@ GameBase::TextureHandle GameBase::System::TextureRegistry::Load(
 	};
 
 	Get<Direct3D>().Ref([&hResult, &texture, SAMPLER_DESC](const ComPtr<ID3D11Device>& _pDevice)
-	{
-		hResult = _pDevice.Get()->CreateSamplerState(
-			&SAMPLER_DESC,
-			texture.pSampler.GetAddressOf());
-	});
+		{
+			hResult = _pDevice.Get()->CreateSamplerState(
+				&SAMPLER_DESC,
+				texture.pSampler.GetAddressOf());
+		});
 	GB_ASSERT(SUCCEEDED(hResult) && "サンプラーの作成に失敗");
 	if (FAILED(hResult))
 	{
-		return INVALID_HANDLE;
+		return false;
 	}
 
 	const D3D11_SHADER_RESOURCE_VIEW_DESC SRV_DESC
@@ -97,29 +125,21 @@ GameBase::TextureHandle GameBase::System::TextureRegistry::Load(
 	};
 
 	Get<Direct3D>().Ref([&hResult, &texture, &image, metadata, SRV_DESC](const ComPtr<ID3D11Device>& _pDevice)
-	{
-		hResult = CreateShaderResourceView(
-			_pDevice.Get(),
-			image.GetImages(),
-			image.GetImageCount(),
-			metadata,
-			texture.pShaderResourceView.GetAddressOf());
-	});
+		{
+			hResult = CreateShaderResourceView(
+				_pDevice.Get(),
+				image.GetImages(),
+				image.GetImageCount(),
+				metadata,
+				texture.pShaderResourceView.GetAddressOf());
+		});
 	GB_ASSERT(SUCCEEDED(hResult) && "シェーダリソースビュの作成に失敗");
 	if (FAILED(hResult))
 	{
-		return INVALID_HANDLE;
+		return false;
 	}
 
-	return registry_.Emplace(texture);
-}
+	*_pOut = std::move(texture);
 
-GameBase::Vec2Int GameBase::System::TextureRegistry::GetImageSize(const TextureHandle _hTexture) const
-{
-	return registry_.At(_hTexture).imageSize;
-}
-
-void GameBase::System::TextureRegistry::RefAt(const TextureHandle _hTexture, std::function<void(const Texture&)> _callback) const
-{
-	_callback(registry_.At(_hTexture));
+	return true;
 }

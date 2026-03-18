@@ -5,7 +5,7 @@ namespace GameBase
 	struct TextureLoadConfig
 	{
 		TextureLoadConfig() :
-			filter{ D3D11_FILTER_MIN_MAG_MIP_LINEAR },
+			filter{ D3D11_FILTER_MIN_MAG_MIP_POINT },
 			addressU{ D3D11_TEXTURE_ADDRESS_CLAMP },
 			addressV{ D3D11_TEXTURE_ADDRESS_CLAMP },
 			addressW{ D3D11_TEXTURE_ADDRESS_CLAMP },

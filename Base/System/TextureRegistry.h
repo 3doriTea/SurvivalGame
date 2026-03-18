@@ -70,6 +70,16 @@ namespace GameBase::System
 		void RefAt(const TextureHandle _hTexture, std::function<void(const Texture&)> _callback) const override;
 
 	private:
+		/// <summary>
+		/// テクスチャを読み込む 本体
+		/// </summary>
+		/// <param name="_file">テクスチャに使用するファイルのパス</param>
+		/// <param name="_loadConfig">読み込み設定</param>
+		/// <param name="_pOut">読み込んだテクスチャの出力先</param>
+		/// <returns>読み込みに成功 true / false</returns>
+		bool TryLoadTexture(const fs::path& _file, const TextureLoadConfig& _loadConfig, Texture* _pOut);
+
+	private:
 		FlyweightFactory<Texture, TextureHandle> registry_;
 
 	};
