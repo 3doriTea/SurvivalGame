@@ -373,6 +373,7 @@
     <ClCompile Include="Base\System\Input.cpp" />
     <ClCompile Include="Base\System\MainWindow.cpp" />
     <ClCompile Include="Base\System\MaterialRegistry.cpp" />
+    <ClCompile Include="Base\System\MeshRegistry.cpp" />
     <ClCompile Include="Base\System\ModelRegistry.cpp" />
     <ClCompile Include="Base\System\Program.cpp" />
     <ClCompile Include="Base\System\Renderer.cpp" />
@@ -424,6 +425,7 @@
     <ClInclude Include="Base\Standalone\CoreType\Handle.h" />
     <ClInclude Include="Base\Standalone\CoreType\Mat4x4.h" />
     <ClInclude Include="Base\Standalone\CoreType\Quaternion.h" />
+    <ClInclude Include="Base\Standalone\CoreType\Type4T.h" />
     <ClInclude Include="Base\Standalone\CoreType\Vec2.h" />
     <ClInclude Include="Base\Standalone\CoreType\Vec2Int.h" />
     <ClInclude Include="Base\Standalone\CoreType\Vec2T.h" />
@@ -450,6 +452,8 @@
     <ClInclude Include="Base\Structure\Model.h" />
     <ClInclude Include="Base\Structure\ModelLoader\FbxLoader.h" />
     <ClInclude Include="Base\Structure\ModelLoader\FbxMaterial.h" />
+    <ClInclude Include="Base\Structure\ModelLoader\FbxVertex.h" />
+    <ClInclude Include="Base\System\MeshRegistry.h" />
     <ClInclude Include="Base\System\ModelRegistry.h" />
     <ClInclude Include="Base\Structure\SchemaLoadBundle.h" />
     <ClInclude Include="Base\Structure\CreateWindowConfig.h" />

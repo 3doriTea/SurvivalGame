@@ -4,5 +4,5 @@
 
 namespace GameBase
 {
-	using Vec2Int = Vec2T<int, DirectX::XMINT2>;
+	using Vec2Int = Vec2T<int, DirectX::XMINT2, int64_t>;
 }

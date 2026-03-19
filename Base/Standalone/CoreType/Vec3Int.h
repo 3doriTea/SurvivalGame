@@ -4,6 +4,6 @@
 
 namespace GameBase
 {
-	using Vec3Int = Vec3T<int, DirectX::XMINT3>;
+	using Vec3Int = Vec3T<int, DirectX::XMINT3, int64_t>;
 }
 #pragma once

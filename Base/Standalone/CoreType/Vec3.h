@@ -4,5 +4,5 @@
 
 namespace GameBase
 {
-	using Vec3 = Vec3T<float, DirectX::XMFLOAT3>;
+	using Vec3 = Vec3T<float, DirectX::XMFLOAT3, double>;
 }

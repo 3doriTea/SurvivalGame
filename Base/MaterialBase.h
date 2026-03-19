@@ -20,9 +20,14 @@ namespace GameBase
 		virtual ShaderHandle Shader() const = 0;
 
 		/// <summary>
-		/// マテリアルに使用するテクスチャ
+		/// マテリアルに使用するディフューズテクスチャ
 		/// </summary>
-		/// <returns></returns>
-		inline virtual TextureHandle Texture() const {};
+		/// <returns>テクスチャハンドル</returns>
+		inline virtual TextureHandle TextureDiffuse() const {}
+		/// <summary>
+		/// マテリアルに使用する法線マップ
+		/// </summary>
+		/// <returns>テクスチャハンドル</returns>
+		inline virtual TextureHandle TextureNormal() const {}
 	};
 }

@@ -11,27 +11,30 @@ namespace GameBase
 		ModelNode(
 			MeshHandle _hMesh,
 			MaterialHandle _hMaterial,
-			Mat4x4 _localTransform) :
+			Mat4x4 _toParentTransform,
+			Mat4x4 _toWorldTransform) :
 			hMesh{ _hMesh },
 			hMaterial{ _hMaterial },
-			localTransform{ _localTransform }
+			toParentTransform{ _toParentTransform },
+			toWorldTransform{ _toWorldTransform }
 		{}
 
 
 		ModelNode() :
-			ModelNode{ INVALID_HANDLE, INVALID_HANDLE, Mat4x4::Identity() }
+			ModelNode{ INVALID_HANDLE, INVALID_HANDLE, Mat4x4::Identity(), Mat4x4::Identity() }
 		{}
 
 		MeshHandle hMesh;
 		MaterialHandle hMaterial;
-		Mat4x4 localTransform;
+		Mat4x4 toParentTransform;
+		Mat4x4 toWorldTransform;
 	};
 
 	struct Model
 	{
 		std::string name;  // モデルのId
-		// メッシュとマテリアルのセット
-		std::vector<ModelNode> meshAndMaterials;
+		// ノード
+		std::vector<ModelNode> nodes;
 		AABB localAABB;  // カリング判定用AABB
 	};
 }

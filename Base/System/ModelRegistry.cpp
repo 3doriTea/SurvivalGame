@@ -1,5 +1,6 @@
 #include "ModelRegistry.h"
 #include "../Structure/ModelLoader/FbxLoader.h"
+#include "MeshRegistry.h"
 
 GameBase::System::ModelRegistry::ModelRegistry()
 {}
@@ -8,7 +9,9 @@ GameBase::System::ModelRegistry::~ModelRegistry()
 {}
 
 void GameBase::System::ModelRegistry::Initialize()
-{}
+{
+	models_.SetDefaultResource(Model{});
+}
 
 void GameBase::System::ModelRegistry::Update(EntityRegistry&)
 {}
@@ -30,7 +33,7 @@ GameBase::ModelHandle GameBase::System::ModelRegistry::Load(const fs::path& _fil
 			return INVALID_HANDLE;
 		}
 
-		models_.Emplace(model);
+		return models_.Emplace(model);
 
 		Debugger::LogEnd();
 

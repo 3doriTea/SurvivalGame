@@ -1,6 +1,6 @@
 #pragma once
 #include "../SystemBase.h"
-#include "../Structure/Model.h"
+#include "../Structure/Mesh.h"
 
 
 namespace GameBase::System
@@ -8,24 +8,27 @@ namespace GameBase::System
 	/// <summary>
 	/// システムインタフェース: 
 	/// </summary>
-	class IModelRegistry : public ISystemInterfaceBase
+	class IMeshRegistry : public ISystemInterfaceBase
 	{
 	public:
-		IModelRegistry() = default;
-		virtual ~IModelRegistry() = default;
+		IMeshRegistry() = default;
+		virtual ~IMeshRegistry() = default;
 
-		virtual ModelHandle Load(const fs::path& _file) = 0;
-		//virtual void Hoge() = 0;
+		/// <summary>
+		/// メッシュをロードする
+		/// </summary>
+		/// <returns>メッシュハンドル</returns>
+		virtual MeshHandle Load(Mesh&& _mesh) = 0;
 	};
 
 	/// <summary>
 	/// システム: 
 	/// </summary>
-	class ModelRegistry : public SystemBase<ModelRegistry, IModelRegistry>
+	class MeshRegistry : public SystemBase<MeshRegistry, IMeshRegistry>
 	{
 	public:
-		ModelRegistry();
-		~ModelRegistry();
+		MeshRegistry();
+		~MeshRegistry();
 
 		// 利用する参照があるときに使用
 		//void OnRegisterDependencies(FluentVectorAddOnly<SystemIndex>* _registry) override;
@@ -45,10 +48,9 @@ namespace GameBase::System
 		/// </summary>
 		void Release() override;
 
-		ModelHandle Load(const fs::path& _file) override;
+		MeshHandle Load(Mesh&& _mesh) override;
 
 	private:
-		// モデル保管
-		FlyweightFactory<Model, ModelHandle> models_;
+		FlyweightFactory<Mesh, MeshHandle> meshes_;
 	};
 }

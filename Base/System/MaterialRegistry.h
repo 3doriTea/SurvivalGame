@@ -43,10 +43,9 @@ namespace GameBase::System
 		/// 終了処理
 		/// </summary>
 		void Release() override;
+	
+		MaterialHandle Load(std::unique_ptr<MaterialBase>) override;
 
 	private:
-
-		// SystemBase を介して継承されました
-		MaterialHandle Load(std::unique_ptr<MaterialBase>) override;
 	};
 }

@@ -3,7 +3,7 @@
 
 namespace GameBase
 {
-	template<typename T, typename DirectXMathT>
+	template<typename T, typename DirectXMathT, typename BIGT>
 	struct Vec2T
 	{
 		struct Vec2TData { T x; T y; };
@@ -26,6 +26,18 @@ namespace GameBase
 			Vec2T{ 0, 0 }
 		{}
 
+		inline Vec2T(const T* _pV) :
+			Vec2T{ _pV[AT_X], _pV[AT_Y] }
+		{}
+
+		inline Vec2T(BIGT* _pV) :
+			Vec2T
+		{
+			static_cast<T>(_pV[AT_X]),
+			static_cast<T>(_pV[AT_Y])
+		}
+		{}
+
 		template<typename U>
 		inline Vec2T(U _x, U _y ) :
 			x{ static_cast<T>(_x) },
@@ -33,14 +45,14 @@ namespace GameBase
 		{
 		}
 
-		template<typename U, typename DirectXMathU>
-		inline Vec2T(const Vec2T<U, DirectXMathU>& _other) :
+		template<typename U, typename DirectXMathU, typename BIGT>
+		inline Vec2T(const Vec2T<U, DirectXMathU, BIGT>& _other) :
 			Vec2T{ _other.x, _other.y }
 		{
 		}
 
-		template<typename U, typename DirectXMathU>
-		inline Vec2T& operator=(const Vec2T<U, DirectXMathU>& _other)
+		template<typename U, typename DirectXMathU, typename BIGT>
+		inline Vec2T& operator=(const Vec2T<U, DirectXMathU, BIGT>& _other)
 		{
 			if (this != &_other)
 			{
@@ -51,15 +63,15 @@ namespace GameBase
 		}
 
 		template<typename U, typename DirectXMathU>
-		inline Vec2T(Vec2T<U, DirectXMathU>&& _other) noexcept :
+		inline Vec2T(Vec2T<U, DirectXMathU, BIGT>&& _other) noexcept :
 			Vec2T{ _other.x, _other.y }
 		{
 			_other.x = 0;
 			_other.y = 0;
 		}
 
-		template<typename U, typename DirectXMathU>
-		inline Vec2T& operator=(Vec2T<U, DirectXMathU>&& _other) noexcept
+		template<typename U, typename DirectXMathU, typename BIGT>
+		inline Vec2T& operator=(Vec2T<U, DirectXMathU, BIGT>&& _other) noexcept
 		{
 			if (this != &_other)
 			{
@@ -115,15 +127,15 @@ namespace GameBase
 #pragma endregion
 
 #pragma region 四則演算
-		template<typename U, typename DirectXMathU>
-		inline Vec2T& operator+=(const Vec2T<U, DirectXMathU> _other)
+		template<typename U, typename DirectXMathU, typename BIGT>
+		inline Vec2T& operator+=(const Vec2T<U, DirectXMathU, BIGT> _other)
 		{
 			this->x += static_cast<T>(_other.x);
 			this->y += static_cast<T>(_other.y);
 			return *this;
 		}
-		template<typename U, typename DirectXMathU>
-		inline Vec2T& operator-=(const Vec2T<U, DirectXMathU> _other)
+		template<typename U, typename DirectXMathU, typename BIGT>
+		inline Vec2T& operator-=(const Vec2T<U, DirectXMathU, BIGT> _other)
 		{
 			this->x -= static_cast<T>(_other.x);
 			this->y -= static_cast<T>(_other.y);
@@ -157,46 +169,46 @@ namespace GameBase
 	};
 
 #pragma region フレンド四則演算関数
-	template<typename T, typename DirectXMathT>
-	inline Vec2T<T, DirectXMathT> operator+(Vec2T<T, DirectXMathT> _left, const Vec2T<T, DirectXMathT> _right)
+	template<typename T, typename DirectXMathT, typename BIGT>
+	inline Vec2T<T, DirectXMathT, BIGT> operator+(Vec2T<T, DirectXMathT, BIGT> _left, const Vec2T<T, DirectXMathT, BIGT> _right)
 	{
 		return _left += _right;
 	}
-	template<typename T, typename DirectXMathT>
-	inline Vec2T<T, DirectXMathT> operator-(Vec2T<T, DirectXMathT> _left, const Vec2T<T, DirectXMathT> _right)
+	template<typename T, typename DirectXMathT, typename BIGT>
+	inline Vec2T<T, DirectXMathT, BIGT> operator-(Vec2T<T, DirectXMathT, BIGT> _left, const Vec2T<T, DirectXMathT, BIGT> _right)
 	{
 		return _left -= _right;
 	}
-	template<typename T, typename DirectXMathT>
-	inline Vec2T<T, DirectXMathT> operator*(Vec2T<T, DirectXMathT> _left, const T _right)
+	template<typename T, typename DirectXMathT, typename BIGT>
+	inline Vec2T<T, DirectXMathT, BIGT> operator*(Vec2T<T, DirectXMathT, BIGT> _left, const T _right)
 	{
 		return _left *= _right;
 	}
-	template<typename T, typename DirectXMathT>
-	inline Vec2T<T, DirectXMathT> operator*(const T _left, const Vec2T<T, DirectXMathT> _right)
+	template<typename T, typename DirectXMathT, typename BIGT>
+	inline Vec2T<T, DirectXMathT, BIGT> operator*(const T _left, const Vec2T<T, DirectXMathT, BIGT> _right)
 	{
 		return _right *= _left;
 	}
-	template<typename T, typename DirectXMathT>
-	inline Vec2T<T, DirectXMathT> operator/(Vec2T<T, DirectXMathT> _left, const T _right)
+	template<typename T, typename DirectXMathT, typename BIGT>
+	inline Vec2T<T, DirectXMathT, BIGT> operator/(Vec2T<T, DirectXMathT, BIGT> _left, const T _right)
 	{
 		return _left /= _right;
 	}
-	template<typename T, typename DirectXMathT>
-	inline Vec2T<T, DirectXMathT> operator/(const T _left, const Vec2T<T, DirectXMathT> _right)
+	template<typename T, typename DirectXMathT, typename BIGT>
+	inline Vec2T<T, DirectXMathT, BIGT> operator/(const T _left, const Vec2T<T, DirectXMathT, BIGT> _right)
 	{
 		return _right /= _left;
 	}
 #pragma endregion
 
 #pragma region フレンド比較演算子
-	template<typename T, typename DirectXMathT>
-	inline bool operator==(const Vec2T<T, DirectXMathT> _a, const Vec2T<T, DirectXMathT> _b)
+	template<typename T, typename DirectXMathT, typename BIGT>
+	inline bool operator==(const Vec2T<T, DirectXMathT, BIGT> _a, const Vec2T<T, DirectXMathT, BIGT> _b)
 	{
 		return _a.x == _b.x && _a.y == _b.y;
 	}
-	template<typename T, typename DirectXMathT>
-	inline bool operator!=(const Vec2T<T, DirectXMathT> _a, const Vec2T<T, DirectXMathT> _b)
+	template<typename T, typename DirectXMathT, typename BIGT>
+	inline bool operator!=(const Vec2T<T, DirectXMathT, BIGT> _a, const Vec2T<T, DirectXMathT, BIGT> _b)
 	{
 		return !(_a == _b);
 	}
