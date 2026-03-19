@@ -19,6 +19,10 @@ namespace GameBase
 			DirectX::XMMATRIX{ DirectX::XMMatrixIdentity() }
 		{}
 
-		
+		/// <summary>
+		/// 単位行列を取得する
+		/// </summary>
+		/// <returns>単位行列</returns>
+		static inline Mat4x4 Identity() { return DirectX::XMMatrixIdentity(); }
 	};
 }

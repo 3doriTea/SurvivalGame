@@ -15,6 +15,7 @@ namespace GameBase::Editor
 			ASSET_UNKNOWN_FOLDER,
 			ASSET_CPP_HEADER,
 			ASSET_CPP_SOURCE,
+			ASSET_MODEL_FBX,
 			ASSET_UP_DIRECTORY,
 			ASSET_TYPE_MAX,
 		};
@@ -51,8 +52,9 @@ namespace GameBase::Editor
 		/// アセットのセルを表示する
 		/// </summary>
 		bool IsClickCellShow(
+			EntityRegistry& _registry,
+			const AssetTypes _assetType,
 			const std::string_view _text,
-			const TextureHandle _icon,
 			const bool _selected = false);
 		/// <summary>
 		/// セルがダブルクリックされたか
@@ -64,6 +66,14 @@ namespace GameBase::Editor
 		/// 右クリックなどで出るメニュー表示
 		/// </summary>
 		void ShowContextMenu();
+
+		/// <summary>
+		/// 右クリックなどで出るセルのメニュー表示
+		/// </summary>
+		void ShowCellContextMenu(
+			EntityRegistry& _registry,
+			const std::string_view _fileName,
+			const AssetTypes _assetType);
 
 		/// <summary>
 		/// カラム数を計算する

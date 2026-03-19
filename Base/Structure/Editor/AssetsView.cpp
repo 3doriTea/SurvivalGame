@@ -2,15 +2,21 @@
 #include "AssetsView.h"
 #include "../../System/Editor/EditorBase.h"
 #include <System/TextureRegistry.h>
+#include <System/ModelRegistry.h>
 
 namespace
 {
+	using namespace GameBase;
+	using AssetType = GameBase::Editor::AssetsView::AssetTypes;
+	using EntityRegistry = GameBase::EntityRegistry;
+
 	static const std::map<GameBase::Editor::AssetsView::AssetTypes, std::string_view> FILE_NAMES
 	{
 		{ GameBase::Editor::AssetsView::ASSET_UNKNOWN_FILE, "UnknownFile.png" },
 		{ GameBase::Editor::AssetsView::ASSET_UNKNOWN_FOLDER, "Folder.png" },
 		{ GameBase::Editor::AssetsView::ASSET_CPP_HEADER, "CppHeader.png" },
 		{ GameBase::Editor::AssetsView::ASSET_CPP_SOURCE, "CppSource.png" },
+		{ GameBase::Editor::AssetsView::ASSET_MODEL_FBX, "ModelFbx.png" },
 		{ GameBase::Editor::AssetsView::ASSET_UP_DIRECTORY, "Updir.png" },
 	};
 
@@ -19,6 +25,26 @@ namespace
 		{ ".cpp", GameBase::Editor::AssetsView::ASSET_CPP_SOURCE },
 		{ ".h", GameBase::Editor::AssetsView::ASSET_CPP_HEADER },
 		{ ".hpp", GameBase::Editor::AssetsView::ASSET_CPP_HEADER },
+		{ ".fbx", GameBase::Editor::AssetsView::ASSET_MODEL_FBX },
+	};
+
+	/// <summary>
+	/// 各アセットを右クリックしたときのメニュー
+	/// </summary>
+	static const std::map<
+		GameBase::Editor::AssetsView::AssetTypes,
+		std::function<void(GameBase::EntityRegistry&, const fs::path&)>> MENU_CONTEXT
+	{
+		{
+			AssetType::ASSET_MODEL_FBX, [](EntityRegistry& _registry, const fs::path& _file)
+			{
+				if (ImGui::MenuItem("Load"))
+				{
+					ModelHandle hModel{ Get<System::ModelRegistry>().Load(_file) };
+					MessageBox(NULL, std::format("Loaded:{}", hModel).c_str(), "Fbx Loaded", MB_OK);
+				}
+			}
+		}
 	};
 }
 
@@ -45,7 +71,7 @@ GameBase::Editor::AssetsView::AssetsView(const Config& _config) :
 	}
 }
 
-bool GameBase::Editor::AssetsView::OnGUI(EntityRegistry&)
+bool GameBase::Editor::AssetsView::OnGUI(EntityRegistry& _registry)
 {
 	bool onSelectedEvent{ false };
 
@@ -75,7 +101,10 @@ bool GameBase::Editor::AssetsView::OnGUI(EntityRegistry&)
 
 			ImGui::PushID("__updirectory__");
 
-			bool _ = IsClickCellShow("../", hIcons_[ASSET_UP_DIRECTORY]);
+			bool _ = IsClickCellShow(
+				_registry,
+				ASSET_UP_DIRECTORY,
+				"../");
 
 			// ダブルクリックでディレクトリに入る処理など
 			if (IsDoubleClickCell())
@@ -116,8 +145,9 @@ bool GameBase::Editor::AssetsView::OnGUI(EntityRegistry&)
 
 			bool selected{ entry.path() == selectedPath_ };
 			if (IsClickCellShow(
+				_registry,
+				assetType,
 				entry.path().filename().string(),
-				hIcons_[assetType],
 				selected))
 			{
 				selectedPath_ = entry.path();
@@ -161,8 +191,9 @@ void GameBase::Editor::AssetsView::OnSelected(EntityRegistry& _registry, Selecte
 }
 
 bool GameBase::Editor::AssetsView::IsClickCellShow(
+	EntityRegistry& _registry,
+	const AssetTypes _assetType,
 	const std::string_view _text,
-	const TextureHandle _icon,
 	const bool _selected)
 {
 	bool isClick{ false };
@@ -171,7 +202,7 @@ bool GameBase::Editor::AssetsView::IsClickCellShow(
 	ImVec2 size = { thumbnailSize_, thumbnailSize_ };
 	ImTextureID icon{};
 	Get<System::TextureRegistry>().RefAt(
-		_icon,
+		hIcons_[_assetType],
 		[&icon](const Texture& _texture)
 		{
 			icon = reinterpret_cast<ImTextureID>(_texture.pShaderResourceView.Get());
@@ -212,6 +243,13 @@ bool GameBase::Editor::AssetsView::IsClickCellShow(
 	ImGui::Text(_text.data());
 	ImGui::PopTextWrapPos();
 
+	// ディレクトリではないなら右クリックメニューを出す
+	if (_assetType != ASSET_UP_DIRECTORY
+		&& _assetType != ASSET_UNKNOWN_FOLDER)
+	{
+		ShowCellContextMenu(_registry, _text, _assetType);
+	}
+
 	if (_selected)
 	{
 		ImGui::PopStyleColor();
@@ -219,6 +257,7 @@ bool GameBase::Editor::AssetsView::IsClickCellShow(
 
 	ImGui::EndChild();
 	ImGui::EndGroup();
+
 	// グループの範囲を判定し、選択中なら枠を描画
 	if (_selected)
 	{
@@ -272,6 +311,98 @@ void GameBase::Editor::AssetsView::ShowContextMenu()
 		if (ImGui::MenuItem("Refresh"))
 		{
 			// リフレッシュ処理
+		}
+
+		ImGui::EndPopup();
+	}
+}
+
+void GameBase::Editor::AssetsView::ShowCellContextMenu(
+	EntityRegistry& _registry,
+	const std::string_view _fileName,
+	const AssetTypes _assetType)
+{
+	static std::array<char, 1024> renameBuffer{};
+	static bool openRenameModal{ false };
+	static std::string targetFileName{};
+
+	// 右クリックの処理
+	if (ImGui::BeginPopupContextWindow("AssetItemContextMenu"))
+	{
+		if (ImGui::MenuItem("Rename"))
+		{
+			targetFileName = _fileName;
+			renameBuffer.fill('\0');
+			std::copy(targetFileName.begin(), targetFileName.end(), renameBuffer.begin());
+			openRenameModal = true;
+		}
+
+		auto itr{ MENU_CONTEXT.find(_assetType) };
+		if (itr != MENU_CONTEXT.end())
+		{
+			auto& [type, func]{ *itr };
+			func(_registry, currentPath_ / _fileName);
+		}
+
+		ImGui::EndPopup();
+	}
+
+	if (openRenameModal)
+	{
+		// 階層回避のためにここで処理する
+		ImGui::OpenPopup("RenameFilePopup");
+		openRenameModal = false;
+	}
+
+	// 名前変更ポップアップ
+	if (ImGui::BeginPopupModal("RenameFilePopup", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::Text("Enter new name:");
+
+		std::function<void()> renameProc
+		{
+			[this]()
+			{
+				fs::path newPath = currentPath_ / renameBuffer.data();
+				try
+				{
+					if (!fs::exists(newPath))
+					{
+						fs::rename(currentPath_ / targetFileName, newPath);
+					}
+				}
+				catch (const fs::filesystem_error& ex)
+				{
+					GB_ASSERT(false && "名前の変更に失敗",
+						std::format("reason:{}", ex.what()));
+				}
+			}
+		};
+
+		// 入力フィールド（Enterキーで確定するように設定）
+		if (ImGui::InputText(
+			"##newName",
+			renameBuffer.data(),
+			renameBuffer.size(),
+			ImGuiInputTextFlags_EnterReturnsTrue))
+		{
+			renameProc();
+			ImGui::CloseCurrentPopup();
+		}
+
+		ImGui::Separator();
+
+		if (ImGui::Button("OK", ImVec2(120, 0)))
+		{
+			renameProc();
+			ImGui::CloseCurrentPopup();
+		}
+
+		ImGui::SameLine();
+
+		if (ImGui::Button("Cancel", ImVec2(120, 0)))
+		{
+			ImGui::CloseCurrentPopup();
 		}
 
 		ImGui::EndPopup();

@@ -21,4 +21,14 @@ namespace GameBase
 	/// マテリアルハンドル
 	/// </summary>
 	using MaterialHandle = uint32_t;
+
+	/// <summary>
+	/// モデルハンドル
+	/// </summary>
+	using ModelHandle = uint32_t;
+
+	/// <summary>
+	/// メッシュのハンドル
+	/// </summary>
+	using MeshHandle = uint32_t;
 }

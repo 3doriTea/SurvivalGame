@@ -96,6 +96,7 @@ namespace fs = std::filesystem;
 #include <CoreType/Vec2Int.h>
 #include <CoreType/Vec3.h>
 #include <CoreType/Vec3Int.h>
+#include <CoreType/Float4.h>
 #include <CoreType/Mat4x4.h>
 #include <CoreType/Handle.h>
 #include <CoreType/XMOperator.h>

@@ -1,6 +1,7 @@
 #include "Debugger.h"
 #include <cassert>
 #include <fstream>
+#include <Windows.h>
 
 namespace
 {
@@ -46,6 +47,7 @@ void GameBase::Debugger::Log(const std::string_view _content)
 
 	auto now{ std::chrono::system_clock::now() };
 	logHistory_.emplace_back(std::format("@{}[{:%H:%M:%S}] {}", scopeName_.str(), now, _content));
+	OutputDebugString(std::format("{}\r\n", logHistory_.back()).c_str());
 }
 
 void GameBase::Debugger::LogEnd()
