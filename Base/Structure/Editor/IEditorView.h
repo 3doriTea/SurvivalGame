@@ -17,13 +17,15 @@ namespace GameBase::Editor
 		/// <summary>
 		/// ImGUI描画タイミング
 		/// </summary>
+		/// <param name="_registry">レジストリ参照</param>
 		/// <returns>選択がされた true / false</returns>
 		virtual bool OnGUI(EntityRegistry&) = 0;
 
 		/// <summary>
 		/// なにかしら項目選択時のイベント
 		/// </summary>
+		/// <param name="_registry">レジストリ参照</param>
 		/// <param name="_event">選択イベント</param>
-		inline virtual void OnSelected(SelectedEvent& _event) {}
+		inline virtual void OnSelected(EntityRegistry& _registry, SelectedEvent& _event) {}
 	};
 }

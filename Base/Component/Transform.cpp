@@ -20,10 +20,13 @@ void GameBase::Component::Transform::OnLoad(const YAML::Node& _node, SchemaLoadB
 	position.y = _node["position"]["y"].as<float>(position.y);
 	position.z = _node["position"]["z"].as<float>(position.z);
 
-	rotation.x = _node["rotation"]["x"].as<float>(rotation.x);
-	rotation.y = _node["rotation"]["y"].as<float>(rotation.y);
-	rotation.z = _node["rotation"]["z"].as<float>(rotation.z);
-	rotation.w = _node["rotation"]["w"].as<float>(rotation.w);
+	Vec3 euler{ rotation.ToEuler() };
+
+	euler.x = _node["rotation"]["x"].as<float>(euler.x);
+	euler.y = _node["rotation"]["y"].as<float>(euler.y);
+	euler.z = _node["rotation"]["z"].as<float>(euler.z);
+
+	rotation = Quaternion::FromEuler(euler);
 
 	scale.x = _node["scale"]["x"].as<float>(scale.x);
 	scale.y = _node["scale"]["y"].as<float>(scale.y);
@@ -37,23 +40,24 @@ void GameBase::Component::Transform::OnSave(YAML::Emitter & _emitter, SchemaLoad
 	_emitter << YAML::Key << "position";
 	_emitter << YAML::Value << YAML::BeginMap;
 	_emitter << YAML::Key << "x" << YAML::Value << position.x;
-	_emitter << YAML::Key << "y" << YAML::Value << position.x;
-	_emitter << YAML::Key << "z" << YAML::Value << position.x;
+	_emitter << YAML::Key << "y" << YAML::Value << position.y;
+	_emitter << YAML::Key << "z" << YAML::Value << position.z;
 	_emitter << YAML::EndMap;
+
+	Vec3 euler{ rotation.ToEuler() };
 
 	_emitter << YAML::Key << "rotation";
 	_emitter << YAML::Value << YAML::BeginMap;
-	_emitter << YAML::Key << "x" << YAML::Value << rotation.x;
-	_emitter << YAML::Key << "y" << YAML::Value << rotation.y;
-	_emitter << YAML::Key << "z" << YAML::Value << rotation.z;
-	_emitter << YAML::Key << "w" << YAML::Value << rotation.w;
+	_emitter << YAML::Key << "x" << YAML::Value << euler.x;
+	_emitter << YAML::Key << "y" << YAML::Value << euler.y;
+	_emitter << YAML::Key << "z" << YAML::Value << euler.z;
 	_emitter << YAML::EndMap;
 
 	_emitter << YAML::Key << "scale";
 	_emitter << YAML::Value << YAML::BeginMap;
 	_emitter << YAML::Key << "x" << YAML::Value << scale.x;
-	_emitter << YAML::Key << "y" << YAML::Value << scale.x;
-	_emitter << YAML::Key << "z" << YAML::Value << scale.x;
+	_emitter << YAML::Key << "y" << YAML::Value << scale.y;
+	_emitter << YAML::Key << "z" << YAML::Value << scale.z;
 	_emitter << YAML::EndMap;
 
 	_emitter << YAML::Key << "parent" << YAML::Value << _bundle.entityToFileId.at(parent);

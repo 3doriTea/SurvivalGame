@@ -38,7 +38,7 @@ namespace GameBase::Editor
 		/// <returns>選択中のエンティティ</returns>
 		Entity GetSelectedEntity() const { return selectedEntity_; }
 
-		void OnSelected(SelectedEvent& _event) override;
+		void OnSelected(EntityRegistry& _registry, SelectedEvent& _event) override;
 
 	private:
 		/// <summary>

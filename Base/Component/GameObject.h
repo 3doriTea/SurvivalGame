@@ -15,6 +15,6 @@ namespace GameBase::Component
 		void OnLoad(const YAML::Node& _node, SchemaLoadBundle& _bundle) override;
 		void OnSave(YAML::Emitter& _emitter, SchemaLoadBundle& _bundle) override;
 
-		std::array<char8_t, GAME_OBJECT_NAME_BUFFER_SIZE> name;  // 名前
+		std::array<char, GAME_OBJECT_NAME_BUFFER_SIZE> name;  // 名前
 	};
 }

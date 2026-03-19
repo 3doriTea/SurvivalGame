@@ -38,7 +38,7 @@ namespace GameBase::Editor
 		/// </summary>
 		bool OnGUI(EntityRegistry&) override;
 
-		void OnSelected(SelectedEvent& _event) override;
+		void OnSelected(EntityRegistry& _registry, SelectedEvent& _event) override;
 
 	private:
 		/// <summary>

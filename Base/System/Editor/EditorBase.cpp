@@ -78,7 +78,7 @@ void GameBase::System::EditorBase::Initialize()
 				{
 					for (const std::shared_ptr<Editor::IEditorView>& p : pEditors_)
 					{
-						p.get()->OnSelected(selectedEvent_);
+						p.get()->OnSelected(_registry, selectedEvent_);
 					}
 				}
 

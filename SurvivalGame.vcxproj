@@ -340,11 +340,13 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Base\Structure\AssetLoader\YamlBuilder.cpp" />
     <ClCompile Include="Base\Structure\AssetLoader\YamlLoader.cpp" />
     <ClCompile Include="Base\Structure\Editor\AssetsView.cpp" />
     <ClCompile Include="Base\Structure\Editor\HierarchyView.cpp" />
     <ClCompile Include="Base\Structure\Editor\IEditorView.cpp" />
     <ClCompile Include="Base\Structure\Editor\InspectorView.cpp" />
+    <ClCompile Include="Base\Structure\Editor\Inspector\Component.cpp" />
     <ClCompile Include="Base\Structure\Editor\SelectedEvent.cpp" />
     <ClCompile Include="Base\SystemBase.cpp" />
     <ClCompile Include="Base\System\Assets.cpp" />
@@ -421,8 +423,10 @@
     <ClInclude Include="Base\Standalone\Utility\TimeUtil.h" />
     <ClInclude Include="Base\Structure\AssetFilter.h" />
     <ClInclude Include="Base\Structure\AssetLoader\AssetLoaderScene.h" />
+    <ClInclude Include="Base\Structure\AssetLoader\YamlBuilder.h" />
     <ClInclude Include="Base\Structure\AssetLoader\YamlLoader.h" />
     <ClInclude Include="Base\Structure\Editor\InspectorView.h" />
+    <ClInclude Include="Base\Structure\Editor\Inspector\Component.h" />
     <ClInclude Include="Base\Structure\Editor\SelectedEvent.h" />
     <ClInclude Include="Base\Structure\SchemaLoadBundle.h" />
     <ClInclude Include="Base\Structure\CreateWindowConfig.h" />

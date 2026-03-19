@@ -15,7 +15,20 @@ GameBase::Component::Camera::Camera() :
 void GameBase::Component::Camera::OnLoad(const YAML::Node& _node, SchemaLoadBundle& _bundle)
 {
 		nearZ = _node["near"].as<float>(nearZ);
+		if (nearZ <= FLT_EPSILON)
+		{
+			nearZ = 0.00001f;  // 0以下にさせない
+		}
 		farZ = _node["far"].as<float>(farZ);
+		if (farZ <= FLT_EPSILON)
+		{
+			farZ = 0.00001f;  // 0以下にさせない
+		}
+
+		if (nearZ <= farZ)
+		{
+			farZ = nearZ + 0.00002f;
+		}
 		fovRadian = _node["fov"].as<float>(fovRadian);
 }
 

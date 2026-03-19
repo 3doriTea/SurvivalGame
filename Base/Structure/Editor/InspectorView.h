@@ -1,5 +1,6 @@
 #pragma once
 #include "IEditorView.h"
+#include "Inspector/Component.h"
 
 namespace GameBase::Editor
 {
@@ -7,7 +8,9 @@ namespace GameBase::Editor
 	{
 		enum struct Mode
 		{
-			ShowComponents,
+			None,            // 何も選択されていない
+			ShowComponents,  // コンポーネントを選択中
+			AssetItem,       // アセットアイテムを選択中
 		};
 
 	public:
@@ -20,7 +23,16 @@ namespace GameBase::Editor
 		/// <param name=""></param>
 		bool OnGUI(EntityRegistry&) override;
 
+		/// <summary>
+		/// 何かしらが選択された
+		/// </summary>
+		/// <param name="_event"></param>
+		void OnSelected(EntityRegistry& _registry, SelectedEvent& _event) override;
+
 	private:
-		
+		Entity selectedEntity_;  // 選択されたエンティティ
+		std::vector<Inspector::Component> components_;  // 選択されたエンティティのコンポーネント
+
+		Mode mode_;  // 選択中のモード
 	};
 }

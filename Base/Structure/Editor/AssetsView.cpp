@@ -148,7 +148,7 @@ bool GameBase::Editor::AssetsView::OnGUI(EntityRegistry&)
 	return onSelectedEvent;
 }
 
-void GameBase::Editor::AssetsView::OnSelected(SelectedEvent& _event)
+void GameBase::Editor::AssetsView::OnSelected(EntityRegistry& _registry, SelectedEvent& _event)
 {
 	if (_event.TryGetEvent<AssetsView>())
 	{

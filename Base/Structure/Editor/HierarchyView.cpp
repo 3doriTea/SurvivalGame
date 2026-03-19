@@ -58,7 +58,7 @@ bool GameBase::Editor::HierarchyView::OnGUI(EntityRegistry& _registry)
 	return onSelectedEvent_;
 }
 
-void GameBase::Editor::HierarchyView::OnSelected(SelectedEvent& _event)
+void GameBase::Editor::HierarchyView::OnSelected(EntityRegistry& _registry, SelectedEvent& _event)
 {
 	if (_event.TryGetEvent<HierarchyView>())
 	{
