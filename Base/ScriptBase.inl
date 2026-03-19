@@ -35,3 +35,9 @@ T& GameBase::Script::Get()
 
 	return *std::static_pointer_cast<T>(sp).get();
 }
+
+template<typename T, typename DataT>
+inline GameBase::ScriptBase<T, DataT>::ScriptBase()
+{
+	// TODO: 登録処理
+}

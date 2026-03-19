@@ -7,8 +7,8 @@ GameBase::Component::Camera::Camera() :
 	farZ{ 300.0f },
 	fovRadian{ DirectX::XM_PIDIV4 },
 	aspectRatio{ 1600.0f / 900.0f },
-	viewMatrix{},
-	projectionMatrix{}
+	viewMatrix{ Mat4x4::Identity() },
+	projectionMatrix{ Mat4x4::Identity() }
 {
 }
 

@@ -43,6 +43,25 @@ namespace GameBase::Editor
 
 	private:
 		/// <summary>
+		/// エクスプローラで選択状態にして開く
+		/// </summary>
+		/// <param name="_path">選択するパス</param>
+		void SelectInExplorer(const fs::path& _path);
+
+		/// <summary>
+		/// エクスプローラで開く
+		/// </summary>
+		/// <param name="_path">開くパス</param>
+		void OpenInExplorer(const fs::path& _path);
+
+		/// <summary>
+		/// アセットはディレクトリであるか
+		/// </summary>
+		/// <param name="_assetType">アセットの種類</param>
+		/// <returns>ディレクトリである true / false</returns>
+		bool IsDirectry(const AssetTypes _assetType);
+
+		/// <summary>
 		/// 1つ上の階層に行けるか
 		/// </summary>
 		/// <returns>行ける true / false</returns>

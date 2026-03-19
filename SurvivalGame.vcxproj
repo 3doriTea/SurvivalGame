@@ -197,6 +197,7 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Assets\Scripts\PlayerController.cpp" />
     <ClCompile Include="Base\ComponentBase.cpp" />
     <ClCompile Include="Base\ComponentRegistry.cpp" />
     <ClCompile Include="Base\Component\Camera.cpp" />

@@ -1,4 +1,15 @@
 #pragma once
 #include <ScriptBase.h>
 
-struct PlayerController : 
+using namespace GameBase;
+
+struct PlayerControllerData
+{
+	Entity player;
+};
+
+struct PlayerController : ScriptBase<PlayerController, PlayerControllerData>
+{
+	void Start() override;
+	void Update() override;
+};

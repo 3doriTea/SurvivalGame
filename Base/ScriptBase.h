@@ -1,11 +1,13 @@
 #pragma once
+#include "ECS/Entity.h"
+
 
 namespace GameBase
 {
 	using ScriptIndex = size_t;
 
 	class IScriptBase;
-	template<typename T>
+	template<typename T, typename DataT>
 	class ScriptBase;
 
 	namespace ScriptRegistry
@@ -62,14 +64,18 @@ namespace GameBase
 		virtual void Start() = 0;
 		virtual void Update() = 0;
 	};
-
+#define GB_LOG_COMPILE(msg) __pragma(message(__FILE__ "(" _CRT_STRINGIZE(__LINE__) ") : [Compile Log] " msg))
 	/// <summary>
 	/// スクリプトのベースクラス
 	/// </summary>
-	/// <typeparam name="T">派生クラス</typeparam>
-	template<typename T>
-	class ScriptBase : public IScriptBase
+	/// <typeparam name="T">派生構造体</typeparam>
+	/// <typeparam name="DataT">データ構造体</typeparam>
+	template<typename T, typename DataT>
+	class ScriptBase : public IScriptBase, private DataT
 	{
+		/* TODO static_assert(sizeof(T) == sizeof(DataT) + 8,
+			"スクリプトにメンバ変数を書くことはできません。"
+			"データ構造体に分けてください。");*/
 	public:
 		ScriptBase();
 		inline virtual ~ScriptBase() = default;
@@ -78,6 +84,12 @@ namespace GameBase
 		virtual void Update() override {}
 
 	private:
+		void InnerUpdate();
+
+	private:
+		
+		
+	private:  // static
 		static inline std::shared_ptr<T> pInstance_{ std::make_shared<T>() };
 	};
 }

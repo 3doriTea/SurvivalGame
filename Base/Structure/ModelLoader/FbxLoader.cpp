@@ -6,6 +6,25 @@
 
 #include "FbxMaterial.h"
 
+namespace
+{
+	/// <summary>
+	/// ufbx_matrixをMat4x4に変換
+	/// </summary>
+	/// <param name="_from">ufbx_matrix</param>
+	/// <returns>Mat4x4</returns>
+	static inline GameBase::Mat4x4 ConvertTOMat4x4(const ufbx_matrix& _from)
+	{
+		return GameBase::Mat4x4
+		{
+			_from.m00, _from.m01, _from.m02, _from.m03,
+			_from.m10, _from.m11, _from.m12, _from.m13,
+			_from.m20, _from.m21, _from.m22, _from.m23,
+			      0.0,       0.0,       0.0,       1.0,
+		};
+	}
+}
+
 
 GameBase::FbxLoader::FbxLoader(const fs::path& _modelFile) :
 	modelFile_{ _modelFile }
@@ -63,8 +82,8 @@ bool GameBase::FbxLoader::TryLoad(Model* _pOut)
 				model.nodes.emplace_back(
 					hMesh,
 					INVALID_HANDLE,
-					pNode->node_to_parent.v,
-					pNode->node_to_world.v)
+					ConvertTOMat4x4(pNode->node_to_parent),
+					ConvertTOMat4x4(pNode->node_to_world));
 			}
 		}
 

@@ -4,6 +4,9 @@
 #include <System/TextureRegistry.h>
 #include <System/ModelRegistry.h>
 
+#include <ShlObj.h>
+#pragma comment(lib, "shell32.lib")
+
 namespace
 {
 	using namespace GameBase;
@@ -190,6 +193,34 @@ void GameBase::Editor::AssetsView::OnSelected(EntityRegistry& _registry, Selecte
 	}
 }
 
+void GameBase::Editor::AssetsView::SelectInExplorer(const fs::path& _path)
+{
+	fs::path absoluted{ fs::absolute(_path) };
+
+	PIDLIST_ABSOLUTE pidl{ ILCreateFromPathW(absoluted.c_str()) };
+	if (pidl)
+	{
+		SHOpenFolderAndSelectItems(pidl, 0, nullptr, 0);
+		ILFree(pidl);
+	}
+}
+
+void GameBase::Editor::AssetsView::OpenInExplorer(const fs::path& _path)
+{
+	ShellExecuteW(
+		nullptr,
+		L"explore",
+		_path.c_str(),
+		nullptr,
+		nullptr,
+		SW_SHOWNORMAL);
+}
+
+inline bool GameBase::Editor::AssetsView::IsDirectry(const AssetTypes _assetType)
+{
+	return _assetType == ASSET_UNKNOWN_FOLDER || _assetType == ASSET_UP_DIRECTORY;
+}
+
 bool GameBase::Editor::AssetsView::IsClickCellShow(
 	EntityRegistry& _registry,
 	const AssetTypes _assetType,
@@ -243,9 +274,9 @@ bool GameBase::Editor::AssetsView::IsClickCellShow(
 	ImGui::Text(_text.data());
 	ImGui::PopTextWrapPos();
 
-	// ディレクトリではないなら右クリックメニューを出す
-	if (_assetType != ASSET_UP_DIRECTORY
-		&& _assetType != ASSET_UNKNOWN_FOLDER)
+	// xxxxディレクトリではないなら右クリックメニューを出す
+	/*if (_assetType != ASSET_UP_DIRECTORY
+		&& _assetType != ASSET_UNKNOWN_FOLDER)*/
 	{
 		ShowCellContextMenu(_registry, _text, _assetType);
 	}
@@ -313,6 +344,13 @@ void GameBase::Editor::AssetsView::ShowContextMenu()
 			// リフレッシュ処理
 		}
 
+		ImGui::Separator();
+
+		if (ImGui::MenuItem("エクスプローラで開く"))
+		{
+			OpenInExplorer(currentPath_ / "");
+		}
+
 		ImGui::EndPopup();
 	}
 }
@@ -329,7 +367,7 @@ void GameBase::Editor::AssetsView::ShowCellContextMenu(
 	// 右クリックの処理
 	if (ImGui::BeginPopupContextWindow("AssetItemContextMenu"))
 	{
-		if (ImGui::MenuItem("Rename"))
+		if (!IsDirectry(_assetType) && ImGui::MenuItem("Rename"))
 		{
 			targetFileName = _fileName;
 			renameBuffer.fill('\0');
@@ -342,6 +380,13 @@ void GameBase::Editor::AssetsView::ShowCellContextMenu(
 		{
 			auto& [type, func]{ *itr };
 			func(_registry, currentPath_ / _fileName);
+		}
+
+		ImGui::Separator();
+
+		if (ImGui::MenuItem("エクスプローラで開く"))
+		{
+			SelectInExplorer(currentPath_ / _fileName);
 		}
 
 		ImGui::EndPopup();

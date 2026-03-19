@@ -7,10 +7,10 @@ GameBase::Component::Transform::Transform():
 	rotation{},
 	scale{},
 	parent{},
-	localTranslateMatrix{},
-	localRotationMatrix{},
-	localScaleMatrix{},
-	worldMatrix{}
+	localTranslateMatrix{ Mat4x4::Identity() },
+	localRotationMatrix{ Mat4x4::Identity() },
+	localScaleMatrix{ Mat4x4::Identity() },
+	worldMatrix{ Mat4x4::Identity() }
 {
 }
 
