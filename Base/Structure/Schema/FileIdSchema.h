@@ -2,5 +2,5 @@
 
 namespace GameBase::Schema
 {
-	using FileId = uint32_t;
+	using FileId = uint64_t;
 }

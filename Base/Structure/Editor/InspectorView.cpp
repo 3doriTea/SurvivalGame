@@ -16,6 +16,16 @@ bool GameBase::Editor::InspectorView::OnGUI(EntityRegistry& _registry)
 	if (mode_ == Mode::ShowComponents)
 	{
 		SchemaLoadBundle loadBundle{};
+
+		{  // FileId も Entityとして扱う無変換
+			auto view{ _registry.GetView() };
+			view.ForEach([&loadBundle](const Entity _entity)
+				{
+					loadBundle.entityToFileId.emplace(_entity, _entity);
+					loadBundle.fileIdToEntity.emplace(_entity, _entity);
+				});
+		}
+
 		for (auto& component : components_)
 		{
 			YAML::Emitter emitter{};

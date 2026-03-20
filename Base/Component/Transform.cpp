@@ -32,7 +32,7 @@ void GameBase::Component::Transform::OnLoad(const YAML::Node& _node, SchemaLoadB
 	scale.y = _node["scale"]["y"].as<float>(scale.y);
 	scale.z = _node["scale"]["z"].as<float>(scale.z);
 
-	parent = _bundle.fileIdToEntity.at(_node["parent"].as<Schema::FileId>(0));
+	parent = _bundle.fileIdToEntity.at(_node["parent"]["fileId"].as<Schema::FileId>(0));
 }
 
 void GameBase::Component::Transform::OnSave(YAML::Emitter & _emitter, SchemaLoadBundle& _bundle)
@@ -60,5 +60,10 @@ void GameBase::Component::Transform::OnSave(YAML::Emitter & _emitter, SchemaLoad
 	_emitter << YAML::Key << "z" << YAML::Value << scale.z;
 	_emitter << YAML::EndMap;
 
-	_emitter << YAML::Key << "parent" << YAML::Value << _bundle.entityToFileId.at(parent);
+	_emitter << YAML::Key << "parent";
+	_emitter << YAML::Value << YAML::BeginMap;
+	_emitter << YAML::Key << "fileId";
+	_emitter << YAML::Value << _bundle.entityToFileId.at(parent);
+	_emitter << YAML::EndMap;
+	_emitter << YAML::EndMap;
 }

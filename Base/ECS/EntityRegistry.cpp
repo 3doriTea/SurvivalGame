@@ -64,3 +64,8 @@ GameBase::IComponentBase& GameBase::EntityRegistry::GetComponent(
 {
 	return Get(_type).GetI(GetIndex(_entity));
 }
+
+bool GameBase::EntityRegistry::HasComponent(const Entity _entity, const ComponentIndex _type) const
+{
+	return entitySignatures_[GetIndex(_entity)].test(_type);
+}

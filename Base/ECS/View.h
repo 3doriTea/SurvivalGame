@@ -7,6 +7,22 @@ namespace GameBase
 {
 	class EntityRegistry;
 
+	class ViewEntityOnly
+	{
+	public:
+		ViewEntityOnly(EntityRegistry& _registry);
+		inline virtual ~ViewEntityOnly() = default;
+
+		/// <summary>
+		/// 全てのエンティティを走査
+		/// </summary>
+		/// <param name="_callback">void(Entity)</param>
+		void ForEach(const std::function<void(Entity)>& _callback);
+
+	private:
+		EntityRegistry& registry_;  // レジストリ参照
+	};
+
 	template<typename ...ComponentsT>
 	class View
 	{

@@ -11,6 +11,7 @@ namespace GameBase
 	{
 		template<typename ...ComponentsT>
 		friend class View;
+		friend class ViewEntityOnly;
 
 	public:
 		EntityRegistry(const EntityVersion _version);
@@ -72,6 +73,14 @@ namespace GameBase
 		IComponentBase& GetComponent(const Entity _entity, const ComponentIndex _type);
 
 		/// <summary>
+		/// エンティティがコンポーネントを持っているか判定
+		/// </summary>
+		/// <param name="_entity">エンティティ</param>
+		/// <param name="_type">コンポーネントのインデクス</param>
+		/// <returns>コンポーネントを持っている true / false</returns>
+		bool HasComponent(const Entity _entity, const ComponentIndex _type) const;
+
+		/// <summary>
 		/// コンポーネントマスクに一致するか
 		/// </summary>
 		/// <param name="_entity">エンティティ</param>
@@ -100,6 +109,19 @@ namespace GameBase
 		/// <returns>総エンティティ数</returns>
 		inline size_t TotalEntitiesCount() const { return entityCounter_; }
 
+		/// <summary>
+		/// ビューを取得する
+		/// </summary>
+		/// <returns>ビュー</returns>
+		inline ViewEntityOnly GetView()
+		{
+			return ViewEntityOnly{ *this };
+		}
+
+		/// <summary>
+		/// ビューを取得する
+		/// </summary>
+		/// <returns>ビュー</returns>
 		template<typename ...Args>
 		inline View<Args...> GetView()
 		{

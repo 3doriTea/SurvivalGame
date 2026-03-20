@@ -1,4 +1,7 @@
 #include "Component.h"
+#include <Component/GameObject.h>
+#include <Component/Transform.h>
+
 
 GameBase::Editor::Inspector::Component::Component(
 	const Entity _entity,
@@ -64,20 +67,14 @@ bool GameBase::Editor::Inspector::Component::IsUpdatedShow(
 							try
 							{
 								std::string str{ params.as<std::string>() };
-								static std::array<char, 20> buffer{};
+								static std::array<char, 1024> buffer{};
 
-								/*if (!ImGui::IsItemActive() && std::string_view{ buffer.data() } != str)
-								{
-									buffer.fill('\0');
-									std::copy(str.begin(), str.end(), buffer.begin());
-								}*/
 								buffer.fill('\0');
 								std::copy(str.begin(), str.end(), buffer.begin());
 
 								if (ImGui::InputText(paramKey.c_str(), buffer.data(), buffer.size()))
 								{
 									str = buffer.data();
-									//OutputDebugString(str.c_str());
 									isChanged = true; // 変更があった
 								}
 								updated << YAML::Value << str;
@@ -107,11 +104,75 @@ bool GameBase::Editor::Inspector::Component::IsUpdatedShow(
 							updated << YAML::Key << "x" << YAML::Value << v3.x;
 							updated << YAML::Key << "y" << YAML::Value << v3.y;
 							updated << YAML::Key << "z" << YAML::Value << v3.z;
-							updated << YAML::Value << YAML::EndMap;
+							updated << YAML::EndMap;
+						}
+						else if (HasKeys(params, { "fileId" }))
+						{
+							int selectedIndex{};
+							Entity selectedEntity{ params["fileId"].as<Schema::FileId>() };
+							auto view{ _registry.GetView<GameBase::Component::GameObject>() };
+							auto [ selectedGameObject ]{ view.At(selectedEntity) };
+							std::string selectedName{};
+							if (selectedEntity == INVALID_ENTITY)
+							{
+								selectedName = "[>未選択<]";
+							}
+							else
+							{
+								selectedName = selectedGameObject.name.data();
+							}
+							if (ImGui::BeginCombo(paramKey.c_str(), selectedName.c_str()))
+							{
+								view.ForEach([&selectedIndex, &selectedEntity, &isChanged, &_registry, this](const Entity _entity, GameBase::Component::GameObject& _gameObject)
+								{
+									if (_entity == ENTITY)
+									{
+										return;  // 自分自身は選択させない
+									}
+
+									auto view{ _registry.GetView<GameBase::Component::Transform>() };
+									Entity at{ _entity };
+									while (at != INVALID_ENTITY &&
+										_registry.HasComponent(
+											at,
+											ComponentRegistry::GetComponentIndex<GameBase::Component::Transform>()))
+									{
+										if (at == ENTITY)
+										{
+											return;  // 自分自身が親にいるなら、選択できない
+										}
+
+										auto [t]{ view.At(at)};
+										at = t.parent;
+									}
+
+									bool isSelected{ selectedEntity == _entity };
+									if (ImGui::Selectable(_gameObject.name.data(), isSelected))
+									{
+										selectedEntity = _entity;
+										isChanged = true;
+									}
+
+									if (isSelected)  // 選択項目としてフォーカス
+									{
+										ImGui::SetItemDefaultFocus();
+									}
+								});
+
+								if (selectedEntity == INVALID_ENTITY)
+								{
+									if (ImGui::Selectable(selectedName.c_str(), true))
+									{
+									}
+								}
+
+								ImGui::EndCombo();
+							}
+							updated << YAML::Value << YAML::BeginMap;
+							updated << YAML::Key << "fileId" << YAML::Value << selectedEntity;
+							updated << YAML::EndMap;
 						}
 					}
-
-					//updated << YAML::Value << params;
 				}
 
 				if (isChanged)  // 変更があった
