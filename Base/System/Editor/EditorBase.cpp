@@ -2,10 +2,12 @@
 #include "../EditorGui.h"
 #include "../TextureRegistry.h"
 #include "../TransformCalculator.h"
+#include "../ViewportSwitcher.h"
 
 #include "../../Structure/Editor/AssetsView.h"
 #include "../../Structure/Editor/HierarchyView.h"
 #include "../../Structure/Editor/InspectorView.h"
+#include "../../Structure/Editor/SceneView.h"
 
 
 GameBase::System::EditorBase::EditorBase()
@@ -21,6 +23,7 @@ void GameBase::System::EditorBase::OnRegisterDependencies(FluentVectorAddOnly<Sy
 		->Add(SystemRegistry::GetSystemIndex<EditorGui>())
 		->Add(SystemRegistry::GetSystemIndex<TextureRegistry>())
 		->Add(SystemRegistry::GetSystemIndex<TransformCalculator>())
+		->Add(SystemRegistry::GetSystemIndex<ViewportSwitcher>())
 	;
 }
 
@@ -29,6 +32,7 @@ void GameBase::System::EditorBase::Initialize()
 	pEditors_.emplace_back(std::make_shared<Editor::AssetsView>());
 	pEditors_.emplace_back(std::make_shared<Editor::HierarchyView>());
 	pEditors_.emplace_back(std::make_shared<Editor::InspectorView>());
+	pEditors_.emplace_back(std::make_shared<Editor::SceneView>());
 
 	Get<EditorGui>().OnGUI([this](EventSubject<EntityRegistry&>& _event)
 	{
@@ -83,9 +87,6 @@ void GameBase::System::EditorBase::Initialize()
 				}
 
 				ImGui::Begin("Game View");
-				ImGui::End();
-
-				ImGui::Begin("Scene View");
 				ImGui::End();
 
 				

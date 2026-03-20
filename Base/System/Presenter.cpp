@@ -5,7 +5,8 @@
 #include "Structure/RefreshRate.h"
 
 
-GameBase::System::Presenter::Presenter()
+GameBase::System::Presenter::Presenter() :
+	pRenderSurface_{ nullptr }
 {
 }
 
@@ -62,11 +63,11 @@ void GameBase::System::Presenter::Initialize()
 
 		});
 
-
-	bool succeed{ TryCreateRenderSurface(&renderSurface_) };
+	/*GB_ASSERT(pRenderSurface_ && "レンダーサーフェスが未指定");
+	bool succeed{ TryCreateRenderSurface(pRenderSurface_) };
 	GB_ASSERT(succeed);
 
-	SetRenderSurface(renderSurface_);
+	SetRenderSurface(pRenderSurface_);*/
 
 	clearDepthValue_ = 1.0f;
 	clearStencilValue_ = 0U;
@@ -84,14 +85,15 @@ void GameBase::System::Presenter::Release()
 
 void GameBase::System::Presenter::BeginDraw()
 {
+	GB_ASSERT(pRenderSurface_ && "レンダーサーフェスが未指定");
 	Get<Direct3D>().Ref([this](const ComPtr<ID3D11DeviceContext> _pContext)
 	{
 		_pContext.Get()->ClearRenderTargetView(
-			renderSurface_.pRenderTargetView.Get(),
+			pRenderSurface_->pRenderTargetView.Get(),
 			backgroundColor_.f);
 
 		_pContext.Get()->ClearDepthStencilView(
-			renderSurface_.pDepthStencilView.Get(),
+			pRenderSurface_->pDepthStencilView.Get(),
 			D3D11_CLEAR_DEPTH,
 			clearDepthValue_,
 			clearStencilValue_);
@@ -100,25 +102,27 @@ void GameBase::System::Presenter::BeginDraw()
 
 void GameBase::System::Presenter::EndDraw()
 {
+	GB_ASSERT(pRenderSurface_ && "レンダーサーフェスが未指定");
 	HRESULT hResult{};
 
-	hResult = renderSurface_.pSwapChain.Get()->Present(static_cast<UINT>(syncInterval_), 0);
+	hResult = pRenderSurface_->pSwapChain.Get()->Present(static_cast<UINT>(syncInterval_), 0);
 
 	GB_ASSERT(SUCCEEDED(hResult) && "スワップチェーンのスワップに失敗");
 }
 
 void GameBase::System::Presenter::Ref(const std::function<void(const ComPtr<ID3D11RenderTargetView>&)> _callback)
 {
-	_callback(renderSurface_.pRenderTargetView);
+	_callback(pRenderSurface_->pRenderTargetView);
 }
 
 void GameBase::System::Presenter::RestoreMainRenderTarget()
 {
+	GB_ASSERT(pRenderSurface_ && "レンダーサーフェスが未指定");
 	Get<Direct3D>().Ref([this](const ComPtr<ID3D11DeviceContext> _pContext)
 	{
-		ID3D11RenderTargetView* rtbs[]{ renderSurface_.pRenderTargetView.Get() };
-		_pContext.Get()->OMSetRenderTargets(1, rtbs, renderSurface_.pDepthStencilView.Get());
-		_pContext.Get()->RSSetViewports(1, &renderSurface_.viewport);
+		ID3D11RenderTargetView* rtbs[]{ pRenderSurface_->pRenderTargetView.Get() };
+		_pContext.Get()->OMSetRenderTargets(1, rtbs, pRenderSurface_->pDepthStencilView.Get());
+		_pContext.Get()->RSSetViewports(1, &pRenderSurface_->viewport);
 	});
 }
 
@@ -127,6 +131,15 @@ void GameBase::System::Presenter::ReleaseRenderTarget()
 	Get<Direct3D>().Ref([this](const ComPtr<ID3D11DeviceContext> _pContext)
 		{
 			_pContext.Get()->OMSetRenderTargets(0, nullptr, nullptr);
+		});
+}
+
+void GameBase::System::Presenter::CleanShaderResource()
+{
+	Get<Direct3D>().Ref([this](const ComPtr<ID3D11DeviceContext> _pContext)
+		{
+			ID3D11ShaderResourceView* NULL_SRV[]{ nullptr };
+			_pContext.Get()->PSSetShaderResources(0, 1, NULL_SRV);
 		});
 }
 
@@ -225,8 +238,6 @@ bool GameBase::System::Presenter::TryCreateRenderSurface(RenderSurface* _pRender
 			{
 				return;
 			}
-			
-			pBackBuffer.Reset();  // もう使わないため解放
 #pragma endregion
 
 #pragma region 深度バッファを作成
@@ -273,12 +284,17 @@ bool GameBase::System::Presenter::TryCreateRenderSurface(RenderSurface* _pRender
 
 #pragma region シェーダリソースビューの作成
 			// スワップチェーンからバックバッファを取り出しちゃう
-			renderSurface.pSwapChain.Get()->GetBuffer(0, IID_PPV_ARGS(pBackBuffer.GetAddressOf()));
+			//renderSurface.pSwapChain.Get()->GetBuffer(0, IID_PPV_ARGS(pBackBuffer.GetAddressOf()));
 
-			_pDevice->CreateShaderResourceView(
+			hResult = _pDevice->CreateShaderResourceView(
 				pBackBuffer.Get(),
 				nullptr,
 				renderSurface.pShaderResourceView.GetAddressOf());
+			GB_ASSERT(SUCCEEDED(hResult) && "シェーダリソースビューの作成に失敗");
+			if (failed = FAILED(hResult))
+			{
+				return;
+			}
 			pBackBuffer.Reset();  // もう使わないため解放
 #pragma endregion
 		});
@@ -295,9 +311,10 @@ bool GameBase::System::Presenter::TryCreateRenderSurface(RenderSurface* _pRender
 	return true;
 }
 
-void GameBase::System::Presenter::SetRenderSurface(RenderSurface& _renderSurface)
+void GameBase::System::Presenter::SetRenderSurface(RenderSurface* _pRenderSurface)
 {
-	Get<Direct3D>().Ref([this, _renderSurface](const ComPtr<ID3D11DeviceContext> _pContext)
+	pRenderSurface_ = _pRenderSurface;
+	Get<Direct3D>().Ref([this, &_pRenderSurface](const ComPtr<ID3D11DeviceContext>& _pContext)
 	{
 		// MEMO: 3角形をどう定義するかの設定
 		_pContext.Get()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -305,12 +322,12 @@ void GameBase::System::Presenter::SetRenderSurface(RenderSurface& _renderSurface
 		// MEMO: 描画先を1枚セット
 		_pContext.Get()->OMSetRenderTargets(
 			1,
-			_renderSurface.pRenderTargetView.GetAddressOf(),
-			_renderSurface.pDepthStencilView.Get());
+			_pRenderSurface->pRenderTargetView.GetAddressOf(),
+			_pRenderSurface->pDepthStencilView.Get());
 
 		// MEMO: ビューポートを1枚セット
 		_pContext.Get()->RSSetViewports(
 			1,
-			&_renderSurface.viewport);
+			&_pRenderSurface->viewport);
 	});
 }

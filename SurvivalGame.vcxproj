@@ -362,6 +362,7 @@
     <ClCompile Include="Base\Structure\Editor\IEditorView.cpp" />
     <ClCompile Include="Base\Structure\Editor\InspectorView.cpp" />
     <ClCompile Include="Base\Structure\Editor\Inspector\Component.cpp" />
+    <ClCompile Include="Base\Structure\Editor\SceneView.cpp" />
     <ClCompile Include="Base\Structure\Editor\SelectedEvent.cpp" />
     <ClCompile Include="Base\Structure\ModelLoader\FbxLoader.cpp" />
     <ClCompile Include="Base\SystemBase.cpp" />
@@ -383,6 +384,7 @@
     <ClCompile Include="Base\System\ShaderCompiler.cpp" />
     <ClCompile Include="Base\System\TextureRegistry.cpp" />
     <ClCompile Include="Base\System\TransformCalculator.cpp" />
+    <ClCompile Include="Base\System\ViewportSwitcher.cpp" />
     <ClCompile Include="Base\System\WindowEvent.cpp" />
     <ClCompile Include="TheMain.cpp" />
   </ItemGroup>
@@ -449,6 +451,7 @@
     <ClInclude Include="Base\Structure\Collider\AABB.h" />
     <ClInclude Include="Base\Structure\Editor\InspectorView.h" />
     <ClInclude Include="Base\Structure\Editor\Inspector\Component.h" />
+    <ClInclude Include="Base\Structure\Editor\SceneView.h" />
     <ClInclude Include="Base\Structure\Editor\SelectedEvent.h" />
     <ClInclude Include="Base\Structure\Model.h" />
     <ClInclude Include="Base\Structure\ModelLoader\FbxLoader.h" />
@@ -505,6 +508,7 @@
     <ClInclude Include="Base\System\ShaderCompiler.h" />
     <ClInclude Include="Base\System\TextureRegistry.h" />
     <ClInclude Include="Base\System\TransformCalculator.h" />
+    <ClInclude Include="Base\System\ViewportSwitcher.h" />
     <ClInclude Include="Base\System\WindowEvent.h" />
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
 #include "GameTime.h"
 #include "Presenter.h"
 #include "Graphic/MainCamera.h"
+#include "ViewportSwitcher.h"
 
 
 GameBase::System::Renderer::Renderer() :
@@ -23,6 +24,7 @@ void GameBase::System::Renderer::OnRegisterDependencies(FluentVectorAddOnly<Syst
 		->Add(SystemRegistry::GetSystemIndex<GameTime>())
 		->Add(SystemRegistry::GetSystemIndex<Presenter>())
 		->Add(SystemRegistry::GetSystemIndex<MainCamera>())
+		->Add(SystemRegistry::GetSystemIndex<ViewportSwitcher>())
 		;
 }
 
@@ -46,6 +48,7 @@ void GameBase::System::Renderer::Update(EntityRegistry& _registry)
 			return _left.sortKey.value > _right.sortKey.value;
 		});
 
+	Get<ViewportSwitcher>().Switch(ViewportMode::Gamer);
 	beginEvent_.get()->Invoke(_registry);
 
 	Get<Presenter>().BeginDraw();
@@ -60,14 +63,15 @@ void GameBase::System::Renderer::Update(EntityRegistry& _registry)
 
 	renderEvent_.get()->Invoke(_registry);
 
+	// --- ゲーム画面描画完了---
+
 	// ゲーム画面の描画完了したから解除
 	Get<Presenter>().ReleaseRenderTarget();
 
+	Get<ViewportSwitcher>().Switch(ViewportMode::Editor);
+
 	// 後処理
 	releasedTargetEvent_.get()->Invoke(_registry);
-
-	// 再登録
-	Get<Presenter>().RestoreMainRenderTarget();
 
 	renderLateEvent_.get()->Invoke(_registry);
 

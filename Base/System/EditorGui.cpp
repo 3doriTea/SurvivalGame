@@ -109,14 +109,14 @@ void GameBase::System::EditorGui::Initialize()
 
 					// IMGUI描画コール OnGUI()を呼んで回る
 					onGUIEvent_.get()->Invoke(_registry);
+
+					ImGui::Render();
 				});
 		});
 	Get<Renderer>().OnRenderLate([this](EventSubject<EntityRegistry&>& _event)
 		{
 			renderLateEvent_ = _event.get()->Connect([this](EntityRegistry& _registry)
 				{
-					ImGui::Render();
-
 					ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
 					ImGuiIO& io{ ImGui::GetIO() };

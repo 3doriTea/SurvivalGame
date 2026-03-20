@@ -32,6 +32,23 @@ namespace GameBase::System
 		/// レンダーターゲットを解除
 		/// </summary>
 		virtual void ReleaseRenderTarget() = 0;
+		/// <summary>
+		/// シェーダリソースの掃除
+		/// </summary>
+		virtual void CleanShaderResource() = 0;
+
+		/// <summary>
+		/// 描画対象を設定する
+		/// </summary>
+		/// <param name="_p"></param>
+		virtual void SetRenderSurface(RenderSurface* _p) = 0;
+
+		/// <summary>
+		/// 描画画面を作成する
+		/// </summary>
+		/// <param name="_pRenderSurface">作成された描画画面のポインタ渡し</param>
+		/// <returns>作成された描画画面</returns>
+		virtual bool TryCreateRenderSurface(RenderSurface* _pRenderSurface) = 0;
 	};
 
 	/// <summary>
@@ -66,22 +83,19 @@ namespace GameBase::System
 		void Ref(const std::function<void(const ComPtr<ID3D11RenderTargetView>&)> _callback) override;
 		void RestoreMainRenderTarget() override;
 		void ReleaseRenderTarget() override;
+		void CleanShaderResource() override;
 
-	private:
 		/// <summary>
 		/// 描画画面を作成する
 		/// </summary>
 		/// <param name="_pRenderSurface">作成された描画画面のポインタ渡し</param>
 		/// <returns>作成された描画画面</returns>
-		bool TryCreateRenderSurface(RenderSurface* _pRenderSurface);
-
+		bool TryCreateRenderSurface(RenderSurface* _pRenderSurface) override;
 		/// <summary>
 		/// 描画する描画画面をセットする
 		/// </summary>
 		/// <param name="renderSurface"></param>
-		void SetRenderSurface(RenderSurface& _renderSurface);
-
-		// シェーダリソースビューを作る
+		void SetRenderSurface(RenderSurface* _renderSurface);
 
 	private:
 		ComPtr<IDXGIDevice> pDXGIDevice_;    // DXGIのデバイス
@@ -95,6 +109,6 @@ namespace GameBase::System
 
 		PresentSyncInterval syncInterval_;  // present関数の引数にわたす値 VSyncなどの設定
 
-		RenderSurface renderSurface_;  // 描画対象
+		RenderSurface* pRenderSurface_;   // 描画対象
 	};
 }
