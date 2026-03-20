@@ -24,7 +24,14 @@ namespace GameBase::System
 		virtual void EndDraw() = 0;
 
 		virtual void Ref(const std::function<void(const ComPtr<ID3D11RenderTargetView>&)> _callback) = 0;
+		/// <summary>
+		/// レンダーターゲットを再登録
+		/// </summary>
 		virtual void RestoreMainRenderTarget() = 0;
+		/// <summary>
+		/// レンダーターゲットを解除
+		/// </summary>
+		virtual void ReleaseRenderTarget() = 0;
 	};
 
 	/// <summary>
@@ -58,6 +65,7 @@ namespace GameBase::System
 		void EndDraw() override;
 		void Ref(const std::function<void(const ComPtr<ID3D11RenderTargetView>&)> _callback) override;
 		void RestoreMainRenderTarget() override;
+		void ReleaseRenderTarget() override;
 
 	private:
 		/// <summary>

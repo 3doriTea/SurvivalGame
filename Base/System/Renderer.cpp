@@ -6,8 +6,10 @@
 
 GameBase::System::Renderer::Renderer() :
 	beginEvent_{ Event<EntityRegistry&>::Create() },
-	endEvent_{ Event<EntityRegistry&>::Create() },
-	renderEvent_{ Event<EntityRegistry&>::Create() }
+	renderEvent_{ Event<EntityRegistry&>::Create() },
+	releasedTargetEvent_{ Event<EntityRegistry&>::Create() },
+	renderLateEvent_{ Event<EntityRegistry&>::Create() },
+	endEvent_{ Event<EntityRegistry&>::Create() }
 {
 }
 
@@ -58,6 +60,17 @@ void GameBase::System::Renderer::Update(EntityRegistry& _registry)
 
 	renderEvent_.get()->Invoke(_registry);
 
+	// ゲーム画面の描画完了したから解除
+	Get<Presenter>().ReleaseRenderTarget();
+
+	// 後処理
+	releasedTargetEvent_.get()->Invoke(_registry);
+
+	// 再登録
+	Get<Presenter>().RestoreMainRenderTarget();
+
+	renderLateEvent_.get()->Invoke(_registry);
+
 	Get<Presenter>().EndDraw();
 
 	endEvent_.get()->Invoke(_registry);
@@ -77,6 +90,16 @@ void GameBase::System::Renderer::OnBegin(const std::function<void(EventSubject<E
 void GameBase::System::Renderer::OnRender(const std::function<void(EventSubject<EntityRegistry&>&)>& _callback)
 {
 	_callback(renderEvent_);
+}
+
+void GameBase::System::Renderer::OnReleasedTarget(const std::function<void(EventSubject<EntityRegistry&>&)>& _callback)
+{
+	_callback(releasedTargetEvent_);
+}
+
+void GameBase::System::Renderer::OnRenderLate(const std::function<void(EventSubject<EntityRegistry&>&)>& _callback)
+{
+	_callback(renderLateEvent_);
 }
 
 void GameBase::System::Renderer::OnEnd(const std::function<void(EventSubject<EntityRegistry&>&)>& _callback)

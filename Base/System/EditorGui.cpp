@@ -99,9 +99,9 @@ void GameBase::System::EditorGui::Initialize()
 			ImGui_ImplDX11_Init(_pDevice.Get(), _pContext.Get());
 		});
 
-	Get<Renderer>().OnBegin([this](EventSubject<EntityRegistry&>& _event)
+	Get<Renderer>().OnReleasedTarget([this](EventSubject<EntityRegistry&>& _event)
 		{
-			renderBeginEvent_ = _event.get()->Connect([this](EntityRegistry& _registry)
+			releasedTargetEvent_ = _event.get()->Connect([this](EntityRegistry& _registry)
 				{
 					ImGui_ImplDX11_NewFrame();
 					ImGui_ImplWin32_NewFrame();
@@ -109,14 +109,14 @@ void GameBase::System::EditorGui::Initialize()
 
 					// IMGUI描画コール OnGUI()を呼んで回る
 					onGUIEvent_.get()->Invoke(_registry);
-
-					ImGui::Render();
 				});
 		});
-	Get<Renderer>().OnRender([this](EventSubject<EntityRegistry&>& _event)
+	Get<Renderer>().OnRenderLate([this](EventSubject<EntityRegistry&>& _event)
 		{
-			renderEndEvent_ = _event.get()->Connect([this](EntityRegistry&)
+			renderLateEvent_ = _event.get()->Connect([this](EntityRegistry& _registry)
 				{
+					ImGui::Render();
+
 					ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
 					ImGuiIO& io{ ImGui::GetIO() };
@@ -127,6 +127,13 @@ void GameBase::System::EditorGui::Initialize()
 
 						Get<Presenter>().RestoreMainRenderTarget();
 					}
+				});
+		});
+	Get<Renderer>().OnRender([this](EventSubject<EntityRegistry&>& _event)
+		{
+			renderEndEvent_ = _event.get()->Connect([this](EntityRegistry&)
+				{
+					
 				});
 		});
 }

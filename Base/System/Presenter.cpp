@@ -122,6 +122,14 @@ void GameBase::System::Presenter::RestoreMainRenderTarget()
 	});
 }
 
+void GameBase::System::Presenter::ReleaseRenderTarget()
+{
+	Get<Direct3D>().Ref([this](const ComPtr<ID3D11DeviceContext> _pContext)
+		{
+			_pContext.Get()->OMSetRenderTargets(0, nullptr, nullptr);
+		});
+}
+
 bool GameBase::System::Presenter::TryCreateRenderSurface(RenderSurface* _pRenderSurface)
 {
 	bool failed{ true };
@@ -154,6 +162,7 @@ bool GameBase::System::Presenter::TryCreateRenderSurface(RenderSurface* _pRender
 		[this, &failed, &renderSurface](const ComPtr<ID3D11Device>& _pDevice, const ComPtr<ID3D11DeviceContext>& _pContext)
 		{
 			HRESULT hResult{};
+			ComPtr<ID3D11Texture2D> pBackBuffer{};  // 取り出し用バッファ
 
 #pragma region スワップチェーンの作成
 			const DXGI_SWAP_CHAIN_DESC SWAP_CHAIN_DESC
@@ -176,7 +185,7 @@ bool GameBase::System::Presenter::TryCreateRenderSurface(RenderSurface* _pRender
 					.Count = 1,    // MSAA (アンチエイリアス) の設定
 					.Quality = 0,  // 
 				},
-				.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT,  // バックバッファの使い道は画面に描画すること
+				.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT | DXGI_USAGE_SHADER_INPUT,  // バックバッファの使い道は画面に描画することと、SRVも使うこと
 				.BufferCount = 1,  // バッファの枚数
 				.OutputWindow = renderSurface.hWnd,
 				.Windowed = renderSurface.windowed,
@@ -196,8 +205,6 @@ bool GameBase::System::Presenter::TryCreateRenderSurface(RenderSurface* _pRender
 #pragma endregion
 
 #pragma region レンダーターゲットビューの作成
-			ComPtr<ID3D11Texture2D> pBackBuffer{};
-
 			hResult = renderSurface.pSwapChain->GetBuffer(
 				0,
 				__uuidof(ID3D11Texture2D),
@@ -262,6 +269,17 @@ bool GameBase::System::Presenter::TryCreateRenderSurface(RenderSurface* _pRender
 			{
 				return;
 			}
+#pragma endregion
+
+#pragma region シェーダリソースビューの作成
+			// スワップチェーンからバックバッファを取り出しちゃう
+			renderSurface.pSwapChain.Get()->GetBuffer(0, IID_PPV_ARGS(pBackBuffer.GetAddressOf()));
+
+			_pDevice->CreateShaderResourceView(
+				pBackBuffer.Get(),
+				nullptr,
+				renderSurface.pShaderResourceView.GetAddressOf());
+			pBackBuffer.Reset();  // もう使わないため解放
 #pragma endregion
 		});
 
