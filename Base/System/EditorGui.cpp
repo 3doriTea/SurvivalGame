@@ -117,6 +117,12 @@ void GameBase::System::EditorGui::Initialize()
 		{
 			renderLateEvent_ = _event.get()->Connect([this](EntityRegistry& _registry)
 				{
+					HWND hWnd{ Get<MainWindow>().GetHandle() };
+					if (!hWnd || !IsWindow(hWnd))
+					{
+						return;  // メインウィンドウがもう閉じられているなら無視
+					}
+
 					ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
 					ImGuiIO& io{ ImGui::GetIO() };

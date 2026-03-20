@@ -5,16 +5,96 @@
 
 GameBase::Editor::HierarchyView::HierarchyView() :
 	selectedEntity_{ INVALID_ENTITY },
-	onSelectedEvent_{}
+	onSelectedEvent_{},
+	createOptionsBuffer{}
 {}
 
 bool GameBase::Editor::HierarchyView::OnGUI(EntityRegistry& _registry)
 {
 	onSelectedEvent_ = false;
 
-	ImGui::Begin("Hierarchy");
+	ImGui::Begin("シーン内オブジェクト親子関係");
 
-	ImGui::Text("Object List...");
+#pragma region オブジェクト作成
+
+	if (ImGui::Button("オブジェクト作成"))
+	{
+		OpenModalCreateObject();
+	}
+
+	ImVec2 center{ ImGui::GetMainViewport()->GetCenter() };
+	ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+	if (ImGui::BeginPopupModal("新規オブジェクト", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		if (ImGui::IsWindowAppearing())
+		{
+			ImGui::SetKeyboardFocusHere();
+		}
+
+		ImGui::InputText("名前", createOptionsBuffer.name.data(), createOptionsBuffer.name.size());
+
+		const char* types[]{ "空っぽ", "3Dオブジェクト" };
+		if (ImGui::Combo("タイプ", &createOptionsBuffer.selected, types, IM_ARRAYSIZE(types)))
+		{
+			ApplyRequiredCreateObjectComponentFlags();
+		}
+
+		ImGui::BeginChild("機能要素の選択", ImVec2{ 0, 150 }, true);
+		{
+			for (ComponentIndex i = 0; i < ComponentRegistry::IndexCounter(); i++)
+			{
+				const std::string_view typeName{ ComponentRegistry::ComponentTypeNames()[i] };
+
+				uint32_t* pFlags{};
+				uint64_t offset{ 0ULL };
+				if (i >= 32U)
+				{
+					pFlags = &createOptionsBuffer.componentFlags.upper;
+					offset = 32ULL;
+				}
+				else
+				{
+					pFlags = &createOptionsBuffer.componentFlags.lower;
+				}
+
+				if (ImGui::CheckboxFlags(typeName.data(), pFlags, 1U << (i - offset)))
+				{
+					ApplyRequiredCreateObjectComponentFlags();
+				}
+			}
+		}
+		ImGui::EndChild();
+
+		ImGui::Separator();
+
+		ImGui::BeginDisabled(IsInvalidCreateName());
+		if (ImGui::Button("作成 (Enter)", ImVec2{ 120, 0 }))
+		{
+			CreateEntity(_registry);
+
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndDisabled();
+
+		ImGui::SetItemDefaultFocus();
+		ImGui::SameLine();
+
+		if (ImGui::Button("キャンセル (Esc)", ImVec2{ 120, 0 }))
+		{
+			ImGui::CloseCurrentPopup();
+		}
+
+		if (ImGui::IsKeyPressed(ImGuiKey_Enter) && !IsInvalidCreateName())
+		{
+			CreateEntity(_registry);
+			ImGui::CloseCurrentPopup();
+		}
+
+		ImGui::EndPopup();
+	}
+
+#pragma endregion
 
 	objects_.clear();
 
@@ -106,4 +186,47 @@ void GameBase::Editor::HierarchyView::ShowObjectTree(ViewGameObjectTransform& _v
 		}
 		ImGui::TreePop();  // 階層を一段戻る
 	}
+}
+
+void GameBase::Editor::HierarchyView::OpenModalCreateObject()
+{
+	createOptionsBuffer.name.fill(0);
+	createOptionsBuffer.componentFlags.full = 0;
+	ApplyRequiredCreateObjectComponentFlags();
+	ImGui::OpenPopup("新規オブジェクト");
+}
+
+bool GameBase::Editor::HierarchyView::IsInvalidCreateName()
+{
+	return createOptionsBuffer.name[0] == '\0';
+}
+
+void GameBase::Editor::HierarchyView::ApplyRequiredCreateObjectComponentFlags()
+{
+	createOptionsBuffer.componentFlags.full |=
+		1ULL << ComponentRegistry::GetComponentIndex<Component::GameObject>();
+	switch (createOptionsBuffer.selected)
+	{
+	case CreateObjectType::Empty:
+		break;
+	case CreateObjectType::_3D:
+		createOptionsBuffer.componentFlags.full |=
+			1ULL << ComponentRegistry::GetComponentIndex<Component::Transform>();
+		break;
+	default:
+		GB_ASSERT(false && "未実装の新規オブジェクトタイプ");
+		break;
+	}
+}
+
+void GameBase::Editor::HierarchyView::CreateEntity(EntityRegistry& _registry)
+{
+	ApplyRequiredCreateObjectComponentFlags();
+
+	Entity entity{ _registry.CreateEntity() };
+
+	_registry.AddComponents(entity, createOptionsBuffer.componentFlags.full);
+
+	auto& gameObject{ _registry.GetComponent<Component::GameObject>(entity) };
+	gameObject.SetName(createOptionsBuffer.name.data());
 }

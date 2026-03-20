@@ -25,3 +25,14 @@ void GameBase::Component::GameObject::OnSave(YAML::Emitter& _emitter, SchemaLoad
 {
 	_emitter << YAML::Key << "name" << YAML::Value << name.data();
 }
+
+void GameBase::Component::GameObject::SetName(const std::string_view _name)
+{
+	std::string nameStr{ _name };
+	if (nameStr.size() >= GAME_OBJECT_NAME_BUFFER_SIZE)
+	{
+		nameStr = nameStr.substr(0, GAME_OBJECT_NAME_BUFFER_SIZE - 1);
+	}
+	name.fill('\0');
+	std::copy(nameStr.begin(), nameStr.end(), name.begin());
+}

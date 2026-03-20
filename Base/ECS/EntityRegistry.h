@@ -43,6 +43,13 @@ namespace GameBase
 		std::vector<ComponentIndex> GetComponentIndices(const Entity _entity);
 
 		/// <summary>
+		/// コンポーネントをまとめて追加する
+		/// </summary>
+		/// <param name="_entity">エンティティ</param>
+		/// <param name="_signature">フラグ</param>
+		void AddComponents(const Entity _entity, const Signature _signature);
+
+		/// <summary>
 		/// エンティティにコンポーネントを追加する
 		/// </summary>
 		/// <param name="_entity">エンティティ</param>

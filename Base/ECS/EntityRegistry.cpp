@@ -34,6 +34,18 @@ std::vector<GameBase::ComponentIndex> GameBase::EntityRegistry::GetComponentIndi
 	return indices;
 }
 
+void GameBase::EntityRegistry::AddComponents(const Entity _entity, const Signature _signature)
+{
+	Signature diff{ ~entitySignatures_[GetIndex(_entity)] & _signature };
+	for (ComponentIndex i = 0; i < ComponentRegistry::IndexCounter(); i++)
+	{
+		if (diff.test(i))
+		{
+			AddComponent(_entity, i);
+		}
+	}
+}
+
 GameBase::IComponentBase& GameBase::EntityRegistry::AddComponent(const Entity _entity, const ComponentIndex _type)
 {
 	entitySignatures_[GetIndex(_entity)][_type] = true;

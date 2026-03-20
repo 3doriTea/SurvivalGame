@@ -126,11 +126,6 @@ void GameBase::System::Input::Update(EntityRegistry&)
 			sizeof(mouse_.stateCurr),
 			&mouse_.statePrev);
 	}
-
-	if (IsPress(KeyCode::R))
-	{
-		GameEvent::Emplace<GameEvent::GameExit>();
-	}
 }
 
 void GameBase::System::Input::Release()

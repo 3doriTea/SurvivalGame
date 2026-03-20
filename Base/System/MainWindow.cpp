@@ -53,6 +53,7 @@ void GameBase::System::MainWindow::Update(EntityRegistry&)
 
 void GameBase::System::MainWindow::Release()
 {
+	handle_ = nullptr;
 }
 
 void GameBase::System::MainWindow::Create(const CreateWindowConfig& _config)

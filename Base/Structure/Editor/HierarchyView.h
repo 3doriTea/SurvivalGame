@@ -22,6 +22,13 @@ namespace GameBase::Editor
 			Object* pParent;
 			std::vector<Object*> childs;
 		};
+
+		enum CreateObjectType : int
+		{
+			Empty,
+			_3D,
+		};
+
 	public:
 		HierarchyView();
 		inline ~HierarchyView() = default;
@@ -47,9 +54,38 @@ namespace GameBase::Editor
 		/// <param name="obj"></param>
 		void ShowObjectTree(ViewGameObjectTransform& _view, const Object& obj);
 
+		/// <summary>
+		/// オブジェクト作成のモーダルダイアログを表示
+		/// </summary>
+		void OpenModalCreateObject();
+
+		/// <summary>
+		/// 新規作成オブジェクト名が無効か
+		/// </summary>
+		/// <returns>無効 true / false</returns>
+		bool IsInvalidCreateName();
+
+		/// <summary>
+		/// 必須フラグを適用する
+		/// </summary>
+		void ApplyRequiredCreateObjectComponentFlags();
+
+		void CreateEntity(EntityRegistry& _registry);
+
 	private:
 		std::vector<Object> objects_;
 		Entity selectedEntity_;
 		bool onSelectedEvent_;
+
+		struct
+		{
+			std::array<char, Component::GAME_OBJECT_NAME_BUFFER_SIZE> name;
+			int selected;
+			union
+			{
+				struct { uint32_t lower; uint32_t upper; };
+				uint64_t full;
+			} componentFlags;
+		} createOptionsBuffer;
 	};
 }
