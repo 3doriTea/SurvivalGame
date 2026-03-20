@@ -103,34 +103,27 @@ bool GameBase::Editor::HierarchyView::OnGUI(EntityRegistry& _registry)
 	{
 		auto [g, t]{view.At(entity) };
 
-		objects_.push_back(entity);
+		objects_.emplace(entity, entity);
 
 		if (t.parent != INVALID_ENTITY)
 		{
-			auto [parentG, parentT]{ view.At(t.parent) };
-			auto itr
-			{
-				std::find_if(
-					objects_.begin(),
-					objects_.end(),
-					[entity](const Object& _pObj){ return _pObj.entity == entity; })
-			};
-
+			auto itr{ objects_.find(t.parent) };
 			GB_ASSERT(itr != objects_.end()
 				&& "順番が不正のため親子関係の登録に失敗");
 
-			itr->childs.push_back(&objects_.back());
-			objects_.back().pParent = &(*itr);
+			auto& [keyEntity, parentObj]{ *itr };
+			parentObj.childs.push_back(entity);
+			objects_[entity].parent = keyEntity;
 		}
 	}
 
-	for (const Object& obj : objects_)
+	for (const auto& [entity, obj] : objects_)
 	{
-		if (obj.pParent)
+		if (obj.parent)
 		{
-			break;  // 親がいるオブジェクトが現れたら以降は全部親あり
+			continue;  // 親がいるオブジェクトが現れたら以降は全部親あり
 		}
-		ShowObjectTree(view, obj);
+		ShowNodeTree(view, obj);
 	}
 
 	ImGui::End();
@@ -150,41 +143,40 @@ void GameBase::Editor::HierarchyView::OnSelected(EntityRegistry& _registry, Sele
 	}
 }
 
-void GameBase::Editor::HierarchyView::ShowObjectTree(ViewGameObjectTransform& _view, const Object& obj)
+void GameBase::Editor::HierarchyView::ShowNodeTree(ViewGameObjectTransform& _view, const Object& _obj)
 {
 	ImGuiTreeNodeFlags flags
 	{
-		ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth
+		ImGuiTreeNodeFlags_OpenOnArrow |
+		ImGuiTreeNodeFlags_OpenOnDoubleClick |
+		ImGuiTreeNodeFlags_SpanAvailWidth
 	};
 
-	if (obj.childs.empty())
+	if (_obj.childs.empty())  // 子がないなら開けない
 	{
 		flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 	}
 
-	auto [g, t]{ _view.At(obj.entity) };
+	auto [g, t] { _view.At(_obj.entity) };
 
 	bool isOpen
 	{
-		ImGui::TreeNodeEx(
-			std::format("{}", obj.entity).c_str(),
-			flags,
-			reinterpret_cast<const char*>(g.name.data()))
+		ImGui::TreeNodeEx(std::to_string(_obj.entity).c_str(), flags, "%s", g.name.data())
 	};
 
 	if (ImGui::IsItemClicked())
 	{
-		selectedEntity_ = obj.entity;
+		selectedEntity_ = _obj.entity;
 		onSelectedEvent_ = true;
 	}
 
-	if (isOpen && !obj.childs.empty())
+	if (isOpen && !_obj.childs.empty())
 	{
-		for (auto& child : obj.childs)
+		for (Entity child : _obj.childs)
 		{
-			ShowObjectTree(_view, (*child));
+			ShowNodeTree(_view, objects_[child]);
 		}
-		ImGui::TreePop();  // 階層を一段戻る
+		ImGui::TreePop();
 	}
 }
 

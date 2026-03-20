@@ -46,3 +46,17 @@ Transform:
   scale:    {x: 1.0, y: 1.0, z: 1.0}
   parent:   {fileId: 101}
 
+--- !gb!GameObject
+Id: 103
+GameObject:
+  name: Player
+  components:
+  - component: {fileId: 1021}
+
+--- !gbc!Transform
+Id: 1021
+Transform:
+  position: {x: 0.0, y: 0.0, z: 0.0}
+  rotation: {x: 0.0, y: 0.0, z: 0.0}
+  scale:    {x: 1.0, y: 1.0, z: 1.0}
+  parent:   {fileId: 0}

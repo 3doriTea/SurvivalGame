@@ -11,16 +11,20 @@ namespace GameBase::Editor
 
 		struct Object
 		{
+			Object() :
+				Object{ INVALID_ENTITY }
+			{}
+
 			Object(const Entity _entity) :
 				entity{ _entity },
-				pParent{},
+				parent{},
 				childs{}
 			{}
 
 
 			Entity entity;
-			Object* pParent;
-			std::vector<Object*> childs;
+			Entity parent;
+			std::vector<Entity> childs;
 		};
 
 		enum CreateObjectType : int
@@ -48,6 +52,8 @@ namespace GameBase::Editor
 		void OnSelected(EntityRegistry& _registry, SelectedEvent& _event) override;
 
 	private:
+		void ShowNodeTree(ViewGameObjectTransform& _view, const Object& _obj);
+
 		/// <summary>
 		/// ImGUIでオブジェクトツリーを表示する
 		/// </summary>
@@ -73,7 +79,7 @@ namespace GameBase::Editor
 		void CreateEntity(EntityRegistry& _registry);
 
 	private:
-		std::vector<Object> objects_;
+		std::map<Entity, Object> objects_;
 		Entity selectedEntity_;
 		bool onSelectedEvent_;
 
