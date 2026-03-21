@@ -111,7 +111,6 @@ void GameBase::Editor::InspectorView::OnSelected(EntityRegistry& _registry, Sele
 			_registry.GetComponentIndices(selectedEntity_)
 		};
 
-		SchemaLoadBundle loadBundle{};
 		for (ComponentIndex index : componentIndices)
 		{
 			components_.emplace_back(selectedEntity_, index);

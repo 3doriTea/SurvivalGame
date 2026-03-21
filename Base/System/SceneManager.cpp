@@ -28,11 +28,11 @@ void GameBase::System::SceneManager::Update(EntityRegistry&)
 void GameBase::System::SceneManager::Release()
 {}
 
-std::string GameBase::System::SceneManager::CurrentSceneName()
+std::string GameBase::System::SceneManager::GetCurrentName()
 {
 	if (currentSceneFile_.empty())
 	{
-		return "BootScene";  // 初期シーンを返す
+		return "Boot";  // 初期シーンを返す
 	}
 	else
 	{
@@ -79,7 +79,7 @@ void GameBase::System::SceneManager::LoadSceneName(const std::string& _name)
 	}
 
 	GB_ASSERT(itr != nameToFile_.end()
-		&& "シーン名からファイルパスが見つからない");
+		&& "シーン名からファイルパスが見つからない"_w.c_str());
 
 	LoadSceneFile(itr->second);
 }

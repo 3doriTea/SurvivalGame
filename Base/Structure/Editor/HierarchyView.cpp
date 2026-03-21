@@ -16,7 +16,7 @@ bool GameBase::Editor::HierarchyView::OnGUI(EntityRegistry& _registry)
 
 	ImGui::Begin("シーン内オブジェクト親子関係");
 
-	ImGui::Text("%s", Get<System::SceneManager>().CurrentSceneName().c_str());
+	ImGui::Text("%s", Get<System::SceneManager>().GetCurrentName().c_str());
 
 #pragma region オブジェクト作成
 

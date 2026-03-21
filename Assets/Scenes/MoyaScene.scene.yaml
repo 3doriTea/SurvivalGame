@@ -5,58 +5,125 @@
 --- !gb!Scene
 Scene:
   gameObjects:
-  - gameObject: {fileId: 101}
-  - gameObject: {fileId: 102}
+    - gameObject:
+        fileId: 1
+    - gameObject:
+        fileId: 2
+    - gameObject:
+        fileId: 3
+    - gameObject:
+        fileId: 4
 
 --- !gb!GameObject
-Id: 101
+Id: 1
 GameObject:
   name: Main Camera
   components:
-  - component: {fileId: 1001}
-  - component: {fileId: 1002}
-
---- !gbc!Camera
-Id: 1002
-Camera:
-  far: 0.1
-  near: 1000.0
-
---- !gbc!Transform
-Id: 1001
-Transform:
-  position: {x: 0.0, y: 0.0, z: -10.0}
-  rotation: {x: 0.0, y: 0.0, z: 0.0}
-  scale:    {x: 1.0, y: 1.0, z: 1.0}
-  parent:   {fileId: 0}
-
+    - component:
+        fileId: 5
+    - component:
+        fileId: 6
 
 --- !gb!GameObject
-Id: 102
+Id: 2
 GameObject:
   name: Sub Camera
   components:
-  - component: {fileId: 1011}
-
---- !gbc!Transform
-Id: 1011
-Transform:
-  position: {x: 0.0, y: 0.0, z: 0.0}
-  rotation: {x: 0.0, y: 0.0, z: 0.0}
-  scale:    {x: 1.0, y: 1.0, z: 1.0}
-  parent:   {fileId: 101}
+    - component:
+        fileId: 7
 
 --- !gb!GameObject
-Id: 103
+Id: 3
 GameObject:
   name: Player
   components:
-  - component: {fileId: 1021}
+    - component:
+        fileId: 8
+
+--- !gb!GameObject
+Id: 4
+GameObject:
+  name: Enemy
+  components:
+    - component:
+        fileId: 9
+
+--- !gbc!Camera
+Id: 5
+Camera:
+  near: 1000
+  far: 0.1
+  fov: 0.7853982
 
 --- !gbc!Transform
-Id: 1021
+Id: 6
 Transform:
-  position: {x: 0.0, y: 0.0, z: 0.0}
-  rotation: {x: 0.0, y: 0.0, z: 0.0}
-  scale:    {x: 1.0, y: 1.0, z: 1.0}
-  parent:   {fileId: 0}
+  position:
+    x: 0
+    y: 0
+    z: -10
+  rotation:
+    x: -0
+    y: 0
+    z: 0
+  scale:
+    x: 1
+    y: 1
+    z: 1
+  parent:
+    fileId: 0
+
+--- !gbc!Transform
+Id: 7
+Transform:
+  position:
+    x: 0
+    y: 0
+    z: 0
+  rotation:
+    x: -0
+    y: 0
+    z: 0
+  scale:
+    x: 1
+    y: 1
+    z: 1
+  parent:
+    fileId: 1
+
+--- !gbc!Transform
+Id: 8
+Transform:
+  position:
+    x: 0
+    y: 0
+    z: 0
+  rotation:
+    x: -0
+    y: 0
+    z: 0
+  scale:
+    x: 1
+    y: 1
+    z: 1
+  parent:
+    fileId: 0
+
+--- !gbc!Transform
+Id: 9
+Transform:
+  position:
+    x: 0
+    y: -10.7
+    z: 0
+  rotation:
+    x: -0
+    y: 0
+    z: 0
+  scale:
+    x: 0
+    y: 0
+    z: 0
+  parent:
+    fileId: 0
+

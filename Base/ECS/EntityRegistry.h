@@ -41,7 +41,7 @@ namespace GameBase
 		/// </summary>
 		/// <param name="_entity">エンティティ</param>
 		/// <returns>コンポーネントのインデクスvector</returns>
-		std::vector<ComponentIndex> GetComponentIndices(const Entity _entity);
+		std::vector<ComponentIndex> GetComponentIndices(const Entity _entity) const;
 
 		/// <summary>
 		/// コンポーネントをまとめて追加する

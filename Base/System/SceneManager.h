@@ -17,15 +17,22 @@ namespace GameBase::System
 		/// 現在のシーン名を取得する
 		/// </summary>
 		/// <returns>シーン名</returns>
-		virtual std::string CurrentSceneName() = 0;
+		virtual std::string GetCurrentName() = 0;
 
 		/// <summary>
-		/// シーンファイルからシーン遷移する
+		/// 現在のシーンのファイルパスを取得
+		/// </summary>
+		/// <returns>現在のシーンのファイルパス</returns>
+		virtual fs::path GetCurrentFile() = 0;
+
+		/// <summary>
+		/// <para>シーンファイルからシーン遷移する</para>
+		/// <para>デフォルトシーンの場合emptyを返す</para>
 		/// </summary>
 		/// <param name="_file">シーンファイルのパス</param>
 		virtual void LoadSceneFile(const fs::path& _file) = 0;
 		/// <summary>
-		/// シーン名からシーン遷移する
+		/// <para>シーン名からシーン遷移する</para>
 		/// </summary>
 		/// <param name="_name">シーン名</param>
 		virtual void LoadSceneName(const std::string& _name) = 0;
@@ -62,10 +69,11 @@ namespace GameBase::System
 		/// 現在のシーン名を取得する
 		/// </summary>
 		/// <returns>現在のシーン名</returns>
-		std::string CurrentSceneName() override;
+		std::string GetCurrentName() override;
 
 		void LoadSceneFile(const fs::path& _file) override;
 		void LoadSceneName(const std::string& _name) override;
+		inline fs::path GetCurrentFile() override { return currentSceneFile_; }
 
 	private:
 		/// <summary>

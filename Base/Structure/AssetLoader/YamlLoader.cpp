@@ -6,8 +6,6 @@ bool GameBase::YamlLoader::TryLoad(const fs::path& _file)
 	Debugger::LogBegin("YAML-Loader");
 	try
 	{
-		YAML::Node test{ YAML::LoadFile(_file.string()) };
-
 		std::vector<YAML::Node> docs{ YAML::LoadAllFromFile(_file.string()) };
 
 		for (const YAML::Node& node : docs)

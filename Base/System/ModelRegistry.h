@@ -28,7 +28,7 @@ namespace GameBase::System
 		~ModelRegistry();
 
 		// 利用する参照があるときに使用
-		//void OnRegisterDependencies(FluentVectorAddOnly<SystemIndex>* _registry) override;
+		void OnRegisterDependencies(FluentVectorAddOnly<SystemIndex>* _registry) override;
 
 		/// <summary>
 		/// 初期化処理

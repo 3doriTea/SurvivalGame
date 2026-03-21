@@ -358,6 +358,7 @@
     </ClCompile>
     <ClCompile Include="Base\Structure\AssetLoader\YamlBuilder.cpp" />
     <ClCompile Include="Base\Structure\AssetLoader\YamlLoader.cpp" />
+    <ClCompile Include="Base\Structure\AssetLoader\YamlSaver.cpp" />
     <ClCompile Include="Base\Structure\Editor\AssetsView.cpp" />
     <ClCompile Include="Base\Structure\Editor\HierarchyView.cpp" />
     <ClCompile Include="Base\Structure\Editor\IEditorView.cpp" />
@@ -383,6 +384,7 @@
     <ClCompile Include="Base\System\Renderer.cpp" />
     <ClCompile Include="Base\System\Presenter.cpp" />
     <ClCompile Include="Base\System\SceneManager.cpp" />
+    <ClCompile Include="Base\System\SceneSaver.cpp" />
     <ClCompile Include="Base\System\SchemaLinker.cpp" />
     <ClCompile Include="Base\System\ShaderCompiler.cpp" />
     <ClCompile Include="Base\System\TextureRegistry.cpp" />
@@ -443,6 +445,7 @@
     <ClInclude Include="Base\Standalone\Event.h" />
     <ClInclude Include="Base\Standalone\FluentVector.h" />
     <ClInclude Include="Base\Standalone\ResponderEvent.h" />
+    <ClInclude Include="Base\Standalone\StringLiteralPostfix.h" />
     <ClInclude Include="Base\Standalone\Utility\Assert.h" />
     <ClInclude Include="Base\Standalone\Utility\FlyweightFactory.h" />
     <ClInclude Include="Base\Standalone\Utility\ReferencePrinter.h" />
@@ -452,6 +455,7 @@
     <ClInclude Include="Base\Structure\AssetLoader\AssetLoaderScene.h" />
     <ClInclude Include="Base\Structure\AssetLoader\YamlBuilder.h" />
     <ClInclude Include="Base\Structure\AssetLoader\YamlLoader.h" />
+    <ClInclude Include="Base\Structure\AssetLoader\YamlSaver.h" />
     <ClInclude Include="Base\Structure\AssetType.h" />
     <ClInclude Include="Base\Structure\Collider\AABB.h" />
     <ClInclude Include="Base\Structure\Editor\CommonView.h" />
@@ -513,6 +517,7 @@
     <ClInclude Include="Base\System\Renderer.h" />
     <ClInclude Include="Base\System\Presenter.h" />
     <ClInclude Include="Base\System\SceneManager.h" />
+    <ClInclude Include="Base\System\SceneSaver.h" />
     <ClInclude Include="Base\System\SchemaLinker.h" />
     <ClInclude Include="Base\System\ShaderCompiler.h" />
     <ClInclude Include="Base\System\TextureRegistry.h" />

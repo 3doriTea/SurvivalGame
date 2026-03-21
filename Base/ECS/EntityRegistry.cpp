@@ -17,7 +17,7 @@ GameBase::Entity GameBase::EntityRegistry::CreateEntity()
 	return created;
 }
 
-std::vector<GameBase::ComponentIndex> GameBase::EntityRegistry::GetComponentIndices(const Entity _entity)
+std::vector<GameBase::ComponentIndex> GameBase::EntityRegistry::GetComponentIndices(const Entity _entity) const
 {
 	std::vector<ComponentIndex> indices{};
 

@@ -8,6 +8,13 @@ GameBase::System::ModelRegistry::ModelRegistry()
 GameBase::System::ModelRegistry::~ModelRegistry()
 {}
 
+void GameBase::System::ModelRegistry::OnRegisterDependencies(FluentVectorAddOnly<SystemIndex>* _registry)
+{
+	_registry
+		->Add(SystemRegistry::GetSystemIndex<MeshRegistry>());
+	;
+}
+
 void GameBase::System::ModelRegistry::Initialize()
 {
 	models_.SetDefaultResource(Model{});

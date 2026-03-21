@@ -90,6 +90,9 @@ using json = nlohmann::json;
 using Microsoft::WRL::ComPtr;
 namespace fs = std::filesystem;
 
+// u8文字列のポストフィックスのやつ
+#include <StringLiteralPostfix.h>
+
 #include <CoreType/Color.h>
 #include <CoreType/Quaternion.h>
 #include <CoreType/Vec2.h>
