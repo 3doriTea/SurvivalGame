@@ -1,5 +1,6 @@
 #include "HierarchyView.h"
 #include <System/TransformCalculator.h>
+#include <System/SceneManager.h>
 #include "SelectedEvent.h"
 
 
@@ -15,9 +16,11 @@ bool GameBase::Editor::HierarchyView::OnGUI(EntityRegistry& _registry)
 
 	ImGui::Begin("シーン内オブジェクト親子関係");
 
+	ImGui::Text("%s", Get<System::SceneManager>().CurrentSceneName().c_str());
+
 #pragma region オブジェクト作成
 
-	if (ImGui::Button("オブジェクト作成"))
+	if (ImGui::Button("オブジェクトを作成"))
 	{
 		OpenModalCreateObject();
 	}

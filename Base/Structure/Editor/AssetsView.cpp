@@ -4,7 +4,7 @@
 #include <System/TextureRegistry.h>
 #include <System/ModelRegistry.h>
 #include <System/Editor/AssetGenerator.h>
-#include <GameEvent/ChangeScene.h>
+#include <System/SceneManager.h>
 
 #include <ShlObj.h>
 #pragma comment(lib, "shell32.lib")
@@ -44,10 +44,15 @@ GameBase::Editor::AssetsView::AssetsView(const Config& _config) :
 	},
 	inCellMargin_{ 5.0f },
 	textHeight_{ 20.0f },
-	currentPath_{ _config.rootPath }
+	currentPath_{ _config.rootPath },
+	createAssetOption_{}
 {
 	for (AssetType type = 0; type < AssetType_MAX; type++)
 	{
+		if (FILE_NAMES.count(type) == 0)
+		{
+			continue;  // まだアイコンを作っていないアセットタイプは無視
+		}
 		hIcons_.at(type) = Get<System::TextureRegistry>().Load(
 			fs::path{ "./Assets/Images/Editor" } / FILE_NAMES.at(type));
 	}
@@ -161,7 +166,8 @@ bool GameBase::Editor::AssetsView::OnGUI(EntityRegistry& _registry)
 				case AssetType_CppSource:
 					break;
 				case AssetType_YamlScene:
-					GameEvent::Emplace<GameEvent::ChangeScene>(selectedPath_);
+					// シーン遷移する
+					Get<System::SceneManager>().LoadSceneFile(entry.path());
 					break;
 				case AssetType_ModelFbx:
 					break;
@@ -324,6 +330,7 @@ bool GameBase::Editor::AssetsView::IsDoubleClickCell()
 
 void GameBase::Editor::AssetsView::ShowContextMenu()
 {
+	bool sholdOpenCreateAssetModal{ false };
 	if (ImGui::BeginPopupContextWindow("AssetWindowContextMenu"))
 	{
 		if (ImGui::MenuItem("フォルダを区切る"))
@@ -361,7 +368,7 @@ void GameBase::Editor::AssetsView::ShowContextMenu()
 				createAssetOption_.type = AssetType_YamlScene;
 			}
 			createAssetOption_.name.fill('\0');
-			ImGui::OpenPopup("新規アセット");
+			sholdOpenCreateAssetModal = true;
 		}
 
 		if (ImGui::MenuItem("再読み込み"))
@@ -377,6 +384,11 @@ void GameBase::Editor::AssetsView::ShowContextMenu()
 		}
 
 		ImGui::EndPopup();
+	}
+
+	if (sholdOpenCreateAssetModal)
+	{
+		ImGui::OpenPopup("新規アセット");
 	}
 
 	ImVec2 center{ ImGui::GetMainViewport()->GetCenter() };
@@ -421,6 +433,8 @@ void GameBase::Editor::AssetsView::ShowContextMenu()
 			CreateAsset();
 			ImGui::CloseCurrentPopup();
 		}
+
+		ImGui::EndPopup();
 	}
 }
 
@@ -549,7 +563,9 @@ void GameBase::Editor::AssetsView::CreateAsset()
 		break;
 	}
 
-	bool succeed{ Get<System::AssetGenerator>().TryGenerate(createFile, createAssetOption_.type) };
+	fs::path absoluted{ fs::absolute(createFile) };
+
+	bool succeed{ Get<System::AssetGenerator>().TryGenerate(absoluted.lexically_normal(), createAssetOption_.type)};
 	GB_ASSERT(succeed && "新規アセットの作成に失敗");
 }
 

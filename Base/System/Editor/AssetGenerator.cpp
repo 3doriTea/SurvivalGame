@@ -47,7 +47,7 @@ bool GameBase::System::AssetGenerator::TryGenerate(const fs::path& _file, const 
 
 		ofs.close();
 
-		break;
+		return true;  // 成功
 	}
 	case AssetType_Shader:
 	case AssetType_ShaderInclude:
