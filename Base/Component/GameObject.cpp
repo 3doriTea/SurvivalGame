@@ -5,7 +5,7 @@ GameBase::Component::GameObject::GameObject() :
 {
 }
 
-void GameBase::Component::GameObject::OnLoad(const YAML::Node& _node, SchemaLoadBundle& _bundle)
+void GameBase::Component::GameObject::OnLoad(const YAML::Node& _node, const SchemaLoadBundle& _bundle)
 {
 	std::string nameStr{ _node["name"].as<std::string>() };
 
@@ -21,7 +21,7 @@ void GameBase::Component::GameObject::OnLoad(const YAML::Node& _node, SchemaLoad
 	std::copy(nameStr.begin(), nameStr.end(), name.begin());
 }
 
-void GameBase::Component::GameObject::OnSave(YAML::Emitter& _emitter, SchemaLoadBundle& _bundle)
+void GameBase::Component::GameObject::OnSave(YAML::Emitter& _emitter, const SchemaLoadBundle& _bundle)
 {
 	_emitter << YAML::Key << "name" << YAML::Value << name.data();
 }

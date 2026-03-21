@@ -1,8 +1,10 @@
 #include "EditorBase.h"
+#include "../Assets.h"
 #include "../EditorGui.h"
 #include "../TextureRegistry.h"
 #include "../TransformCalculator.h"
 #include "../ViewportSwitcher.h"
+#include "AssetGenerator.h"
 
 #include "../../Structure/Editor/AssetsView.h"
 #include "../../Structure/Editor/HierarchyView.h"
@@ -24,6 +26,8 @@ void GameBase::System::EditorBase::OnRegisterDependencies(FluentVectorAddOnly<Sy
 		->Add(SystemRegistry::GetSystemIndex<TextureRegistry>())
 		->Add(SystemRegistry::GetSystemIndex<TransformCalculator>())
 		->Add(SystemRegistry::GetSystemIndex<ViewportSwitcher>())
+		->Add(SystemRegistry::GetSystemIndex<Assets>())
+		->Add(SystemRegistry::GetSystemIndex<AssetGenerator>())
 	;
 }
 

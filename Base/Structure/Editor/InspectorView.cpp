@@ -2,6 +2,7 @@
 #include <System/Editor/EditorBase.h>
 #include "HierarchyView.h"
 #include "../AssetLoader/YamlBuilder.h"
+#include <System/SchemaLinker.h>
 
 
 GameBase::Editor::InspectorView::InspectorView() :
@@ -15,16 +16,9 @@ bool GameBase::Editor::InspectorView::OnGUI(EntityRegistry& _registry)
 
 	if (mode_ == Mode::ShowComponents)
 	{
-		SchemaLoadBundle loadBundle{};
+		const auto& loadBundle{ Get<System::SchemaLinker>().GetSchemaLoadBundle() };
 
-		{  // FileId も Entityとして扱う無変換
-			auto view{ _registry.GetView() };
-			view.ForEach([&loadBundle](const Entity _entity)
-				{
-					loadBundle.entityToFileId.emplace(_entity, _entity);
-					loadBundle.fileIdToEntity.emplace(_entity, _entity);
-				});
-		}
+		
 
 		for (auto& component : components_)
 		{

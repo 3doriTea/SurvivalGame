@@ -14,7 +14,7 @@ GameBase::Component::Transform::Transform():
 {
 }
 
-void GameBase::Component::Transform::OnLoad(const YAML::Node& _node, SchemaLoadBundle& _bundle)
+void GameBase::Component::Transform::OnLoad(const YAML::Node& _node, const SchemaLoadBundle& _bundle)
 {
 	position.x = _node["position"]["x"].as<float>(position.x);
 	position.y = _node["position"]["y"].as<float>(position.y);
@@ -35,7 +35,7 @@ void GameBase::Component::Transform::OnLoad(const YAML::Node& _node, SchemaLoadB
 	parent = _bundle.fileIdToEntity.at(_node["parent"]["fileId"].as<Schema::FileId>(0));
 }
 
-void GameBase::Component::Transform::OnSave(YAML::Emitter & _emitter, SchemaLoadBundle& _bundle)
+void GameBase::Component::Transform::OnSave(YAML::Emitter & _emitter, const SchemaLoadBundle& _bundle)
 {
 	_emitter << YAML::Key << "position";
 	_emitter << YAML::Value << YAML::BeginMap;

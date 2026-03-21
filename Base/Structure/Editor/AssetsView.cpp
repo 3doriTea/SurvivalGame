@@ -3,6 +3,8 @@
 #include "../../System/Editor/EditorBase.h"
 #include <System/TextureRegistry.h>
 #include <System/ModelRegistry.h>
+#include <System/Editor/AssetGenerator.h>
+#include <GameEvent/ChangeScene.h>
 
 #include <ShlObj.h>
 #pragma comment(lib, "shell32.lib")
@@ -10,36 +12,15 @@
 namespace
 {
 	using namespace GameBase;
-	using AssetType = GameBase::Editor::AssetsView::AssetTypes;
 	using EntityRegistry = GameBase::EntityRegistry;
-
-	static const std::map<GameBase::Editor::AssetsView::AssetTypes, std::string_view> FILE_NAMES
-	{
-		{ GameBase::Editor::AssetsView::ASSET_UNKNOWN_FILE, "UnknownFile.png" },
-		{ GameBase::Editor::AssetsView::ASSET_UNKNOWN_FOLDER, "Folder.png" },
-		{ GameBase::Editor::AssetsView::ASSET_CPP_HEADER, "CppHeader.png" },
-		{ GameBase::Editor::AssetsView::ASSET_CPP_SOURCE, "CppSource.png" },
-		{ GameBase::Editor::AssetsView::ASSET_MODEL_FBX, "ModelFbx.png" },
-		{ GameBase::Editor::AssetsView::ASSET_UP_DIRECTORY, "Updir.png" },
-	};
-
-	static const std::map<std::string_view, GameBase::Editor::AssetsView::AssetTypes> EXT_TO_TYPE
-	{
-		{ ".cpp", GameBase::Editor::AssetsView::ASSET_CPP_SOURCE },
-		{ ".h", GameBase::Editor::AssetsView::ASSET_CPP_HEADER },
-		{ ".hpp", GameBase::Editor::AssetsView::ASSET_CPP_HEADER },
-		{ ".fbx", GameBase::Editor::AssetsView::ASSET_MODEL_FBX },
-	};
 
 	/// <summary>
 	/// 各アセットを右クリックしたときのメニュー
 	/// </summary>
-	static const std::map<
-		GameBase::Editor::AssetsView::AssetTypes,
-		std::function<void(GameBase::EntityRegistry&, const fs::path&)>> MENU_CONTEXT
+	static const std::map<GameBase::AssetType, std::function<void(GameBase::EntityRegistry&, const fs::path&)>> MENU_CONTEXT
 	{
 		{
-			AssetType::ASSET_MODEL_FBX, [](EntityRegistry& _registry, const fs::path& _file)
+			AssetType_ModelFbx, [](EntityRegistry& _registry, const fs::path& _file)
 			{
 				if (ImGui::MenuItem("Load"))
 				{
@@ -65,10 +46,8 @@ GameBase::Editor::AssetsView::AssetsView(const Config& _config) :
 	textHeight_{ 20.0f },
 	currentPath_{ _config.rootPath }
 {
-	for (int i = 0; i < ASSET_TYPE_MAX; i++)
+	for (AssetType type = 0; type < AssetType_MAX; type++)
 	{
-		AssetTypes type{ static_cast<AssetTypes>(i) };
-
 		hIcons_.at(type) = Get<System::TextureRegistry>().Load(
 			fs::path{ "./Assets/Images/Editor" } / FILE_NAMES.at(type));
 	}
@@ -106,7 +85,7 @@ bool GameBase::Editor::AssetsView::OnGUI(EntityRegistry& _registry)
 
 			bool _ = IsClickCellShow(
 				_registry,
-				ASSET_UP_DIRECTORY,
+				AssetType_UpDirectory,
 				"../");
 
 			// ダブルクリックでディレクトリに入る処理など
@@ -125,24 +104,35 @@ bool GameBase::Editor::AssetsView::OnGUI(EntityRegistry& _registry)
 			// アイテムごとにIDをユニークにする（ファイル名などを利用）
 			ImGui::PushID(entry.path().string().c_str());
 
-			AssetTypes assetType{};
+			AssetType assetType{};
 
 			if (entry.is_directory())  // ディレクトリ
 			{
-				assetType = ASSET_UNKNOWN_FOLDER;
+				assetType = AssetType_UnknownFolder;
 			}
 			else if (entry.is_regular_file())  // 普通のファイル
 			{
-				auto itr{ EXT_TO_TYPE.find(entry.path().extension().string()) };
-				if (itr == EXT_TO_TYPE.end())
+				if (!entry.path().has_extension())
 				{
 					// 未登録のファイルタイプ
-					assetType = ASSET_UNKNOWN_FILE;
+					assetType = AssetType_UnknownFile;
 				}
 				else
 				{
-					// 登録済みのファイルタイプ
-					assetType = itr->second;
+					std::string fileName{ entry.path().filename().string() };
+					std::string extension{ fileName.substr(fileName.find('.')) };
+
+					auto itr{ EXT_TO_TYPE.find(extension) };
+					if (itr == EXT_TO_TYPE.end())
+					{
+						// 未登録のファイルタイプ
+						assetType = AssetType_UnknownFile;
+					}
+					else
+					{
+						// 登録済みのファイルタイプ
+						assetType = itr->second;
+					}
 				}
 			}
 
@@ -160,9 +150,27 @@ bool GameBase::Editor::AssetsView::OnGUI(EntityRegistry& _registry)
 			// ダブルクリックでディレクトリに入る処理など
 			if (IsDoubleClickCell())
 			{
-				if (entry.is_directory())
+				switch (assetType)
 				{
+				case AssetType_UnknownFile:
+					break;
+				case AssetType_UnknownFolder:
 					currentPath_ = entry.path(); // パスを更新
+					break;
+				case AssetType_CppHeader:
+				case AssetType_CppSource:
+					break;
+				case AssetType_YamlScene:
+					GameEvent::Emplace<GameEvent::ChangeScene>(selectedPath_);
+					break;
+				case AssetType_ModelFbx:
+					break;
+				case AssetType_UpDirectory:
+					break;
+				case AssetType_MAX:
+				default:
+					GB_ASSERT(false && "未対応のダブルクリック動作");
+					break;
 				}
 			}
 
@@ -216,14 +224,14 @@ void GameBase::Editor::AssetsView::OpenInExplorer(const fs::path& _path)
 		SW_SHOWNORMAL);
 }
 
-inline bool GameBase::Editor::AssetsView::IsDirectry(const AssetTypes _assetType)
+inline bool GameBase::Editor::AssetsView::IsDirectry(const AssetType _assetType)
 {
-	return _assetType == ASSET_UNKNOWN_FOLDER || _assetType == ASSET_UP_DIRECTORY;
+	return _assetType == AssetType_UnknownFolder || _assetType == AssetType_UpDirectory;
 }
 
 bool GameBase::Editor::AssetsView::IsClickCellShow(
 	EntityRegistry& _registry,
-	const AssetTypes _assetType,
+	const AssetType _assetType,
 	const std::string_view _text,
 	const bool _selected)
 {
@@ -318,7 +326,7 @@ void GameBase::Editor::AssetsView::ShowContextMenu()
 {
 	if (ImGui::BeginPopupContextWindow("AssetWindowContextMenu"))
 	{
-		if (ImGui::MenuItem("New Folder"))
+		if (ImGui::MenuItem("フォルダを区切る"))
 		{
 			// 新しいフォルダの名前を決定（例: NewFolder, NewFolder (1)...）
 			fs::path newPath = currentPath_ / "New Folder";
@@ -330,16 +338,33 @@ void GameBase::Editor::AssetsView::ShowContextMenu()
 
 			// 実際にフォルダを作成
 			std::error_code ec;
-			if (fs::create_directory(newPath, ec)) {
+			if (fs::create_directory(newPath, ec))
+			{
 				// 成功したら必要に応じてファイルリストを再スキャンするフラグを立てる
 				// refreshFileList = true; 
 			}
-			else {
+			else
+			{
 				// エラーハンドリング
 			}
 		}
 
-		if (ImGui::MenuItem("Refresh"))
+		if (ImGui::MenuItem("新規作成"))
+		{
+			if (currentPath_.filename().string() == "Scenes")
+			{
+				createAssetOption_.type = AssetType_YamlScene;
+			}
+			else
+			{
+				// 違うなら他の
+				createAssetOption_.type = AssetType_YamlScene;
+			}
+			createAssetOption_.name.fill('\0');
+			ImGui::OpenPopup("新規アセット");
+		}
+
+		if (ImGui::MenuItem("再読み込み"))
 		{
 			// リフレッシュ処理
 		}
@@ -353,12 +378,56 @@ void GameBase::Editor::AssetsView::ShowContextMenu()
 
 		ImGui::EndPopup();
 	}
+
+	ImVec2 center{ ImGui::GetMainViewport()->GetCenter() };
+	ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+	if (ImGui::BeginPopupModal("新規アセット", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		if (ImGui::IsWindowAppearing())
+		{
+			ImGui::SetKeyboardFocusHere();
+		}
+
+		ImGui::InputText("名前(拡張子不要)", createAssetOption_.name.data(), createAssetOption_.name.size());
+
+		ImGui::Separator();
+
+		if (ImGui::RadioButton("シーン (.scene.yaml)", createAssetOption_.type == AssetType_YamlScene))
+		{
+			createAssetOption_.type = AssetType_YamlScene;
+		}
+
+		ImGui::Separator();
+
+		ImGui::BeginDisabled(IsInvalidCreateAssetName());
+		if (ImGui::Button("作成 (Enter)", ImVec2{ 120, 0 }))
+		{
+			CreateAsset();
+
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndDisabled();
+
+		ImGui::SameLine();
+
+		if (ImGui::Button("キャンセル (Esc)", ImVec2{ 120, 0 }))
+		{
+			ImGui::CloseCurrentPopup();
+		}
+
+		if (ImGui::IsKeyPressed(ImGuiKey_Enter) && !IsInvalidCreateAssetName())
+		{
+			CreateAsset();
+			ImGui::CloseCurrentPopup();
+		}
+	}
 }
 
 void GameBase::Editor::AssetsView::ShowCellContextMenu(
 	EntityRegistry& _registry,
 	const std::string_view _fileName,
-	const AssetTypes _assetType)
+	const AssetType _assetType)
 {
 	static std::array<char, 1024> renameBuffer{};
 	static bool openRenameModal{ false };
@@ -465,4 +534,26 @@ int GameBase::Editor::AssetsView::CalculateCloumnCount()
 	}
 
 	return cloumnCount;
+}
+
+void GameBase::Editor::AssetsView::CreateAsset()
+{
+	fs::path createFile{ currentPath_ / createAssetOption_.name.data() };
+
+	switch (createAssetOption_.type)
+	{
+	case AssetType_YamlScene:
+		createFile += ".scene.yaml";
+		break;
+	default:
+		break;
+	}
+
+	bool succeed{ Get<System::AssetGenerator>().TryGenerate(createFile, createAssetOption_.type) };
+	GB_ASSERT(succeed && "新規アセットの作成に失敗");
+}
+
+bool GameBase::Editor::AssetsView::IsInvalidCreateAssetName()
+{
+	return createAssetOption_.name[0] == '\0';
 }

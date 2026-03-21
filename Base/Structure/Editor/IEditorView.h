@@ -1,5 +1,6 @@
 #pragma once
 #include "../../ECS/EntityRegistry.h"
+#include "CommonView.h"
 
 namespace GameBase::Editor
 {

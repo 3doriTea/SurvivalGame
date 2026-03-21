@@ -62,29 +62,6 @@ void GameBase::System::Assets::Load()
 	};
 #pragma endregion
 
-#pragma region yamlファイルの読み込み
-
-	//AssetLoaderScene assetLoaderScene{};
-
-	//Debugger::LogBegin("Load-YAML");
-	//for (const fs::directory_entry& x : fs::recursive_directory_iterator{ directory_ })
-	//{
-	//	if (fs::is_regular_file(x) == false)
-	//	{
-	//		continue;  // 普通のファイル以外は除外
-	//	}
-
-	//	if (x.path().extension() == ".yaml")
-	//	{
-	//		// 拡張子が.yamlのファイルを読み込む
-	//		bool succeed{ assetLoaderScene.TryLoad(x.path()) };
-
-	//		Debugger::LogF("{}: {}", x.path().string(), succeed ? "Sucees!" : "Feild.");
-	//	}
-	//}
-	//Debugger::LogEnd();
-#pragma endregion
-
 #pragma region Assetsフォルダ内を走査
 	for (const fs::directory_entry& x : fs::recursive_directory_iterator{ directory_ })
 	{
@@ -93,11 +70,15 @@ void GameBase::System::Assets::Load()
 		{
 			if (x.path().extension() == ".hlsl")
 			{
-				typeToFilesPath_[AssetsType::Shader].push_back(x.path());
+				typeToFilesPath_[AssetType_Shader].push_back(x.path());
 			}
 			if (x.path().extension() == ".hlsli")
 			{
-				typeToFilesPath_[AssetsType::ShaderInclude].push_back(x.path());
+				typeToFilesPath_[AssetType_ShaderInclude].push_back(x.path());
+			}
+			if (x.path().extension() == ".fbx")
+			{
+				typeToFilesPath_[AssetType_ModelFbx].push_back(x.path());
 			}
 		}
 	}
@@ -126,7 +107,7 @@ json GameBase::System::Assets::FetchJson(const fs::path& _file)
 	return j;
 }
 
-void GameBase::System::Assets::Ref(const std::function<void(const std::vector<fs::path>&)>& _callback, const AssetsType _type)
+void GameBase::System::Assets::Ref(const std::function<void(const std::vector<fs::path>&)>& _callback, const AssetType _type)
 {
 	_callback(typeToFilesPath_[_type]);
 }

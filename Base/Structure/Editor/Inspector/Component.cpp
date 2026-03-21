@@ -14,7 +14,7 @@ GameBase::Editor::Inspector::Component::Component(
 bool GameBase::Editor::Inspector::Component::IsUpdatedShow(
 	EntityRegistry& _registry,
 	std::string& _yamlStr,
-	SchemaLoadBundle& _loadBundle)
+	const SchemaLoadBundle& _loadBundle)
 {
 	//schema.node
 	//ImGui::Selectable(build.c_str());

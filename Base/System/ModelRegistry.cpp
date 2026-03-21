@@ -21,6 +21,13 @@ void GameBase::System::ModelRegistry::Release()
 
 GameBase::ModelHandle GameBase::System::ModelRegistry::Load(const fs::path& _file)
 {
+	ModelHandle hModel{ models_.Find([&_file](const Model& _model) { return !_model.filePath.empty() && fs::equivalent(_model.filePath, _file); }) };
+
+	if (hModel != INVALID_HANDLE)
+	{
+		return hModel;  // すでに読み込み済みならそれを取得
+	}
+
 	if (_file.extension() == ".fbx")
 	{
 		Debugger::LogBegin("FBX_LOADING");

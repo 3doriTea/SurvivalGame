@@ -202,6 +202,7 @@
     <ClCompile Include="Base\ComponentRegistry.cpp" />
     <ClCompile Include="Base\Component\Camera.cpp" />
     <ClCompile Include="Base\Component\GameObject.cpp" />
+    <ClCompile Include="Base\Component\ModelRenderer.cpp" />
     <ClCompile Include="Base\Component\Transform.cpp" />
     <ClCompile Include="Base\DependencyResolver.cpp" />
     <ClCompile Include="Base\ECS\ComponentPool.cpp" />
@@ -369,6 +370,7 @@
     <ClCompile Include="Base\System\Assets.cpp" />
     <ClCompile Include="Base\System\Direct3D.cpp" />
     <ClCompile Include="Base\System\EditorGui.cpp" />
+    <ClCompile Include="Base\System\Editor\AssetGenerator.cpp" />
     <ClCompile Include="Base\System\Editor\EditorBase.cpp" />
     <ClCompile Include="Base\System\GameTime.cpp" />
     <ClCompile Include="Base\System\Graphic\MainCamera.cpp" />
@@ -381,6 +383,7 @@
     <ClCompile Include="Base\System\Renderer.cpp" />
     <ClCompile Include="Base\System\Presenter.cpp" />
     <ClCompile Include="Base\System\SceneManager.cpp" />
+    <ClCompile Include="Base\System\SchemaLinker.cpp" />
     <ClCompile Include="Base\System\ShaderCompiler.cpp" />
     <ClCompile Include="Base\System\TextureRegistry.cpp" />
     <ClCompile Include="Base\System\TransformCalculator.cpp" />
@@ -396,6 +399,7 @@
     <ClInclude Include="Base\ComponentRegistry.h" />
     <ClInclude Include="Base\Component\Camera.h" />
     <ClInclude Include="Base\Component\GameObject.h" />
+    <ClInclude Include="Base\Component\ModelRenderer.h" />
     <ClInclude Include="Base\Component\Transform.h" />
     <ClInclude Include="Base\DependencyResolver.h" />
     <ClInclude Include="Base\ECS\ComponentPool.h" />
@@ -448,7 +452,9 @@
     <ClInclude Include="Base\Structure\AssetLoader\AssetLoaderScene.h" />
     <ClInclude Include="Base\Structure\AssetLoader\YamlBuilder.h" />
     <ClInclude Include="Base\Structure\AssetLoader\YamlLoader.h" />
+    <ClInclude Include="Base\Structure\AssetType.h" />
     <ClInclude Include="Base\Structure\Collider\AABB.h" />
+    <ClInclude Include="Base\Structure\Editor\CommonView.h" />
     <ClInclude Include="Base\Structure\Editor\InspectorView.h" />
     <ClInclude Include="Base\Structure\Editor\Inspector\Component.h" />
     <ClInclude Include="Base\Structure\Editor\SceneView.h" />
@@ -457,6 +463,8 @@
     <ClInclude Include="Base\Structure\ModelLoader\FbxLoader.h" />
     <ClInclude Include="Base\Structure\ModelLoader\FbxMaterial.h" />
     <ClInclude Include="Base\Structure\ModelLoader\FbxVertex.h" />
+    <ClInclude Include="Base\Structure\Schema\AssetIdSchema.h" />
+    <ClInclude Include="Base\System\Editor\AssetGenerator.h" />
     <ClInclude Include="Base\System\MeshRegistry.h" />
     <ClInclude Include="Base\System\ModelRegistry.h" />
     <ClInclude Include="Base\Structure\SchemaLoadBundle.h" />
@@ -505,6 +513,7 @@
     <ClInclude Include="Base\System\Renderer.h" />
     <ClInclude Include="Base\System\Presenter.h" />
     <ClInclude Include="Base\System\SceneManager.h" />
+    <ClInclude Include="Base\System\SchemaLinker.h" />
     <ClInclude Include="Base\System\ShaderCompiler.h" />
     <ClInclude Include="Base\System\TextureRegistry.h" />
     <ClInclude Include="Base\System\TransformCalculator.h" />

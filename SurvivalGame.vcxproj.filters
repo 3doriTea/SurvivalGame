@@ -227,6 +227,15 @@
     <ClCompile Include="Base\System\ViewportSwitcher.cpp">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Base\Component\ModelRenderer.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\System\SchemaLinker.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\System\Editor\AssetGenerator.cpp">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\GameBase.h">
@@ -590,6 +599,24 @@
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
     <ClInclude Include="Base\System\ViewportSwitcher.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Component\ModelRenderer.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Structure\Schema\AssetIdSchema.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\System\SchemaLinker.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Structure\Editor\CommonView.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\System\Editor\AssetGenerator.h">
+      <Filter>未分類のソースヘッダファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Structure\AssetType.h">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
   </ItemGroup>

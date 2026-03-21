@@ -18,8 +18,8 @@ namespace GameBase::Component
 		friend class GameBase::System::TransformCalculator;
 
 		Transform();
-		void OnLoad(const YAML::Node& _node, SchemaLoadBundle& _bundle) override;
-		void OnSave(YAML::Emitter& _emitter, SchemaLoadBundle& _bundle) override;
+		void OnLoad(const YAML::Node& _node, const SchemaLoadBundle& _bundle) override;
+		void OnSave(YAML::Emitter& _emitter, const SchemaLoadBundle& _bundle) override;
 
 		inline Vec3 Forward() const { return Vec3::Forward() * localRotationMatrix; }
 		inline Vec3 Up() const { return Vec3::Up() * localRotationMatrix; }

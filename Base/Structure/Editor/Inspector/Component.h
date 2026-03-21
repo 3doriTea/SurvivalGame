@@ -13,7 +13,7 @@ namespace GameBase::Editor::Inspector
 			const ComponentIndex _componentIndex);
 		inline ~Component() = default;
 
-		bool IsUpdatedShow(EntityRegistry& _registry, std::string& _yamlStr, SchemaLoadBundle& _loadBundle);
+		bool IsUpdatedShow(EntityRegistry& _registry, std::string& _yamlStr, const SchemaLoadBundle& _loadBundle);
 
 	public:  // 公開
 		const Entity ENTITY;

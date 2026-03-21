@@ -3,8 +3,8 @@
 #include "../../ECS/IComponentBase.h"
 
 
-GameBase::YamlBuilder::YamlBuilder(SchemaLoadBundle& _loadBundle) :
-	loadBundle_{ _loadBundle }
+GameBase::YamlBuilder::YamlBuilder(const SchemaLoadBundle& _loadBundle) :
+	LOAD_BUNDLE_{ _loadBundle }
 {
 	//out_ << YAML::BeginDoc;
 	Header();

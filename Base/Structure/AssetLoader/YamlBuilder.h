@@ -11,7 +11,7 @@ namespace GameBase
 	class YamlBuilder
 	{
 	public:
-		YamlBuilder(SchemaLoadBundle& _loadBundle);
+		YamlBuilder(const SchemaLoadBundle& _loadBundle);
 		~YamlBuilder();
 
 		/// <summary>
@@ -33,7 +33,7 @@ namespace GameBase
 		void Header();
 
 	private:
-		SchemaLoadBundle& loadBundle_;  // 外部,動的情報を参照
+		const SchemaLoadBundle& LOAD_BUNDLE_;  // 外部,動的情報を参照
 		std::stringstream out_;         // 書き込むss
 	};
 }

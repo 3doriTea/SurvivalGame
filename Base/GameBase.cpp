@@ -32,7 +32,7 @@ bool GameBase::Game::Start()
 	Debugger::LogBegin("GameBase::Game::Start");
 
 	//// TODO: デフォルトシーン読み込み
-	MoveScene(fs::current_path() / "Assets/Default/BootScene.yaml");
+	MoveScene(fs::current_path() / "Assets/Default/Boot.scene.yaml");
 	//MakeScene(true);
 
 	Debugger::LogEnd();

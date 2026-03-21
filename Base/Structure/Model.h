@@ -32,6 +32,7 @@ namespace GameBase
 
 	struct Model
 	{
+		fs::path filePath;  // ファイルパス
 		std::string name;  // モデルのId
 		// ノード
 		std::vector<ModelNode> nodes;

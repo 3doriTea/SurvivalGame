@@ -28,7 +28,7 @@ void GameBase::System::ShaderCompiler::Initialize()
 		{
 			shaders_.Emplace(Compile(filePath, {}, {}));
 		}
-	}, AssetsType::Shader);
+	}, AssetType_Shader);
 }
 
 void GameBase::System::ShaderCompiler::Update(EntityRegistry&)

@@ -1,5 +1,6 @@
 #pragma once
 #include "IEditorView.h"
+#include "../../Structure/AssetType.h"
 
 namespace GameBase::Editor
 {
@@ -9,17 +10,6 @@ namespace GameBase::Editor
 	class AssetsView : public IEditorView
 	{
 	public:
-		enum AssetTypes : int
-		{
-			ASSET_UNKNOWN_FILE,
-			ASSET_UNKNOWN_FOLDER,
-			ASSET_CPP_HEADER,
-			ASSET_CPP_SOURCE,
-			ASSET_MODEL_FBX,
-			ASSET_UP_DIRECTORY,
-			ASSET_TYPE_MAX,
-		};
-
 		struct Config
 		{
 			Config() :
@@ -59,7 +49,7 @@ namespace GameBase::Editor
 		/// </summary>
 		/// <param name="_assetType">アセットの種類</param>
 		/// <returns>ディレクトリである true / false</returns>
-		bool IsDirectry(const AssetTypes _assetType);
+		bool IsDirectry(const AssetType _assetType);
 
 		/// <summary>
 		/// 1つ上の階層に行けるか
@@ -72,7 +62,7 @@ namespace GameBase::Editor
 		/// </summary>
 		bool IsClickCellShow(
 			EntityRegistry& _registry,
-			const AssetTypes _assetType,
+			const AssetType _assetType,
 			const std::string_view _text,
 			const bool _selected = false);
 		/// <summary>
@@ -92,12 +82,23 @@ namespace GameBase::Editor
 		void ShowCellContextMenu(
 			EntityRegistry& _registry,
 			const std::string_view _fileName,
-			const AssetTypes _assetType);
+			const AssetType _assetType);
 
 		/// <summary>
 		/// カラム数を計算する
 		/// </summary>
 		int CalculateCloumnCount();
+
+		/// <summary>
+		/// アセットを作成
+		/// </summary>
+		void CreateAsset();
+
+		/// <summary>
+		/// 作成するアセット名が無効か
+		/// </summary>
+		/// <returns>無効である true / false</returns>
+		bool IsInvalidCreateAssetName();
 
 	private:
 		const fs::path ROOT_PATH_;  // アセットフォルダのパス
@@ -119,7 +120,13 @@ namespace GameBase::Editor
 		fs::path currentPath_;  // 開いているディレクトリパス
 		fs::path selectedPath_;  // 選択中のファイルパス
 
+		struct
+		{
+			std::array<char, MAX_PATH> name;
+			AssetType type;  // 選択中のアセットタイプ
+		} createAssetOption_;
+
 		// アセットアイコンハンドル
-		std::array<TextureHandle, ASSET_TYPE_MAX> hIcons_;
+		std::array<TextureHandle, AssetType_MAX> hIcons_;
 	};
 }

@@ -96,6 +96,7 @@ bool GameBase::Editor::HierarchyView::OnGUI(EntityRegistry& _registry)
 
 #pragma endregion
 
+#pragma region ノードツリー
 	objects_.clear();
 
 	ViewGameObjectTransform view{ _registry.GetView<Component::GameObject, Component::Transform>() };
@@ -125,6 +126,7 @@ bool GameBase::Editor::HierarchyView::OnGUI(EntityRegistry& _registry)
 		}
 		ShowNodeTree(view, obj);
 	}
+#pragma endregion
 
 	ImGui::End();
 

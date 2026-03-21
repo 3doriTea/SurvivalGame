@@ -3,16 +3,11 @@
 #include "Structure/GameConfig.h"
 #include "Structure/GameManifest.h"
 #include <Library/nlohmann-json/json.hpp>
+#include <Structure/AssetType.h>
 
 
 namespace GameBase::System
 {
-	enum struct AssetsType : int
-	{
-		Shader,
-		ShaderInclude,
-	};
-
 	/// <summary>
 	/// システムインタフェース: アセットシステム
 	/// </summary>
@@ -54,7 +49,7 @@ namespace GameBase::System
 		/// </summary>
 		/// <param name="_callback">パスvectorの参照コールバックvoid(const std::vector<fs::path>&)</param>
 		/// <param name="_type">アセットファイルの種類</param>
-		virtual void Ref(const std::function<void(const std::vector<fs::path>&)>& _callback, const AssetsType _type) = 0;
+		virtual void Ref(const std::function<void(const std::vector<fs::path>&)>& _callback, const AssetType _type) = 0;
 	};
 
 	/// <summary>
@@ -89,12 +84,12 @@ namespace GameBase::System
 		GameManifest GetGameManifest() override { return gameManifest_; }
 		void Load() override;
 		json FetchJson(const fs::path& _file) override;
-		void Ref(const std::function<void(const std::vector<fs::path>&)>& _callback, const AssetsType _type) override;
+		void Ref(const std::function<void(const std::vector<fs::path>&)>& _callback, const AssetType _type) override;
 
 	private:
 		fs::path directory_;
 
-		std::map<AssetsType, std::vector<fs::path>> typeToFilesPath_;  // アセットの種類別全ファイルパス
+		std::map<AssetType, std::vector<fs::path>> typeToFilesPath_;  // アセットの種類別全ファイルパス
 		GameConfig gameConfig_;
 		GameManifest gameManifest_;
 

@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !gbc! GameBase::Component::
+%TAG !gb! GameBase::
+
+--- !gb!Scene
+Scene:
+  gameObjects:
+  - gameObject: {fileId: 101}
+  - gameObject: {fileId: 102}
+
+--- !gb!GameObject
+Id: 101
+GameObject:
+  name: Main Camera
+  components:
+  - component: {fileId: 1001}
+  - component: {fileId: 1002}
+
+--- !gbc!Camera
+Id: 1002
+Camera:
+  far: 0.1
+  near: 1000.0
+
+--- !gbc!Transform
+Id: 1001
+Transform:
+  position: {x: 0.0, y: 0.0, z: -10.0}
+  rotation: {x: 0.0, y: 0.0, z: 0.0}
+  scale:    {x: 1.0, y: 1.0, z: 1.0}
+  parent:   {fileId: 0}
+
+
+--- !gb!GameObject
+Id: 102
+GameObject:
+  name: Sub Camera
+  components:
+  - component: {fileId: 1011}
+
+--- !gbc!Transform
+Id: 1011
+Transform:
+  position: {x: 0.0, y: 0.0, z: 0.0}
+  rotation: {x: 0.0, y: 0.0, z: 0.0}
+  scale:    {x: 1.0, y: 1.0, z: 1.0}
+  parent:   {fileId: 101}
+
+--- !gb!GameObject
+Id: 103
+GameObject:
+  name: Player
+  components:
+  - component: {fileId: 1021}
+
+--- !gbc!Transform
+Id: 1021
+Transform:
+  position: {x: 0.0, y: 0.0, z: 0.0}
+  rotation: {x: 0.0, y: 0.0, z: 0.0}
+  scale:    {x: 1.0, y: 1.0, z: 1.0}
+  parent:   {fileId: 0}

@@ -17,8 +17,8 @@ namespace GameBase::Component
 		friend GameBase::System::MainCamera;
 
 		Camera();
-		void OnLoad(const YAML::Node& _node, SchemaLoadBundle& _bundle) override;
-		void OnSave(YAML::Emitter& _emitter, SchemaLoadBundle& _bundle) override;
+		void OnLoad(const YAML::Node& _node, const SchemaLoadBundle& _bundle) override;
+		void OnSave(YAML::Emitter& _emitter, const SchemaLoadBundle& _bundle) override;
 
 		float nearZ;        // ファークリップ平面の距離
 		float farZ;         // ニヤークリップ平面の距離
