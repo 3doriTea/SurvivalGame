@@ -28,6 +28,12 @@ namespace GameBase::System
 		/// セーブが必要かチェックする
 		/// </summary>
 		virtual bool CheckSave() = 0;
+
+		/// <summary>
+		/// 未保存のデータがあるか取得
+		/// </summary>
+		/// <returns>true / false</returns>
+		virtual bool HasUnsaved() = 0;
 	};
 
 	/// <summary>
@@ -63,6 +69,7 @@ namespace GameBase::System
 		bool CheckSave() override;
 		bool TrySaveScene(EntityRegistry& _registry, const fs::path& _file) override;
 		void SetDirty() override;
+		bool HasUnsaved() override { return hasUnsaved_; }
 
 	private:
 		EntityRegistry* pDangerPtrEntityRegistry_;   // TODO: あとで消す

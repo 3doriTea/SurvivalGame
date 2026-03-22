@@ -63,7 +63,7 @@ GameObject:
 --- !gb!GameObject
 Id: 6
 GameObject:
-  name: testing
+  name: testinawdaw
   components:
     - component:
         fileId: 13
@@ -169,7 +169,7 @@ Transform:
 Id: 13
 Transform:
   position:
-    x: 0
+    x: -0.3
     y: 0
     z: 0
   rotation:
