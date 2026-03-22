@@ -13,12 +13,6 @@ Scene:
         fileId: 3
     - gameObject:
         fileId: 4
-    - gameObject:
-        fileId: 5
-    - gameObject:
-        fileId: 6
-    - gameObject:
-        fileId: 7
 
 --- !gb!GameObject
 Id: 1
@@ -26,9 +20,9 @@ GameObject:
   name: Main Camera
   components:
     - component:
-        fileId: 8
+        fileId: 5
     - component:
-        fileId: 9
+        fileId: 6
 
 --- !gb!GameObject
 Id: 2
@@ -36,7 +30,7 @@ GameObject:
   name: Sub Camera
   components:
     - component:
-        fileId: 10
+        fileId: 7
 
 --- !gb!GameObject
 Id: 3
@@ -44,51 +38,27 @@ GameObject:
   name: Player
   components:
     - component:
-        fileId: 11
+        fileId: 8
 
 --- !gb!GameObject
 Id: 4
 GameObject:
-  name: Enemy
+  name: TestPlaneObj
   components:
     - component:
-        fileId: 12
-
---- !gb!GameObject
-Id: 5
-GameObject:
-  name: ppp
-  components:
+        fileId: 9
     - component:
-        fileId: 13
-
---- !gb!GameObject
-Id: 6
-GameObject:
-  name: testinawdaw
-  components:
-    - component:
-        fileId: 14
-
---- !gb!GameObject
-Id: 7
-GameObject:
-  name: TestPlane
-  components:
-    - component:
-        fileId: 15
-    - component:
-        fileId: 16
+        fileId: 10
 
 --- !gbc!Camera
-Id: 8
+Id: 5
 Camera:
   near: 1000
   far: 0.1
   fov: 0.7853982
 
 --- !gbc!Transform
-Id: 9
+Id: 6
 Transform:
   position:
     x: 0
@@ -106,7 +76,7 @@ Transform:
     fileId: 0
 
 --- !gbc!Transform
-Id: 10
+Id: 7
 Transform:
   position:
     x: 0
@@ -124,7 +94,7 @@ Transform:
     fileId: 1
 
 --- !gbc!Transform
-Id: 11
+Id: 8
 Transform:
   position:
     x: 0
@@ -141,68 +111,14 @@ Transform:
   parent:
     fileId: 0
 
---- !gbc!Transform
-Id: 12
-Transform:
-  position:
-    x: 0
-    y: -10.7
-    z: 0
-  rotation:
-    x: -0
-    y: 0
-    z: 0
-  scale:
-    x: 0
-    y: 0
-    z: 0
-  parent:
-    fileId: 0
-
---- !gbc!Transform
-Id: 13
-Transform:
-  position:
-    x: 0
-    y: 0
-    z: 0
-  rotation:
-    x: -0
-    y: 0
-    z: 0
-  scale:
-    x: 0
-    y: 0
-    z: 0
-  parent:
-    fileId: 0
-
---- !gbc!Transform
-Id: 14
-Transform:
-  position:
-    x: -0.3
-    y: 0
-    z: 0
-  rotation:
-    x: -0
-    y: 0
-    z: 0
-  scale:
-    x: 0
-    y: 0
-    z: 0
-  parent:
-    fileId: 0
-
---- !gbc!ModelRenderer
-Id: 15
-ModelRenderer:
+--- !gbc!ModelRenderable
+Id: 9
+ModelRenderable:
   hModel:
-    assetId: ""
+    assetId: 0
 
 --- !gbc!Transform
-Id: 16
+Id: 10
 Transform:
   position:
     x: 0

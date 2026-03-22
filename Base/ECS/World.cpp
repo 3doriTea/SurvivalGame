@@ -127,7 +127,7 @@ bool GameBase::World::TryLoadScene(
 	}
 
 	SchemaLoadBundle loadBundle{};
-	loadBundle.assetIdToModel.emplace("", INVALID_HANDLE);
+	loadBundle.assetIdToModel.emplace("0", INVALID_HANDLE);
 	
 	// エンティティを作っていく
 	for (auto& gameObject : yaml.gameObjects)

@@ -227,7 +227,7 @@
     <ClCompile Include="Base\System\ViewportSwitcher.cpp">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Base\Component\ModelRenderer.cpp">
+    <ClCompile Include="Base\Component\ModelRenderable.cpp">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClCompile>
     <ClCompile Include="Base\System\SchemaLinker.cpp">
@@ -607,7 +607,7 @@
     <ClInclude Include="Base\System\ViewportSwitcher.h">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Component\ModelRenderer.h">
+    <ClInclude Include="Base\Component\ModelRenderable.h">
       <Filter>未分類のソースヘッダファイル</Filter>
     </ClInclude>
     <ClInclude Include="Base\Structure\Schema\AssetIdSchema.h">

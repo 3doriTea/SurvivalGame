@@ -47,7 +47,14 @@ bool GameBase::FbxLoader::TryLoad(Model* _pOut)
 	}
 
 	Model model{};
+	model.filePath = modelFile_;
 	model.name = modelFile_.string();
+
+	if (model.name != "N:\\workhome\\SurvivalGame\\Assets\\Models\\TestPlane\\TestPlane.fbx")
+	{
+		return false;
+	}
+
 
 	for (ufbx_node* pNode : pScene->nodes)
 	{
@@ -93,8 +100,10 @@ bool GameBase::FbxLoader::TryLoad(Model* _pOut)
 	}
 
 	ufbx_free_scene(pScene);
+
+	*_pOut = std::move(model);
 	
-	return false;  // TODO 後で成功にする
+	return true;  // TODO 後で成功にする
 }
 
 GameBase::MeshHandle GameBase::FbxLoader::LoadMesh(ufbx_mesh* _pMesh, ufbx_mesh_part* _pPart) const
