@@ -45,6 +45,11 @@ namespace GameBase::System
 		/// </summary>
 		void Release() override;
 
+		/// <summary>
+		/// 再読込する
+		/// </summary>
+		void Reload();
+
 		void RefLoadBundle(const std::function<void(const SchemaLoadBundle&)>& _callback) const override;
 
 		inline const SchemaLoadBundle& GetSchemaLoadBundle() const override { return loadBundle_; }

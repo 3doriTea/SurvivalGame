@@ -24,6 +24,11 @@ namespace GameBase::System
 		/// </summary>
 		/// <returns>ウィンドウサイズ</returns>
 		virtual Vec2Int GetWindowSize() const = 0;
+		/// <summary>
+		/// ウィンドウのハンドルを取得する
+		/// </summary>
+		/// <returns></returns>
+		virtual HWND GetHandle() const = 0;
 	};
 
 	/// <summary>
@@ -59,7 +64,7 @@ namespace GameBase::System
 		/// <param name="_config">作るウィンドウの設定</param>
 		void Create(const CreateWindowConfig& _config);
 
-		HWND GetHandle() const { return handle_; }
+		HWND GetHandle() const override { return handle_; }
 		Vec2Int GetClientSize() const override { return clientSize_; }
 		Vec2Int GetWindowSize() const override { return windowSize_; }
 

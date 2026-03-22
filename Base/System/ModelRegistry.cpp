@@ -60,3 +60,24 @@ GameBase::ModelHandle GameBase::System::ModelRegistry::Load(const fs::path& _fil
 
 	return INVALID_HANDLE;
 }
+
+const GameBase::Model& GameBase::System::ModelRegistry::At(const std::string& _fileName)
+{
+	return models_.At(Find(_fileName));
+}
+
+GameBase::ModelHandle GameBase::System::ModelRegistry::Find(const std::string& _fileName)
+{
+	if (!fs::is_regular_file(_fileName))
+	{
+		return INVALID_HANDLE;  // ファイルじゃないなら無視
+	}
+	return models_.Find([_fileName](const Model& _model)
+		{
+			if (!fs::is_regular_file(_model.filePath))
+			{
+				return false;  // ファイルじゃないなら不一致
+			}
+			return fs::equivalent(_model.filePath, _fileName);
+		});
+}

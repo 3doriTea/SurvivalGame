@@ -24,6 +24,7 @@ void GameBase::System::SchemaLinker::OnRegisterDependencies(FluentVectorAddOnly<
 void GameBase::System::SchemaLinker::Initialize()
 {
 	// 各アセットのハンドルも登録
+	preModel2AssetId_.emplace(INVALID_HANDLE, "0");
 	preModel2AssetId_.emplace(INVALID_HANDLE, "");
 	Get<System::Assets>().Ref([this](const std::vector<fs::path>& _modelsPath)
 		{
@@ -62,7 +63,6 @@ void GameBase::System::SchemaLinker::Update(EntityRegistry& _registry)
 			loadBundle_.fileIdToEntity.emplace(_entity, _entity);
 		});
 
-
 	loadBundle_.modelToAssetId.clear();
 	loadBundle_.assetIdToModel.clear();
 	for (auto& [hModel, assetId] : preModel2AssetId_)
@@ -75,6 +75,10 @@ void GameBase::System::SchemaLinker::Update(EntityRegistry& _registry)
 
 void GameBase::System::SchemaLinker::Release()
 {}
+
+void GameBase::System::SchemaLinker::Reload()
+{
+}
 
 void GameBase::System::SchemaLinker::RefLoadBundle(const std::function<void(const SchemaLoadBundle&)>&_callback) const
 {

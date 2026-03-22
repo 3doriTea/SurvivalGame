@@ -27,6 +27,12 @@ namespace GameBase::System
 		virtual void Load() = 0;
 
 		/// <summary>
+		/// アセットフォルダのパスを取得する
+		/// </summary>
+		/// <returns>アセットフォルダのパス</returns>
+		virtual fs::path GetAssetDirPath() const = 0;
+
+		/// <summary>
 		/// 指定したJSONファイルを読み込む
 		/// </summary>
 		/// <param name="_file">アセットフォルダからの相対パス</param>
@@ -85,6 +91,7 @@ namespace GameBase::System
 		void Load() override;
 		json FetchJson(const fs::path& _file) override;
 		void Ref(const std::function<void(const std::vector<fs::path>&)>& _callback, const AssetType _type) override;
+		fs::path GetAssetDirPath() const override { return directory_; }
 
 	private:
 		fs::path directory_;

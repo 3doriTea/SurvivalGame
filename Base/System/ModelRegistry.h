@@ -14,8 +14,30 @@ namespace GameBase::System
 		IModelRegistry() = default;
 		virtual ~IModelRegistry() = default;
 
+		/// <summary>
+		/// モデうをロードする
+		/// </summary>
+		/// <param name="_file">ファイルパス</param>
+		/// <returns>モデルハンドル</returns>
 		virtual ModelHandle Load(const fs::path& _file) = 0;
-		//virtual void Hoge() = 0;
+		/// <summary>
+		/// モデルハンドルからモデルを参照する
+		/// </summary>
+		/// <param name="_handle">モデルハンドル</param>
+		/// <returns>モデルの参照</returns>
+		virtual const Model& At(const ModelHandle _handle) = 0;
+		/// <summary>
+		/// ファイル名からモデルを参照する
+		/// </summary>
+		/// <param name="_fileName">ファイル名</param>
+		/// <returns>モデルの参照</returns>
+		virtual const Model& At(const std::string& _fileName) = 0;
+		/// <summary>
+		/// ファイル名からモデルハンドルを取得する
+		/// </summary>
+		/// <param name="_fileName">ファイル名</param>
+		/// <returns>モデルハンドル</returns>
+		virtual ModelHandle Find(const std::string& _fileName) = 0;
 	};
 
 	/// <summary>
@@ -46,6 +68,9 @@ namespace GameBase::System
 		void Release() override;
 
 		ModelHandle Load(const fs::path& _file) override;
+		inline const Model& At(const ModelHandle _handle) override { return models_.At(_handle); }
+		const Model& At(const std::string& _fileName) override;
+		ModelHandle Find(const std::string& _fileName) override;
 
 	private:
 		// モデル保管

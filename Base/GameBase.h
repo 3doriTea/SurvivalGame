@@ -14,7 +14,7 @@ namespace GameBase
 		Game(const RunMode _runMode);
 		~Game() = default;
 
-		bool Start();
+		bool Start(const fs::path& _startScenePath = "Assets/Default/Boot.scene.yaml");
 		bool Update();
 		bool End();
 

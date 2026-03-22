@@ -29,12 +29,12 @@ GameBase::Game::Game(const RunMode _runMode) :
 {
 }
 
-bool GameBase::Game::Start()
+bool GameBase::Game::Start(const fs::path& _sceneFile)
 {
 	Debugger::LogBegin("GameBase::Game::Start");
 
 	//// TODO: デフォルトシーン読み込み
-	MoveScene(fs::current_path() / "Assets/Default/Boot.scene.yaml");
+	MoveScene(fs::current_path() / _sceneFile);
 	//MakeScene(true);
 
 	Debugger::LogEnd();

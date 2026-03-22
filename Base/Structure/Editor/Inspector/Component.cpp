@@ -2,6 +2,9 @@
 #include <Component/GameObject.h>
 #include <Component/Transform.h>
 #include <System/SceneSaver.h>
+#include <System/ModelRegistry.h>
+#include <System/MainWindow.h>
+#include <System/Assets.h>
 
 
 GameBase::Editor::Inspector::Component::Component(
@@ -171,6 +174,52 @@ bool GameBase::Editor::Inspector::Component::IsUpdatedShow(
 							}
 							updated << YAML::Value << YAML::BeginMap;
 							updated << YAML::Key << "fileId" << YAML::Value << selectedEntity;
+							updated << YAML::EndMap;
+						}
+						else if (HasKeys(params, { "assetId" }))
+						{
+							ModelHandle hModel{ INVALID_HANDLE };
+							try
+							{
+								hModel = params["assetId"].as<ModelHandle>();
+							}
+							catch (const YAML::BadConversion&)
+							{
+								std::string fileName{ params["assetId"].as<std::string>() };
+								hModel = Get<System::ModelRegistry>().Find(fileName);
+							}
+
+							std::string currentFileName{ Get<System::ModelRegistry>().At(hModel).filePath.string() };
+							if (ImGui::Button(currentFileName.empty() ? "[>未指定<]" : currentFileName.c_str()))
+							{
+								std::array<char, MAX_PATH> fileName{};
+								if (currentFileName.empty())
+								{
+									std::string defaultDir{ Get<System::Assets>().GetAssetDirPath().string() };
+									std::copy(defaultDir.begin(), defaultDir.end(), fileName.begin());
+								}
+								else
+								{
+									std::copy(currentFileName.begin(), currentFileName.end(), fileName.begin());
+								}
+								OPENFILENAME openFileName{};
+								openFileName.lStructSize = sizeof(openFileName);
+								openFileName.hwndOwner = Get<System::MainWindow>().GetHandle();
+								openFileName.lpstrFile = fileName.data();
+								openFileName.nMaxFile = MAX_PATH;
+								openFileName.lpstrFilter = "*.fbx";
+								openFileName.nFilterIndex = 1;
+								openFileName.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
+
+								if (GetOpenFileName(&openFileName))
+								{
+									hModel = Get<System::ModelRegistry>().Find(fileName.data());
+									isChanged = true;  // 変更がアタ
+								}
+							}
+
+							updated << YAML::Value << YAML::BeginMap;
+							updated << YAML::Key << "assetId" << YAML::Value << hModel;
 							updated << YAML::EndMap;
 						}
 					}
