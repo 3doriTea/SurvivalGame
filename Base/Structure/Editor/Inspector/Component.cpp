@@ -1,6 +1,7 @@
 #include "Component.h"
 #include <Component/GameObject.h>
 #include <Component/Transform.h>
+#include <System/SceneSaver.h>
 
 
 GameBase::Editor::Inspector::Component::Component(
@@ -181,6 +182,9 @@ bool GameBase::Editor::Inspector::Component::IsUpdatedShow(
 					std::string t{ YAML::Dump(undatedNode) };
 
 					_registry.GetComponent(ENTITY, COMPONENT_INDEX).OnLoad(undatedNode, _loadBundle);
+
+					Get<System::SceneSaver>().SetDirty();
+
 					isUpdated = true;
 				}
 			}

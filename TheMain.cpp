@@ -13,7 +13,7 @@ void Main()
 
 	LogBegin("Main");
 
-	Game game{};
+	Game game{ RunMode::Editor };
 	if (!game.Start())
 	{
 		Log("スタートに失敗");

@@ -5,33 +5,153 @@
 --- !gb!Scene
 Scene:
   gameObjects:
-  - gameObject: {fileId: 101}
+    - gameObject:
+        fileId: 1
+    - gameObject:
+        fileId: 2
+    - gameObject:
+        fileId: 3
+    - gameObject:
+        fileId: 4
+    - gameObject:
+        fileId: 5
 
 --- !gb!GameObject
-Id: 101
+Id: 1
 GameObject:
   name: Main Camera
   components:
-  - component: {fileId: 1001}
-  - component: {fileId: 1002}
+    - component:
+        fileId: 6
+    - component:
+        fileId: 7
+
+--- !gb!GameObject
+Id: 2
+GameObject:
+  name: objeeeee
+  components:
+    - component:
+        fileId: 8
+
+--- !gb!GameObject
+Id: 3
+GameObject:
+  name: obj
+  components:
+    - component:
+        fileId: 9
+
+--- !gb!GameObject
+Id: 4
+GameObject:
+  name: obbbj
+  components:
+    - component:
+        fileId: 10
+
+--- !gb!GameObject
+Id: 5
+GameObject:
+  name: obj
+  components:
+    - component:
+        fileId: 11
 
 --- !gbc!Camera
-Id: 1002
+Id: 6
 Camera:
+  near: 1000
   far: 0.1
-  near: 1000.0  
+  fov: 0.7853982
 
 --- !gbc!Transform
-Id: 1001
+Id: 7
 Transform:
-  position: {x: 0.0, y: 0.0, z: -10.0}
-  rotation: {x: 0.0, y: 0.0, z: 0.0}
-  scale:    {x: 1.0, y: 1.0, z: 1.0}
-  parent:   {fileId: 0}
+  position:
+    x: 0
+    y: 0
+    z: -10
+  rotation:
+    x: -0
+    y: 0
+    z: 0
+  scale:
+    x: 1
+    y: 1
+    z: 1
+  parent:
+    fileId: 0
 
-# --- !gbc!PrefabInstance
-# PrefabInstance:
-#   name: Player
-#   TransformParent: {fileId: 0}
-#   SourcePrefab: {path: Prefab/Player.yaml}
+--- !gbc!Transform
+Id: 8
+Transform:
+  position:
+    x: 0
+    y: 0
+    z: 0
+  rotation:
+    x: -0
+    y: 0
+    z: 0
+  scale:
+    x: 1
+    y: 1
+    z: 1
+  parent:
+    fileId: 1
+
+--- !gbc!Transform
+Id: 9
+Transform:
+  position:
+    x: 0
+    y: 0
+    z: 0
+  rotation:
+    x: -0
+    y: 0
+    z: 0
+  scale:
+    x: 1
+    y: 1
+    z: 1
+  parent:
+    fileId: 0
+
+--- !gbc!Transform
+Id: 10
+Transform:
+  position:
+    x: 0
+    y: -10.7
+    z: 0
+  rotation:
+    x: -0
+    y: 0
+    z: 0
+  scale:
+    x: 0
+    y: 0
+    z: 0
+  parent:
+    fileId: 0
+
+--- !gbc!Transform
+Id: 11
+Transform:
+  position:
+    x: 4.8
+    y: -1.4
+    z: -14.3
+  rotation:
+    x: -0
+    y: 1.0829998
+    z: 0
+  scale:
+    x: 21.5
+    y: 22.5
+    z: -5
+  parent:
+    fileId: 0
 

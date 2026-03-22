@@ -1,5 +1,6 @@
 #pragma once
 #include "ECS/EntityRegistry.h"
+#include "Structure/RunInfo.h"
 
 
 namespace GameBase
@@ -80,6 +81,7 @@ namespace GameBase
 		inline ISystemBase() = default;
 		inline virtual ~ISystemBase() = default;
 
+		virtual bool OnVerifyShouldSkip(const RunInfo& _runInfo) = 0;
 		virtual void OnRegisterDependencies(FluentVectorAddOnly<SystemIndex>* _registry) = 0;
 		virtual void Initialize() = 0;
 		virtual void Update(EntityRegistry&) = 0;
@@ -98,6 +100,8 @@ namespace GameBase
 
 		inline virtual void OnRegisterDependencies(
 			FluentVectorAddOnly<SystemIndex>* _pRegistry) override {}
+
+		inline virtual bool OnVerifyShouldSkip(const RunInfo& _runInfo) override { return false; }
 
 	private:
 		static inline std::shared_ptr<T> pInstance_{ std::make_shared<T>() };

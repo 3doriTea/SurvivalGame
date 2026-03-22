@@ -5,6 +5,7 @@
 #include <System/ModelRegistry.h>
 #include <System/Editor/AssetGenerator.h>
 #include <System/SceneManager.h>
+#include <System/SceneSaver.h>
 
 #include <ShlObj.h>
 #pragma comment(lib, "shell32.lib")
@@ -166,8 +167,15 @@ bool GameBase::Editor::AssetsView::OnGUI(EntityRegistry& _registry)
 				case AssetType_CppSource:
 					break;
 				case AssetType_YamlScene:
-					// シーン遷移する
-					Get<System::SceneManager>().LoadSceneFile(entry.path());
+					// シーン遷移を処理する
+					if (Get<System::SceneSaver>().CheckSave())
+					{
+
+					}
+					else
+					{
+						Get<System::SceneManager>().LoadSceneFile(entry.path());
+					}
 					break;
 				case AssetType_ModelFbx:
 					break;

@@ -4,6 +4,7 @@
 #include "../TextureRegistry.h"
 #include "../TransformCalculator.h"
 #include "../ViewportSwitcher.h"
+#include "../SceneSaver.h"
 #include "AssetGenerator.h"
 
 #include "../../Structure/Editor/AssetsView.h"
@@ -28,6 +29,7 @@ void GameBase::System::EditorBase::OnRegisterDependencies(FluentVectorAddOnly<Sy
 		->Add(SystemRegistry::GetSystemIndex<ViewportSwitcher>())
 		->Add(SystemRegistry::GetSystemIndex<Assets>())
 		->Add(SystemRegistry::GetSystemIndex<AssetGenerator>())
+		->Add(SystemRegistry::GetSystemIndex<SceneSaver>())
 	;
 }
 

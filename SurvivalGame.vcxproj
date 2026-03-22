@@ -414,6 +414,7 @@
     <ClInclude Include="Base\ECS\World.h" />
     <ClInclude Include="Base\GameBase.h" />
     <ClInclude Include="Base\GameEvent.h" />
+    <ClInclude Include="Base\GameEvent\ChangeRunMode.h" />
     <ClInclude Include="Base\GameEvent\ChangeScene.h" />
     <ClInclude Include="Base\GameEvent\GameExit.h" />
     <ClInclude Include="Base\GlobalGetter.h" />
@@ -427,6 +428,8 @@
     <ClInclude Include="Base\Library\imgui\imstb_truetype.h" />
     <ClInclude Include="Base\Library\ufbx\ufbx.h" />
     <ClInclude Include="Base\MaterialBase.h" />
+    <ClInclude Include="Base\Structure\RunInfo.h" />
+    <ClInclude Include="Base\Structure\RunMode.h" />
     <ClInclude Include="Base\ScriptBase.h" />
     <ClInclude Include="Base\Standalone\CoreType\Color.h" />
     <ClInclude Include="Base\Standalone\Constant\KeyCode.h" />

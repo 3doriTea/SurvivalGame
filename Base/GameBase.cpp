@@ -3,6 +3,7 @@
 
 #include "GameEvent/GameExit.h"
 #include "GameEvent/ChangeScene.h"
+#include "GameEvent/ChangeRunMode.h"
 
 #include "SystemBase.h"
 #include "ComponentBase.h"
@@ -22,8 +23,9 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 
 #endif
 
-GameBase::Game::Game() :
-	versionCounter_{}
+GameBase::Game::Game(const RunMode _runMode) :
+	versionCounter_{},
+	runMode_{ _runMode }
 {
 }
 
@@ -56,6 +58,11 @@ bool GameBase::Game::Update()
 	{
 		return false;
 	}
+
+	GameEvent::TryErase<GameEvent::ChangeRunMode>([this](GameEvent::ChangeRunMode& _event)
+	{
+		runMode_ = _event.runMode;
+	});
 
 	// シーン遷移イベントの処理
 	GameEvent::TryErase<GameEvent::ChangeScene>([this](GameEvent::ChangeScene& _event)
@@ -93,10 +100,10 @@ bool GameBase::Game::End()
 	return succeed;
 }
 
-void GameBase::Game::MakeScene(const bool _reloadSystems)
+void GameBase::Game::MakeScene(const RunInfo& _runInfo, const bool _reloadSystems)
 {
 	versionCounter_++;  // バージョンを上げる
-	pWorld_ = std::make_unique<World>(versionCounter_);
+	pWorld_ = std::make_unique<World>(versionCounter_, _runInfo);
 	if (_reloadSystems)
 	{
 		pWorld_.get()->TryReloadSystems();
@@ -107,7 +114,10 @@ void GameBase::Game::MoveScene(const fs::path& _sceneFile)
 {
 	if (!pWorld_)
 	{
-		MakeScene(true);  // ワールドがないなら作る
+		std::string fileName{ _sceneFile.filename().string() };
+		std::string sceneName{ fileName.substr(0, fileName.find('.')) };
+
+		MakeScene(RunInfo{ runMode_, sceneName }, true);  // ワールドがないなら作る
 	}
 
 	bool succeed{ pWorld_->TryLoadScene(_sceneFile) };

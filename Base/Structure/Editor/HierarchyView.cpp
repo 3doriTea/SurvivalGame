@@ -1,6 +1,7 @@
 #include "HierarchyView.h"
 #include <System/TransformCalculator.h>
 #include <System/SceneManager.h>
+#include <System/SceneSaver.h>
 #include "SelectedEvent.h"
 
 
@@ -226,4 +227,6 @@ void GameBase::Editor::HierarchyView::CreateEntity(EntityRegistry& _registry)
 
 	auto& gameObject{ _registry.GetComponent<Component::GameObject>(entity) };
 	gameObject.SetName(createOptionsBuffer.name.data());
+
+	Get<System::SceneSaver>().SetDirty();
 }

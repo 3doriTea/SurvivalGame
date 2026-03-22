@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "EntityRegistry.h"
+#include "../Structure/RunInfo.h"
 
 namespace GameBase
 {
@@ -19,7 +20,7 @@ namespace GameBase
 	class World
 	{
 	public:
-		World(const EntityVersion _version);
+		World(const EntityVersion _version, const RunInfo& _runInfo);
 		~World() = default;
 
 		/// <summary>
@@ -40,6 +41,7 @@ namespace GameBase
 		bool TryReloadSystems();
 
 	private:
+		const RunInfo RUN_INFO_;                            // 実行時情報
 		const EntityVersion VERSION_;                // エンティティに付与するバージョン情報
 		std::vector<int> systemOrderIndices_;        // システムの順番インデックス
 		std::unique_ptr<EntityRegistry> pRegistry_;  // データが入るやつ

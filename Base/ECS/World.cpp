@@ -10,8 +10,9 @@
 
 
 
-GameBase::World::World(const EntityVersion _version) :
+GameBase::World::World(const EntityVersion _version, const RunInfo& _runInfo) :
 	VERSION_{ _version },
+	RUN_INFO_{ _runInfo },
 	systemOrderIndices_{}
 {}
 
@@ -244,6 +245,11 @@ bool GameBase::World::TryReloadSystems()
 	{
 		if (auto pSystem{ p.lock() })
 		{
+			if (pSystem->OnVerifyShouldSkip(RUN_INFO_))
+			{
+				continue;  // スキップ要請があったら飛ばす
+			}
+
 			FluentVector<SystemIndex> registry{};
 			pSystem->OnRegisterDependencies(
 				static_cast<FluentVectorAddOnly<SystemIndex>*>(

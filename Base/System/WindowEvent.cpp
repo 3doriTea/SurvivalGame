@@ -14,9 +14,16 @@ LRESULT WINAPI GameBase::System::WindowEvent::WndProc(HWND _hWnd, UINT _msg, WPA
 	return static_cast<LRESULT>(result);
 }
 
+void GameBase::System::WindowEvent::RefOnCloseEvent(const std::function<void(EventSubject<>&)>& _callback)
+{
+	_callback(onCloseEvent_);
+}
+
 GameBase::System::WindowEvent::WindowEvent() :
 	defWindowProcEvent_{},
-	peekedMessage_{}
+	peekedMessage_{},
+	onCloseEvent_{ Event<>::Create() },
+	plsCancelCloseWindow_{ false }
 {
 }
 
@@ -26,13 +33,22 @@ GameBase::System::WindowEvent::~WindowEvent()
 
 void GameBase::System::WindowEvent::Initialize()
 {
-	defWindowProcEvent_ = event_.Connect([](HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+	defWindowProcEvent_ = event_.Connect([this](HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		{
 			switch (msg)
 			{
+			case WM_CLOSE:
+				onCloseEvent_.get()->Invoke();
+				if (plsCancelCloseWindow_)
+				{
+					plsCancelCloseWindow_ = false;
+					// ウィンドウ終了キャンセル
+					return WndProcEventResult::Pass;
+				}
+				return static_cast<WndProcEventResult>(DefWindowProc(hWnd, msg, wParam, lParam));
 			case WM_DESTROY:
 				GameEvent::Emplace<GameEvent::GameExit>();
-				break;
+				return static_cast<WndProcEventResult>(DefWindowProc(hWnd, msg, wParam, lParam));
 			default:
 				return static_cast<WndProcEventResult>(DefWindowProc(hWnd, msg, wParam, lParam));
 			}

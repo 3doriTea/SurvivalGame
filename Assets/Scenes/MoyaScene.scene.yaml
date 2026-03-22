@@ -13,6 +13,10 @@ Scene:
         fileId: 3
     - gameObject:
         fileId: 4
+    - gameObject:
+        fileId: 5
+    - gameObject:
+        fileId: 6
 
 --- !gb!GameObject
 Id: 1
@@ -20,9 +24,9 @@ GameObject:
   name: Main Camera
   components:
     - component:
-        fileId: 5
+        fileId: 7
     - component:
-        fileId: 6
+        fileId: 8
 
 --- !gb!GameObject
 Id: 2
@@ -30,7 +34,7 @@ GameObject:
   name: Sub Camera
   components:
     - component:
-        fileId: 7
+        fileId: 9
 
 --- !gb!GameObject
 Id: 3
@@ -38,7 +42,7 @@ GameObject:
   name: Player
   components:
     - component:
-        fileId: 8
+        fileId: 10
 
 --- !gb!GameObject
 Id: 4
@@ -46,17 +50,33 @@ GameObject:
   name: Enemy
   components:
     - component:
-        fileId: 9
+        fileId: 11
+
+--- !gb!GameObject
+Id: 5
+GameObject:
+  name: pppppp
+  components:
+    - component:
+        fileId: 12
+
+--- !gb!GameObject
+Id: 6
+GameObject:
+  name: testing
+  components:
+    - component:
+        fileId: 13
 
 --- !gbc!Camera
-Id: 5
+Id: 7
 Camera:
   near: 1000
   far: 0.1
   fov: 0.7853982
 
 --- !gbc!Transform
-Id: 6
+Id: 8
 Transform:
   position:
     x: 0
@@ -74,7 +94,7 @@ Transform:
     fileId: 0
 
 --- !gbc!Transform
-Id: 7
+Id: 9
 Transform:
   position:
     x: 0
@@ -92,7 +112,7 @@ Transform:
     fileId: 1
 
 --- !gbc!Transform
-Id: 8
+Id: 10
 Transform:
   position:
     x: 0
@@ -110,11 +130,47 @@ Transform:
     fileId: 0
 
 --- !gbc!Transform
-Id: 9
+Id: 11
 Transform:
   position:
     x: 0
     y: -10.7
+    z: 0
+  rotation:
+    x: -0
+    y: 0
+    z: 0
+  scale:
+    x: 0
+    y: 0
+    z: 0
+  parent:
+    fileId: 0
+
+--- !gbc!Transform
+Id: 12
+Transform:
+  position:
+    x: 0
+    y: 0
+    z: 0
+  rotation:
+    x: -0
+    y: 0
+    z: 0
+  scale:
+    x: 0
+    y: 0
+    z: 0
+  parent:
+    fileId: 0
+
+--- !gbc!Transform
+Id: 13
+Transform:
+  position:
+    x: 0
+    y: 0
     z: 0
   rotation:
     x: -0

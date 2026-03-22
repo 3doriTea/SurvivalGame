@@ -1,6 +1,7 @@
 #pragma once
 #include "ECS/World.h"
 #include "ECS/EntityRegistry.h"
+#include "Structure/RunInfo.h"
 
 
 extern void Main();
@@ -10,7 +11,7 @@ namespace GameBase
 	class Game final
 	{
 	public:
-		Game();
+		Game(const RunMode _runMode);
 		~Game() = default;
 
 		bool Start();
@@ -20,7 +21,7 @@ namespace GameBase
 		/// <summary>
 		/// シーンを作る
 		/// </summary>
-		void MakeScene(const bool _reloadSystems = false);
+		void MakeScene(const RunInfo& _runInfo, const bool _reloadSystems = false);
 		/// <summary>
 		/// シーンを読み込み込む
 		/// </summary>
@@ -30,6 +31,7 @@ namespace GameBase
 		//fs::path SaveScene();
 
 	private:
+		RunMode runMode_;  // 実行モード
 		std::unique_ptr<World> pWorld_;  // 今動かしているワールド
 		std::vector<std::type_info> systemsTypeinfo_;  // システムの型情報
 		std::unique_ptr<EntityRegistry> registries_;  // データベース

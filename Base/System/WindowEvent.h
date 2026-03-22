@@ -21,6 +21,18 @@ namespace GameBase::System
 		virtual WndProcEventResult WndProcEvent(
 			const std::function<WndProcEventResult(
 				ResponderEvent<HWND, UINT, WPARAM, LPARAM>&)>& _callback) = 0;
+
+		/// <summary>
+		/// ウィンドウ終了時イベント登録
+		/// </summary>
+		/// <param name="_callback">void(EventSubject<>&)></param>
+		virtual void RefOnCloseEvent(
+			const std::function<void(EventSubject<>&)>& _callback) = 0;
+
+		/// <summary>
+		/// ウィンドウ終了をキャンセルする
+		/// </summary>
+		virtual void CancelCloseWindow() = 0;
 	};
 
 	/// <summary>
@@ -56,13 +68,19 @@ namespace GameBase::System
 		WndProcEventResult WndProcEvent(
 			const std::function<WndProcEventResult(
 				ResponderEvent<HWND, UINT, WPARAM, LPARAM>&)>& _callback) override;
+		void RefOnCloseEvent(const std::function<void(EventSubject<>&)>& _callback) override;
+
+		void CancelCloseWindow() override { plsCancelCloseWindow_ = true; }
 
 	private:
 		static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 	private:
+		bool plsCancelCloseWindow_;  // ウィンドウ終了キャンセル界隈
 		ResponderEvent<HWND, UINT, WPARAM, LPARAM> event_;
+		EventSubject<> onCloseEvent_;  // ウィンドウ終了時のイベント
 		std::shared_ptr<void> defWindowProcEvent_;
 		MSG peekedMessage_;
+
 	};
 }
