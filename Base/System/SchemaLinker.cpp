@@ -6,7 +6,7 @@
 
 GameBase::System::SchemaLinker::SchemaLinker() :
 	loadBundle_{},
-	preModel2AssetId_{}
+	preAssetId2Model_{}
 {}
 
 GameBase::System::SchemaLinker::~SchemaLinker()
@@ -23,24 +23,7 @@ void GameBase::System::SchemaLinker::OnRegisterDependencies(FluentVectorAddOnly<
 
 void GameBase::System::SchemaLinker::Initialize()
 {
-	// 各アセットのハンドルも登録
-	preModel2AssetId_.emplace(INVALID_HANDLE, "0");
-	preModel2AssetId_.emplace(INVALID_HANDLE, "");
-	Get<System::Assets>().Ref([this](const std::vector<fs::path>& _modelsPath)
-		{
-			for (auto& file : _modelsPath)
-			{
-				ModelHandle hModel{ Get<ModelRegistry>().Load(file) };
-
-				if (hModel == INVALID_HANDLE)
-				{
-					continue;  // 読み込み失敗なら無視
-				}
-
-				preModel2AssetId_.emplace(hModel, file.string());
-			}
-		},
-		AssetType_ModelFbx);
+	Reload();
 }
 
 void GameBase::System::SchemaLinker::Update(EntityRegistry& _registry)
@@ -65,7 +48,7 @@ void GameBase::System::SchemaLinker::Update(EntityRegistry& _registry)
 
 	loadBundle_.modelToAssetId.clear();
 	loadBundle_.assetIdToModel.clear();
-	for (auto& [hModel, assetId] : preModel2AssetId_)
+	for (auto& [assetId, hModel] : preAssetId2Model_)
 	{
 		loadBundle_.modelToAssetId.emplace(hModel, assetId);
 		loadBundle_.assetIdToModel.emplace(assetId, hModel);
@@ -78,6 +61,26 @@ void GameBase::System::SchemaLinker::Release()
 
 void GameBase::System::SchemaLinker::Reload()
 {
+	preAssetId2Model_.clear();
+	// 各アセットのハンドルも登録
+	preAssetId2Model_.emplace("0", INVALID_HANDLE);
+	preAssetId2Model_.emplace("", INVALID_HANDLE);
+	Get<System::Assets>().Ref([this](const std::vector<fs::path>& _modelsPath)
+		{
+			for (auto& file : _modelsPath)
+			{
+				ModelHandle hModel{ Get<ModelRegistry>().Load(file) };
+
+				if (hModel == INVALID_HANDLE)
+				{
+					continue;  // 読み込み失敗なら無視
+				}
+
+				preAssetId2Model_.emplace(file.string(), hModel);
+				preAssetId2Model_.emplace(std::to_string(hModel), hModel);
+			}
+		},
+		AssetType_ModelFbx);
 }
 
 void GameBase::System::SchemaLinker::RefLoadBundle(const std::function<void(const SchemaLoadBundle&)>&_callback) const

@@ -115,7 +115,7 @@ Transform:
 Id: 9
 ModelRenderable:
   hModel:
-    assetId: 0
+    assetId: 1
 
 --- !gbc!Transform
 Id: 10

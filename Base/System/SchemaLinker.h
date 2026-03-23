@@ -16,6 +16,10 @@ namespace GameBase::System
 
 		virtual void RefLoadBundle(const std::function<void(const SchemaLoadBundle&)>& _callback) const = 0;
 		virtual const SchemaLoadBundle& GetSchemaLoadBundle() const = 0;
+		/// <summary>
+		/// スキーマリンクの再読み込み
+		/// </summary>
+		virtual void Reload() = 0;
 	};
 
 	/// <summary>
@@ -48,7 +52,7 @@ namespace GameBase::System
 		/// <summary>
 		/// 再読込する
 		/// </summary>
-		void Reload();
+		void Reload() override;
 
 		void RefLoadBundle(const std::function<void(const SchemaLoadBundle&)>& _callback) const override;
 
@@ -56,6 +60,6 @@ namespace GameBase::System
 
 	private:
 		SchemaLoadBundle loadBundle_;
-		std::map<ModelHandle, Schema::AssetId> preModel2AssetId_;  // プリロードしたモデルハンドルとアセットId
+		std::map<Schema::AssetId, ModelHandle> preAssetId2Model_;  // プリロードしたモデルハンドルとアセットId
 	};
 }

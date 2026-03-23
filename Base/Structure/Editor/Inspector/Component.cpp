@@ -5,6 +5,7 @@
 #include <System/ModelRegistry.h>
 #include <System/MainWindow.h>
 #include <System/Assets.h>
+#include <System/SchemaLinker.h>
 
 
 GameBase::Editor::Inspector::Component::Component(
@@ -215,6 +216,7 @@ bool GameBase::Editor::Inspector::Component::IsUpdatedShow(
 								{
 									hModel = Get<System::ModelRegistry>().Find(fileName.data());
 									isChanged = true;  // 変更がアタ
+									//Get<System::SchemaLinker>().
 								}
 							}
 
