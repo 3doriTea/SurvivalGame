@@ -15,7 +15,24 @@ namespace GameBase::System
 		IShaderCompiler() = default;
 		virtual ~IShaderCompiler() = default;
 
-		//virtual void Hoge() = 0;
+		/// <summary>
+		/// シェーダを取得する
+		/// </summary>
+		/// <param name="_hShader">シェーダハンドル</param>
+		/// <returns>シェーダの参照</returns>
+		virtual Shader& At(const ShaderHandle _hShader) = 0;
+
+		/// <summary>
+		/// シェーダを読み込む
+		/// </summary>
+		/// <param name="_file">シェーダファイルのパス</param>
+		/// <param name="_rasterizerConfig">ラスタライザせて血</param>
+		/// <param name="_config">シェーダコンパイル設定</param>
+		/// <returns></returns>
+		virtual ShaderHandle Load(
+			const fs::path& _file,
+			const RasterizerConfig& _rasterizerConfig,
+			const ShaderCompileConfig& _config) = 0;
 	};
 
 	/// <summary>
@@ -49,6 +66,13 @@ namespace GameBase::System
 			const fs::path& _file,
 			const RasterizerConfig& _rasterizerConfig,
 			const ShaderCompileConfig& _config);
+
+		Shader& At(const ShaderHandle _hShader) override;
+
+		ShaderHandle Load(
+			const fs::path& _file,
+			const RasterizerConfig& _rasterizerConfig,
+			const ShaderCompileConfig& _config) override;
 
 	private:
 		FlyweightFactory<Shader, ShaderHandle> shaders_;

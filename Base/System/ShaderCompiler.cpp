@@ -234,7 +234,7 @@ GameBase::Shader GameBase::System::ShaderCompiler::Compile(
 			static_cast<UINT>(inputLayoutDesc.size()),
 			pCompileVS.Get()->GetBufferPointer(),
 			pCompileVS.Get()->GetBufferSize(),
-			shader.pVertexInputLayoyt.GetAddressOf());
+			shader.pVertexInputLayout.GetAddressOf());
 		GB_ASSERT(SUCCEEDED(hResult) && "頂点インプットレイアウトの作成に失敗");
 		if (FAILED(hResult))
 		{
@@ -244,4 +244,14 @@ GameBase::Shader GameBase::System::ShaderCompiler::Compile(
 	});
 
 	return shader;
+}
+
+GameBase::Shader& GameBase::System::ShaderCompiler::At(const ShaderHandle _hShader)
+{
+	return shaders_.At(_hShader);
+}
+
+GameBase::ShaderHandle GameBase::System::ShaderCompiler::Load(const fs::path& _file, const RasterizerConfig& _rasterizerConfig, const ShaderCompileConfig& _config)
+{
+	return shaders_.Emplace(Compile(_file, _rasterizerConfig, _config));
 }

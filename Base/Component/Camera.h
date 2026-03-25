@@ -20,6 +20,8 @@ namespace GameBase::Component
 		void OnLoad(const YAML::Node& _node, const SchemaLoadBundle& _bundle) override;
 		void OnSave(YAML::Emitter& _emitter, const SchemaLoadBundle& _bundle) override;
 
+		inline Mat4x4 GetViewProjectionMatrix() const { return viewMatrix * projectionMatrix; }
+
 		float nearZ;        // ファークリップ平面の距離
 		float farZ;         // ニヤークリップ平面の距離
 		float fovRadian;    // 視野角

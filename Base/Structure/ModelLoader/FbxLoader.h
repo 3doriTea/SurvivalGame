@@ -2,6 +2,7 @@
 #include <Library/ufbx/ufbx.h>
 #include "../Model.h"
 #include "FbxVertex.h"
+#include "FbxMaterial.h"
 
 
 namespace GameBase
@@ -9,7 +10,7 @@ namespace GameBase
 	class FbxLoader
 	{
 	public:
-		FbxLoader(const fs::path& _modelFile);
+		FbxLoader(const fs::path& _modelFile, const ShaderHandle _hShader);
 		inline FbxLoader() = default;
 
 		bool TryLoad(Model* _pOut);
@@ -20,6 +21,7 @@ namespace GameBase
 		bool TryCreateIndexBuffer(ComPtr<ID3D11Buffer>& _p, const std::vector<uint32_t> _indices) const;
 
 	private:
-		fs::path modelFile_;  // ファイルパス
+		fs::path modelFile_;        // ファイルパス
+		MaterialHandle hMaterial_;  // fbxのデフォルトマテリアル
 	};
 }

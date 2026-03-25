@@ -197,11 +197,13 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Assets\Default\InvalidMaterial.cpp" />
     <ClCompile Include="Assets\Scripts\PlayerController.cpp" />
     <ClCompile Include="Base\ComponentBase.cpp" />
     <ClCompile Include="Base\ComponentRegistry.cpp" />
     <ClCompile Include="Base\Component\Camera.cpp" />
     <ClCompile Include="Base\Component\GameObject.cpp" />
+    <ClCompile Include="Base\Component\Image.cpp" />
     <ClCompile Include="Base\Component\ModelRenderable.cpp" />
     <ClCompile Include="Base\Component\Transform.cpp" />
     <ClCompile Include="Base\DependencyResolver.cpp" />
@@ -373,8 +375,11 @@
     <ClCompile Include="Base\System\EditorGui.cpp" />
     <ClCompile Include="Base\System\Editor\AssetGenerator.cpp" />
     <ClCompile Include="Base\System\Editor\EditorBase.cpp" />
+    <ClCompile Include="Base\System\EnvConstant.cpp" />
     <ClCompile Include="Base\System\GameTime.cpp" />
+    <ClCompile Include="Base\System\Graphic\ImageRenderer.cpp" />
     <ClCompile Include="Base\System\Graphic\MainCamera.cpp" />
+    <ClCompile Include="Base\System\Graphic\ModelRenderer.cpp" />
     <ClCompile Include="Base\System\Input.cpp" />
     <ClCompile Include="Base\System\MainWindow.cpp" />
     <ClCompile Include="Base\System\MaterialRegistry.cpp" />
@@ -401,6 +406,7 @@
     <ClInclude Include="Base\ComponentRegistry.h" />
     <ClInclude Include="Base\Component\Camera.h" />
     <ClInclude Include="Base\Component\GameObject.h" />
+    <ClInclude Include="Base\Component\Image.h" />
     <ClInclude Include="Base\Component\ModelRenderable.h" />
     <ClInclude Include="Base\Component\Transform.h" />
     <ClInclude Include="Base\DependencyResolver.h" />
@@ -471,7 +477,11 @@
     <ClInclude Include="Base\Structure\ModelLoader\FbxMaterial.h" />
     <ClInclude Include="Base\Structure\ModelLoader\FbxVertex.h" />
     <ClInclude Include="Base\Structure\Schema\AssetIdSchema.h" />
+    <ClInclude Include="Base\Structure\SortKey.h" />
     <ClInclude Include="Base\System\Editor\AssetGenerator.h" />
+    <ClInclude Include="Base\System\EnvConstant.h" />
+    <ClInclude Include="Base\System\Graphic\ImageRenderer.h" />
+    <ClInclude Include="Base\System\Graphic\ModelRenderer.h" />
     <ClInclude Include="Base\System\MeshRegistry.h" />
     <ClInclude Include="Base\System\ModelRegistry.h" />
     <ClInclude Include="Base\Structure\SchemaLoadBundle.h" />
@@ -543,6 +553,8 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Default\InvalidShader.hlsl" />
+    <FxCompile Include="Assets\Default\LambertShader.hlsl" />
+    <FxCompile Include="Assets\Default\UI.hlsl" />
     <FxCompile Include="Assets\Shaders\Simple2D.hlsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

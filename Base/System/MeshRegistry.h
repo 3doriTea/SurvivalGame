@@ -19,6 +19,8 @@ namespace GameBase::System
 		/// </summary>
 		/// <returns>メッシュハンドル</returns>
 		virtual MeshHandle Load(Mesh&& _mesh) = 0;
+
+		virtual const Mesh& At(const MeshHandle _hMesh) = 0;
 	};
 
 	/// <summary>
@@ -49,6 +51,7 @@ namespace GameBase::System
 		void Release() override;
 
 		MeshHandle Load(Mesh&& _mesh) override;
+		inline const Mesh& At(const MeshHandle _hMesh) { return meshes_.At(_hMesh); }
 
 	private:
 		FlyweightFactory<Mesh, MeshHandle> meshes_;

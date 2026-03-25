@@ -1,4 +1,6 @@
 #pragma once
+#include "../MaterialBase.h"
+
 
 namespace GameBase
 {
@@ -7,6 +9,12 @@ namespace GameBase
 	/// </summary>
 	struct Material
 	{
+		Material(const MaterialBase& _base, ComPtr<ID3D11Buffer>&& _p) :
+			base{ _base },
+			pConstantBuffer{ std::move(_p) }
+		{}
+
+		const MaterialBase& base;              // マテリアル
 		ComPtr<ID3D11Buffer> pConstantBuffer;  // コンスタントバッファ
 	};
 }

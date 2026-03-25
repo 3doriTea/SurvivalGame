@@ -24,6 +24,7 @@ namespace GameBase::Component
 		inline Vec3 Forward() const { return Vec3::Forward() * localRotationMatrix; }
 		inline Vec3 Up() const { return Vec3::Up() * localRotationMatrix; }
 		inline Vec3 WorldPosition() const { return { worldMatrix.r[3].m128_f32[Vec3::AT_X], worldMatrix.r[3].m128_f32[Vec3::AT_Y], worldMatrix.r[3].m128_f32[Vec3::AT_Z] }; }
+		inline Mat4x4 GetWorldMatrix() const { return worldMatrix; }
 
 		Vec3 position;
 		Quaternion rotation;

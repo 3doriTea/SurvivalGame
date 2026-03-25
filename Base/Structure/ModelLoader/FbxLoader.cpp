@@ -26,9 +26,11 @@ namespace
 }
 
 
-GameBase::FbxLoader::FbxLoader(const fs::path& _modelFile) :
-	modelFile_{ _modelFile }
-{}
+GameBase::FbxLoader::FbxLoader(const fs::path& _modelFile, const ShaderHandle _hShader) :
+	modelFile_{ _modelFile },
+	hMaterial_{ _hShader }
+{
+}
 
 bool GameBase::FbxLoader::TryLoad(Model* _pOut)
 {
@@ -88,7 +90,7 @@ bool GameBase::FbxLoader::TryLoad(Model* _pOut)
 
 				model.nodes.emplace_back(
 					hMesh,
-					INVALID_HANDLE,
+					hMaterial_,
 					ConvertTOMat4x4(pNode->node_to_parent),
 					ConvertTOMat4x4(pNode->node_to_world));
 			}
@@ -165,6 +167,7 @@ GameBase::MeshHandle GameBase::FbxLoader::LoadMesh(ufbx_mesh* _pMesh, ufbx_mesh_
 	if (TryCreateVertexBuffer(mesh.pVertexBuffer, vertices)
 		&& TryCreateIndexBuffer(mesh.pIndexBuffer, indices))
 	{
+		mesh.indexCount = static_cast<uint32_t>(indices.size());
 		return Get<System::MeshRegistry>().Load(std::move(mesh));
 	}
 

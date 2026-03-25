@@ -1,6 +1,8 @@
 #pragma once
 #include "../SystemBase.h"
 #include "../MaterialBase.h"
+#include "../Structure/Material.h"
+#include "../../Assets/Default/InvalidMaterial.h"
 
 
 namespace GameBase::System
@@ -14,7 +16,8 @@ namespace GameBase::System
 		IMaterialRegistry() = default;
 		virtual ~IMaterialRegistry() = default;
 
-		virtual MaterialHandle Load(std::unique_ptr<MaterialBase> ) = 0;
+		virtual MaterialHandle Load(MaterialBase*) = 0;
+		virtual const Material& At(const MaterialHandle _hMaterial) = 0;
 	};
 
 	/// <summary>
@@ -44,8 +47,15 @@ namespace GameBase::System
 		/// </summary>
 		void Release() override;
 	
-		MaterialHandle Load(std::unique_ptr<MaterialBase>) override;
+		MaterialHandle Load(MaterialBase*) override;
+		inline const Material& At(const MaterialHandle _hMaterial) { return materials_.At(_hMaterial); }
 
 	private:
+		bool TryGenerateConstantBuffer(MaterialBase* _pMaterialBase, ComPtr<ID3D11Buffer>& _out);
+
+	private:
+		FlyweightFactory<Material, MaterialHandle> materials_;
+
+		InvalidMaterial invalidMaterial_;  // TODO: ここに持つべきではない
 	};
 }

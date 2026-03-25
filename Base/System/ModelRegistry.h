@@ -1,6 +1,7 @@
 #pragma once
 #include "../SystemBase.h"
 #include "../Structure/Model.h"
+#include "../Structure/ModelLoader/FbxMaterial.h"
 
 
 namespace GameBase::System
@@ -75,5 +76,8 @@ namespace GameBase::System
 	private:
 		// モデル保管
 		FlyweightFactory<Model, ModelHandle> models_;
+
+		std::unique_ptr<FbxMaterial> pFbxDefaultMaterial_;      // fbxのデフォルトマテリアル
+		MaterialHandle hfbxDefaultMaterial_;  // デフォルトマテリアルハンドル
 	};
 }

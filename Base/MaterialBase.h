@@ -2,7 +2,7 @@
 
 namespace GameBase
 {
-	struct MaterialBase
+	struct alignas(16) MaterialBase
 	{
 		MaterialBase() = default;
 		virtual ~MaterialBase() = default;
@@ -20,14 +20,21 @@ namespace GameBase
 		virtual ShaderHandle Shader() const = 0;
 
 		/// <summary>
+		/// コンスタントバッファに使用する構造体のポインタ
+		/// </summary>
+		/// <returns>構造体のポインタ</returns>
+		virtual const void* GetPtr() const = 0;
+		virtual std::string GetName() const { return ""; }
+
+		/// <summary>
 		/// マテリアルに使用するディフューズテクスチャ
 		/// </summary>
 		/// <returns>テクスチャハンドル</returns>
-		inline virtual TextureHandle TextureDiffuse() const {}
+		inline virtual TextureHandle TextureDiffuse() const { return INVALID_HANDLE; }
 		/// <summary>
 		/// マテリアルに使用する法線マップ
 		/// </summary>
 		/// <returns>テクスチャハンドル</returns>
-		inline virtual TextureHandle TextureNormal() const {}
+		inline virtual TextureHandle TextureNormal() const { return INVALID_HANDLE; }
 	};
 }
