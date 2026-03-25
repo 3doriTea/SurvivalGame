@@ -62,9 +62,13 @@ void GameBase::System::SchemaLinker::Release()
 void GameBase::System::SchemaLinker::Reload()
 {
 	preAssetId2Model_.clear();
+	preAssetFile2Model_.clear();
+
 	// 各アセットのハンドルも登録
 	preAssetId2Model_.emplace("0", INVALID_HANDLE);
 	preAssetId2Model_.emplace("", INVALID_HANDLE);
+	preAssetFile2Model_.emplace("", INVALID_HANDLE);
+	preModel2AssetFile_.emplace(INVALID_HANDLE, "");
 	Get<System::Assets>().Ref([this](const std::vector<fs::path>& _modelsPath)
 		{
 			for (auto& file : _modelsPath)
@@ -78,6 +82,8 @@ void GameBase::System::SchemaLinker::Reload()
 
 				preAssetId2Model_.emplace(file.string(), hModel);
 				preAssetId2Model_.emplace(std::to_string(hModel), hModel);
+				preAssetFile2Model_.emplace(file.string(), hModel);
+				preModel2AssetFile_.emplace(hModel, file.string());
 			}
 		},
 		AssetType_ModelFbx);
@@ -87,3 +93,4 @@ void GameBase::System::SchemaLinker::RefLoadBundle(const std::function<void(cons
 {
 	_callback(loadBundle_);
 }
+

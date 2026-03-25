@@ -6,6 +6,7 @@
 #include "../ComponentBase.h"
 #include "../Structure/Schema/YamlSchema.h"
 #include "../Structure/SchemaLoadBundle.h"
+#include "System/SchemaLinker.h"
 #include <Component/GameObject.h>
 
 
@@ -127,7 +128,7 @@ bool GameBase::World::TryLoadScene(
 	}
 
 	SchemaLoadBundle loadBundle{};
-	loadBundle.assetIdToModel.emplace("0", INVALID_HANDLE);
+	loadBundle.assetIdToModel = Get<System::SchemaLinker>().GetAssetFileToModel();
 	
 	// エンティティを作っていく
 	for (auto& gameObject : yaml.gameObjects)
@@ -164,6 +165,14 @@ bool GameBase::World::TryLoadScene(
 				GB_ASSERT(false && "コンポーネントの読み取りに失敗",
 					std::format("component:{} why->{}", component.tag, ex.what()));
 				return false;
+			}
+			catch (const std::out_of_range&)
+			{
+				// mapの範囲外アクセス == ファイルの無効値 はデフォルト値にする
+				pRegistry_.get()->RemoveComponent(entity, index);
+				pRegistry_.get()->AddComponent(entity, index);
+
+				Debugger::LogF("コンポーネント読み取り失敗:```yaml\r\n{}\r\n```", YAML::Dump(component.node));
 			}
 		}
 	}

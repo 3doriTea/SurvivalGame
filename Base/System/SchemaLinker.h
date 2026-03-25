@@ -16,6 +16,8 @@ namespace GameBase::System
 
 		virtual void RefLoadBundle(const std::function<void(const SchemaLoadBundle&)>& _callback) const = 0;
 		virtual const SchemaLoadBundle& GetSchemaLoadBundle() const = 0;
+		virtual const std::map<ModelHandle, Schema::AssetId>& GetModelToAssetFile() const = 0;
+		virtual const std::map<Schema::AssetId, ModelHandle>& GetAssetFileToModel() const = 0;
 		/// <summary>
 		/// スキーマリンクの再読み込み
 		/// </summary>
@@ -57,9 +59,13 @@ namespace GameBase::System
 		void RefLoadBundle(const std::function<void(const SchemaLoadBundle&)>& _callback) const override;
 
 		inline const SchemaLoadBundle& GetSchemaLoadBundle() const override { return loadBundle_; }
+		const std::map<ModelHandle, Schema::AssetId>& GetModelToAssetFile() const override { return preModel2AssetFile_; }
+		const std::map<Schema::AssetId, ModelHandle>& GetAssetFileToModel() const override { return preAssetFile2Model_; }
 
 	private:
 		SchemaLoadBundle loadBundle_;
+		std::map<ModelHandle, Schema::AssetId> preModel2AssetFile_;  // プリロードしたモデルのファイルとモデルハンドル
+		std::map<Schema::AssetId, ModelHandle> preAssetFile2Model_;  // プリロードしたモデルのファイルとモデルハンドル
 		std::map<Schema::AssetId, ModelHandle> preAssetId2Model_;  // プリロードしたモデルハンドルとアセットId
 	};
 }

@@ -115,7 +115,7 @@ Transform:
 Id: 9
 ModelRenderable:
   hModel:
-    assetId: 1
+    assetId: N:\workhome\SurvivalGame\Assets\Models\TestPlane\TestPlane.fbx
 
 --- !gbc!Transform
 Id: 10

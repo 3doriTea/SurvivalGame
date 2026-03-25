@@ -133,8 +133,12 @@ bool GameBase::System::SceneSaver::TrySaveScene(EntityRegistry& _registry, const
 
 	SchemaLoadBundle loadBundle{};
 	const auto& localLoadBundle{ Get<SchemaLinker>().GetSchemaLoadBundle() };
-	loadBundle.assetIdToModel = localLoadBundle.assetIdToModel;
-	loadBundle.modelToAssetId = localLoadBundle.modelToAssetId;
+	//loadBundle.assetIdToModel = localLoadBundle.assetIdToModel;
+	//loadBundle.modelToAssetId = localLoadBundle.modelToAssetId;
+	// ファイルパスを直接指定に変更
+	loadBundle.modelToAssetId = Get<SchemaLinker>().GetModelToAssetFile();
+
+
 #pragma endregion
 
 #pragma region オブジェクトを走査する
