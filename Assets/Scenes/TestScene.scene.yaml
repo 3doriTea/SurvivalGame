@@ -116,8 +116,8 @@ Id: 9
 Image:
   color:
     r: 0
-    g: 0
-    b: 0
+    g: 0.59733343
+    b: 0.93333334
     a: 1
 
 --- !gbc!Transform

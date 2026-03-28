@@ -152,8 +152,8 @@ Id: 12
 Image:
   color:
     r: 0
-    g: 0
-    b: 0
+    g: 0.75318533
+    b: 0.9111111
     a: 1
 
 --- !gbc!Transform

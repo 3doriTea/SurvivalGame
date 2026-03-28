@@ -79,7 +79,7 @@ void GameBase::System::ImageRenderer::Initialize()
 	}
 
 	{
-		std::array<uint32_t, 6> indices{ 0, 1, 3, 1, 2 };
+		std::array<uint32_t, 6> indices{ 0, 1, 3, 3, 1, 2 };
 
 		const D3D11_BUFFER_DESC DESC
 		{

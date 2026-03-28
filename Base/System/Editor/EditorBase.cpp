@@ -11,6 +11,7 @@
 #include "../../Structure/Editor/HierarchyView.h"
 #include "../../Structure/Editor/InspectorView.h"
 #include "../../Structure/Editor/SceneView.h"
+#include "../../Structure/Editor/GameView.h"
 
 
 GameBase::System::EditorBase::EditorBase()
@@ -39,6 +40,7 @@ void GameBase::System::EditorBase::Initialize()
 	pEditors_.emplace_back(std::make_shared<Editor::HierarchyView>());
 	pEditors_.emplace_back(std::make_shared<Editor::InspectorView>());
 	pEditors_.emplace_back(std::make_shared<Editor::SceneView>());
+	pEditors_.emplace_back(std::make_shared<Editor::GameView>());
 
 	Get<EditorGui>().OnGUI([this](EventSubject<EntityRegistry&>& _event)
 	{
@@ -91,11 +93,6 @@ void GameBase::System::EditorBase::Initialize()
 						p.get()->OnSelected(_registry, selectedEvent_);
 					}
 				}
-
-				ImGui::Begin("Game View");
-				ImGui::End();
-
-				
 
 				ImGui::End();
 		});

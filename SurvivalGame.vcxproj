@@ -362,6 +362,7 @@
     <ClCompile Include="Base\Structure\AssetLoader\YamlLoader.cpp" />
     <ClCompile Include="Base\Structure\AssetLoader\YamlSaver.cpp" />
     <ClCompile Include="Base\Structure\Editor\AssetsView.cpp" />
+    <ClCompile Include="Base\Structure\Editor\GameView.cpp" />
     <ClCompile Include="Base\Structure\Editor\HierarchyView.cpp" />
     <ClCompile Include="Base\Structure\Editor\IEditorView.cpp" />
     <ClCompile Include="Base\Structure\Editor\InspectorView.cpp" />
@@ -436,6 +437,7 @@
     <ClInclude Include="Base\Library\imgui\imstb_truetype.h" />
     <ClInclude Include="Base\Library\ufbx\ufbx.h" />
     <ClInclude Include="Base\MaterialBase.h" />
+    <ClInclude Include="Base\Structure\Editor\GameView.h" />
     <ClInclude Include="Base\Structure\Renderer\EditorPipeLine.h" />
     <ClInclude Include="Base\Structure\Renderer\GamePipeLine.h" />
     <ClInclude Include="Base\Structure\RunInfo.h" />

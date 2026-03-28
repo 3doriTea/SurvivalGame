@@ -41,6 +41,9 @@ bool GameBase::Editor::Inspector::Component::IsUpdatedShow(
 		{
 			std::string componentName{ componentTag.substr(COMPONENT_HEAD.size()) };
 
+			//ImGui::Text(componentName.c_str());
+			ImGui::SeparatorText(componentName.c_str());
+
 			try
 			{
 				const YAML::Node& componentNode{ node[componentName] };
@@ -109,6 +112,33 @@ bool GameBase::Editor::Inspector::Component::IsUpdatedShow(
 							updated << YAML::Key << "x" << YAML::Value << v3.x;
 							updated << YAML::Key << "y" << YAML::Value << v3.y;
 							updated << YAML::Key << "z" << YAML::Value << v3.z;
+							updated << YAML::EndMap;
+						}
+						if (HasKeys(params, { "r", "g", "b", "a" }))
+						{
+							Color color
+							{
+								params["r"].as<float>(),
+								params["g"].as<float>(),
+								params["b"].as<float>(),
+								params["a"].as<float>(),
+							};
+							ImGuiColorEditFlags flags
+							{
+								ImGuiColorEditFlags_PickerHueBar |
+								ImGuiColorEditFlags_AlphaBar |
+								ImGuiColorEditFlags_DisplayHex |
+								ImGuiColorEditFlags_NoSidePreview
+							};
+							if (ImGui::ColorPicker4(paramKey.c_str(), color.f, flags))
+							{
+								isChanged = true;  // 変更がアタ
+							}
+							updated << YAML::Value << YAML::BeginMap;
+							updated << YAML::Key << "r" << YAML::Value << color.r;
+							updated << YAML::Key << "g" << YAML::Value << color.g;
+							updated << YAML::Key << "b" << YAML::Value << color.b;
+							updated << YAML::Key << "a" << YAML::Value << color.a;
 							updated << YAML::EndMap;
 						}
 						else if (HasKeys(params, { "fileId" }))
@@ -244,6 +274,9 @@ bool GameBase::Editor::Inspector::Component::IsUpdatedShow(
 				GB_ASSERT(false && "コンポーネントパースに失敗",
 					std::format("reason={}", ex.what()));
 			}
+
+			ImGui::Separator();
+			ImGui::Spacing();
 		}
 	}
 
