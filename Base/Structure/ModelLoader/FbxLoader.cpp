@@ -167,6 +167,7 @@ GameBase::MeshHandle GameBase::FbxLoader::LoadMesh(ufbx_mesh* _pMesh, ufbx_mesh_
 	if (TryCreateVertexBuffer(mesh.pVertexBuffer, vertices)
 		&& TryCreateIndexBuffer(mesh.pIndexBuffer, indices))
 	{
+		mesh.vertexStructSize = sizeof(FbxVertex);
 		mesh.indexCount = static_cast<uint32_t>(indices.size());
 		return Get<System::MeshRegistry>().Load(std::move(mesh));
 	}

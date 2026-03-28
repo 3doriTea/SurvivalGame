@@ -1,5 +1,6 @@
 #pragma once
 #include "../SystemBase.h"
+#include "../../Structure/UI/UIMaterial.h"
 
 
 namespace GameBase::System
@@ -47,5 +48,8 @@ namespace GameBase::System
 		void Release() override;
 
 	private:
+		MeshHandle hMesh_;
+		MaterialHandle hMaterial_;
+		std::unique_ptr<UIMaterial> pMaterial_;
 	};
 }

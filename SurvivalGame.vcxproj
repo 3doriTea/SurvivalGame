@@ -369,6 +369,8 @@
     <ClCompile Include="Base\Structure\Editor\SceneView.cpp" />
     <ClCompile Include="Base\Structure\Editor\SelectedEvent.cpp" />
     <ClCompile Include="Base\Structure\ModelLoader\FbxLoader.cpp" />
+    <ClCompile Include="Base\Structure\Renderer\EditorPipeLine.cpp" />
+    <ClCompile Include="Base\Structure\Renderer\GamePipeLine.cpp" />
     <ClCompile Include="Base\SystemBase.cpp" />
     <ClCompile Include="Base\System\Assets.cpp" />
     <ClCompile Include="Base\System\Direct3D.cpp" />
@@ -434,6 +436,8 @@
     <ClInclude Include="Base\Library\imgui\imstb_truetype.h" />
     <ClInclude Include="Base\Library\ufbx\ufbx.h" />
     <ClInclude Include="Base\MaterialBase.h" />
+    <ClInclude Include="Base\Structure\Renderer\EditorPipeLine.h" />
+    <ClInclude Include="Base\Structure\Renderer\GamePipeLine.h" />
     <ClInclude Include="Base\Structure\RunInfo.h" />
     <ClInclude Include="Base\Structure\RunMode.h" />
     <ClInclude Include="Base\ScriptBase.h" />
@@ -478,6 +482,8 @@
     <ClInclude Include="Base\Structure\ModelLoader\FbxVertex.h" />
     <ClInclude Include="Base\Structure\Schema\AssetIdSchema.h" />
     <ClInclude Include="Base\Structure\SortKey.h" />
+    <ClInclude Include="Base\Structure\UI\UIMaterial.h" />
+    <ClInclude Include="Base\Structure\UI\UIVertex.h" />
     <ClInclude Include="Base\System\Editor\AssetGenerator.h" />
     <ClInclude Include="Base\System\EnvConstant.h" />
     <ClInclude Include="Base\System\Graphic\ImageRenderer.h" />

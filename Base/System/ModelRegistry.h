@@ -77,7 +77,7 @@ namespace GameBase::System
 		// モデル保管
 		FlyweightFactory<Model, ModelHandle> models_;
 
-		std::unique_ptr<FbxMaterial> pFbxDefaultMaterial_;      // fbxのデフォルトマテリアル
-		MaterialHandle hfbxDefaultMaterial_;  // デフォルトマテリアルハンドル
+		std::unique_ptr<FbxMaterial> pFbxDefaultMaterial_;  // fbxのデフォルトマテリアル
+		MaterialHandle hfbxDefaultMaterial_;                // デフォルトマテリアルハンドル
 	};
 }

@@ -31,6 +31,7 @@ namespace GameBase::Editor
 		{
 			Empty,
 			_3D,
+			UI
 		};
 
 	public:

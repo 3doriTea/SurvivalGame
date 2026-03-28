@@ -13,8 +13,6 @@ Scene:
         fileId: 3
     - gameObject:
         fileId: 4
-    - gameObject:
-        fileId: 5
 
 --- !gb!GameObject
 Id: 1
@@ -22,9 +20,9 @@ GameObject:
   name: Main Camera
   components:
     - component:
-        fileId: 6
+        fileId: 5
     - component:
-        fileId: 7
+        fileId: 6
 
 --- !gb!GameObject
 Id: 2
@@ -32,7 +30,7 @@ GameObject:
   name: Sub Camera
   components:
     - component:
-        fileId: 8
+        fileId: 7
 
 --- !gb!GameObject
 Id: 3
@@ -40,37 +38,27 @@ GameObject:
   name: Player
   components:
     - component:
-        fileId: 9
+        fileId: 8
 
 --- !gb!GameObject
 Id: 4
 GameObject:
-  name: TestPlaneObj
-  components:
-    - component:
-        fileId: 10
-    - component:
-        fileId: 11
-
---- !gb!GameObject
-Id: 5
-GameObject:
   name: TestUI
   components:
     - component:
-        fileId: 12
+        fileId: 9
     - component:
-        fileId: 13
+        fileId: 10
 
 --- !gbc!Camera
-Id: 6
+Id: 5
 Camera:
   near: 1000
   far: 0.1
   fov: 0.7853982
 
 --- !gbc!Transform
-Id: 7
+Id: 6
 Transform:
   position:
     x: 0
@@ -88,7 +76,7 @@ Transform:
     fileId: 0
 
 --- !gbc!Transform
-Id: 8
+Id: 7
 Transform:
   position:
     x: 0
@@ -106,7 +94,7 @@ Transform:
     fileId: 1
 
 --- !gbc!Transform
-Id: 9
+Id: 8
 Transform:
   position:
     x: 0
@@ -123,32 +111,8 @@ Transform:
   parent:
     fileId: 0
 
---- !gbc!ModelRenderable
-Id: 10
-ModelRenderable:
-  hModel:
-    assetId: N:\workhome\SurvivalGame\Assets\Models\TestPlane\TestPlane.fbx
-
---- !gbc!Transform
-Id: 11
-Transform:
-  position:
-    x: 0
-    y: 0
-    z: 0
-  rotation:
-    x: -0
-    y: 0
-    z: 0
-  scale:
-    x: 0
-    y: 0
-    z: 0
-  parent:
-    fileId: 0
-
 --- !gbc!Image
-Id: 12
+Id: 9
 Image:
   color:
     r: 0
@@ -157,10 +121,10 @@ Image:
     a: 1
 
 --- !gbc!Transform
-Id: 13
+Id: 10
 Transform:
   position:
-    x: 3.1
+    x: 0
     y: 0
     z: 0
   rotation:
@@ -168,9 +132,9 @@ Transform:
     y: 0
     z: 0
   scale:
-    x: 3.9
-    y: 6.6
-    z: 7.3
+    x: 1
+    y: 1
+    z: 1
   parent:
     fileId: 0
 

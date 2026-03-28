@@ -3,6 +3,12 @@
 #include "Structure/RenderItem.h"
 
 
+namespace GameBase
+{
+	struct EditorPipeLine;
+	struct GamePipeLine;
+}
+
 namespace GameBase::System
 {
 	/// <summary>
@@ -51,9 +57,20 @@ namespace GameBase::System
 	/// </summary>
 	class Renderer : public SystemBase<Renderer, IRenderer>
 	{
+		friend struct GameBase::EditorPipeLine;
+		friend struct GameBase::GamePipeLine;
+	public:
+		struct IPipeLine
+		{
+			virtual void Render(Renderer& _self, EntityRegistry& _registry) = 0;
+		};
+
 	public:
 		Renderer();
 		~Renderer();
+
+		// ワールド実行情報の分岐
+		bool OnVerifyShouldSkip(const RunInfo& _runInfo) override;
 
 		// 利用する参照があるときに使用
 		void OnRegisterDependencies(FluentVectorAddOnly<SystemIndex>* _registry) override;
@@ -87,5 +104,7 @@ namespace GameBase::System
 		EventSubject<EntityRegistry&> renderLateEvent_;
 		EventSubject<EntityRegistry&> endEvent_;
 		std::vector<RenderItem> renderQueue_;  // 描画キュー
+
+		std::unique_ptr<IPipeLine> pPipeLine_;
 	};
 }

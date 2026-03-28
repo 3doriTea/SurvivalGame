@@ -14,7 +14,7 @@ void Main()
 	LogBegin("Main");
 
 	Game game{ RunMode::Editor };
-	if (!game.Start())
+	if (!game.Start("./Assets/Scenes/TestScene.scene.yaml"))
 	{
 		Log("スタートに失敗");
 		Debugger::LogWriteOutFile("./Logs/", "");

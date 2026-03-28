@@ -3,6 +3,7 @@
 #include <System/SceneManager.h>
 #include <System/SceneSaver.h>
 #include "SelectedEvent.h"
+#include <Component/Image.h>
 
 
 GameBase::Editor::HierarchyView::HierarchyView() :
@@ -217,6 +218,11 @@ void GameBase::Editor::HierarchyView::ApplyRequiredCreateObjectComponentFlags()
 	case CreateObjectType::_3D:
 		createOptionsBuffer.componentFlags.full |=
 			1ULL << ComponentRegistry::GetComponentIndex<Component::Transform>();
+		break;
+	case CreateObjectType::UI:
+		createOptionsBuffer.componentFlags.full |=
+			1ULL << ComponentRegistry::GetComponentIndex<Component::Transform>() |
+			1ULL << ComponentRegistry::GetComponentIndex<Component::Image>();
 		break;
 	default:
 		GB_ASSERT(false && "未実装の新規オブジェクトタイプ");

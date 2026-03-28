@@ -44,5 +44,9 @@ namespace GameBase
 			DirectX::XMFLOAT4 xm;  // XMFLOAT4
 			float f[AT_MAX];       // 配列としてアクセスする
 		};
+
+		static const Color WHITE;
 	};
+
+	inline const Color Color::WHITE{ 1, 1, 1 };
 }
