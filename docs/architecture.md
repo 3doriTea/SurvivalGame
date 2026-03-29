@@ -1,16 +1,3 @@
----
-layout: default
-title: エンジンの設計思想 | SuvivalGame
----
-
-<script type="module">
-  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-  mermaid.initialize({ startOnLoad: true });
-</script>
-<style>
-  .mermaid { background-color: white; padding: 10px; border-radius: 4px; }
-</style>
-
 # エンジンの設計思想
 
 ## 目標 (優先度順)
@@ -89,8 +76,3 @@ graph LR
     同種コンポーネントが配列配置になったことで、アドレスがバラバラなポインタアクセスを排除。  
     配列のインデクスでアクセスできるため、特定の型(GameObjectの派生型)を知る必要がなくなった。  
     そのため、ワールド(シーン)データのシリアライズと、その読み書きを簡単に実装できた。
-
-<script type="module">
-  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-  mermaid.initialize({ startOnLoad: true });
-</script>

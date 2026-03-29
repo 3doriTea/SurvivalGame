@@ -1,8 +1,0 @@
-# サイトのタイトル（ブラウザのタブなどに表示されます）
-title: "SuvivalGame | Doc"
-
-# 以前のエラーログに出ていたテーマを指定
-theme: jekyll-theme-primer
-
-# docsフォルダをルートとして扱う設定
-source: docs
