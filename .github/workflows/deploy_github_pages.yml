@@ -48,6 +48,16 @@ jobs:
             sudo sed -i "s|</head>|$MERMAID_HTML_TAG\n</head>|" "$file"
           done
 
+      - name: Add Icon
+        env:
+          ICON_HTML_TAG: <link rel="icon" type="image/x-icon" href="./favicon.ico">
+        run: |
+          ICON_HTML_TAG="${ICON_HTML_TAG//$'\n'/}"
+          find _site -name "*.html" | while read -r file; do
+            echo "Adding Icon to $file"
+            sudo sed -i "s|</head>|$ICON_HTML_TAG</head>|" "$file"
+          done
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
