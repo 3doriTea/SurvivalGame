@@ -1,3 +1,16 @@
+---
+layout: default
+title: エンジンの設計思想 | SuvivalGame
+---
+
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true });
+</script>
+<style>
+  .mermaid { background-color: white; padding: 10px; border-radius: 4px; }
+</style>
+
 # エンジンの設計思想
 
 ## 目標 (優先度順)
