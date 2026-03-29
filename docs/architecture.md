@@ -76,3 +76,8 @@ graph LR
     同種コンポーネントが配列配置になったことで、アドレスがバラバラなポインタアクセスを排除。  
     配列のインデクスでアクセスできるため、特定の型(GameObjectの派生型)を知る必要がなくなった。  
     そのため、ワールド(シーン)データのシリアライズと、その読み書きを簡単に実装できた。
+
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true });
+</script>
