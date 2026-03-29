@@ -6,10 +6,10 @@ on:
     branches:
       - master
 
-env:
+#env:
   #FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   # アクションの内部的に24に対応していないので警告を一時的に無視することにした
-  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+  #ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
@@ -38,7 +38,7 @@ jobs:
               import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
               mermaid.initialize({ startOnLoad: false });
               await mermaid.run({
-                querySelector: 'pre > code.language-mermaid',
+                querySelector: '.language-mermaid',
               });
             </script>
         run: |
