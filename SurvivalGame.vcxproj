@@ -206,6 +206,7 @@
     <ClCompile Include="Base\Component\Image.cpp" />
     <ClCompile Include="Base\Component\ModelRenderable.cpp" />
     <ClCompile Include="Base\Component\Transform.cpp" />
+    <ClCompile Include="Base\Component\Transform2D.cpp" />
     <ClCompile Include="Base\DependencyResolver.cpp" />
     <ClCompile Include="Base\ECS\ComponentPool.cpp" />
     <ClCompile Include="Base\ECS\EntityRegistry.cpp" />
@@ -396,6 +397,7 @@
     <ClCompile Include="Base\System\SchemaLinker.cpp" />
     <ClCompile Include="Base\System\ShaderCompiler.cpp" />
     <ClCompile Include="Base\System\TextureRegistry.cpp" />
+    <ClCompile Include="Base\System\Transform2DCalculator.cpp" />
     <ClCompile Include="Base\System\TransformCalculator.cpp" />
     <ClCompile Include="Base\System\ViewportSwitcher.cpp" />
     <ClCompile Include="Base\System\WindowEvent.cpp" />
@@ -411,6 +413,7 @@
     <ClInclude Include="Base\Component\GameObject.h" />
     <ClInclude Include="Base\Component\Image.h" />
     <ClInclude Include="Base\Component\ModelRenderable.h" />
+    <ClInclude Include="Base\Component\Transform2D.h" />
     <ClInclude Include="Base\Component\Transform.h" />
     <ClInclude Include="Base\DependencyResolver.h" />
     <ClInclude Include="Base\ECS\ComponentPool.h" />
@@ -542,6 +545,7 @@
     <ClInclude Include="Base\System\SchemaLinker.h" />
     <ClInclude Include="Base\System\ShaderCompiler.h" />
     <ClInclude Include="Base\System\TextureRegistry.h" />
+    <ClInclude Include="Base\System\Transform2DCalculator.h" />
     <ClInclude Include="Base\System\TransformCalculator.h" />
     <ClInclude Include="Base\System\ViewportSwitcher.h" />
     <ClInclude Include="Base\System\WindowEvent.h" />

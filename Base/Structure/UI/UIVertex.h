@@ -18,7 +18,7 @@ namespace GameBase
 			uv{ _uv }	
 		{}
 
-		Vec2 position; uint32_t padding0{}, padding1{};
-		Vec2 uv;       uint32_t padding2{}, padding3{};
+		Vec2 position; // uint32_t padding0{}, padding1{};
+		Vec2 uv;       // uint32_t padding2{}, padding3{};
 	};
 }

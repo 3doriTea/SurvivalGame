@@ -10,18 +10,27 @@ cbuffer RenderCB : register(b0)
 	float4 RenderCB_Color;
 }
 
-struct SV_OUT
+struct SV_IN
 {
-	float4 pos : SV_POSITION;
-	float4 color : COLOR;
+	float2 pos : POSITION;
+	float2 uv  : TEXCOORD;
 };
 
-SV_OUT VS(float4 pos : POSITION, float2 uv : TEXCOORD)
+struct SV_OUT
+{
+	float4 pos   : SV_POSITION;
+	float4 color : COLOR;
+	float2 uv    : TEXCOORD;
+};
+
+SV_OUT VS(SV_IN inData)
 {
 	SV_OUT outData;
 
-	outData.pos = mul(pos, mul(EnvCB_Transform, EnvCB_ViewProjection)),
+	outData.pos = mul(float4(inData.pos, 0, 1), EnvCB_Transform);
+	outData.pos.w = 1.0f;
 	outData.color = RenderCB_Color;
+	outData.uv = inData.uv;
 	
 	return outData;
 }

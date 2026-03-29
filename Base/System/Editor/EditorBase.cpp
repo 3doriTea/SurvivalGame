@@ -3,6 +3,7 @@
 #include "../EditorGui.h"
 #include "../TextureRegistry.h"
 #include "../TransformCalculator.h"
+#include "../Transform2DCalculator.h"
 #include "../ViewportSwitcher.h"
 #include "../SceneSaver.h"
 #include "AssetGenerator.h"
@@ -27,6 +28,7 @@ void GameBase::System::EditorBase::OnRegisterDependencies(FluentVectorAddOnly<Sy
 		->Add(SystemRegistry::GetSystemIndex<EditorGui>())
 		->Add(SystemRegistry::GetSystemIndex<TextureRegistry>())
 		->Add(SystemRegistry::GetSystemIndex<TransformCalculator>())
+		->Add(SystemRegistry::GetSystemIndex<Transform2DCalculator>())
 		->Add(SystemRegistry::GetSystemIndex<ViewportSwitcher>())
 		->Add(SystemRegistry::GetSystemIndex<Assets>())
 		->Add(SystemRegistry::GetSystemIndex<AssetGenerator>())

@@ -114,7 +114,7 @@ bool GameBase::Editor::Inspector::Component::IsUpdatedShow(
 							updated << YAML::Key << "z" << YAML::Value << v3.z;
 							updated << YAML::EndMap;
 						}
-						if (HasKeys(params, { "r", "g", "b", "a" }))
+						else if (HasKeys(params, { "r", "g", "b", "a" }))
 						{
 							Color color
 							{
@@ -139,6 +139,29 @@ bool GameBase::Editor::Inspector::Component::IsUpdatedShow(
 							updated << YAML::Key << "g" << YAML::Value << color.g;
 							updated << YAML::Key << "b" << YAML::Value << color.b;
 							updated << YAML::Key << "a" << YAML::Value << color.a;
+							updated << YAML::EndMap;
+						}
+						else if (HasKeys(params, { "x", "y" }))
+						{
+							Vec2 v2
+							{
+								params["x"].as<float>(),
+								params["y"].as<float>(),
+							};
+							ImGuiColorEditFlags flags
+							{
+								ImGuiColorEditFlags_PickerHueBar |
+								ImGuiColorEditFlags_AlphaBar |
+								ImGuiColorEditFlags_DisplayHex |
+								ImGuiColorEditFlags_NoSidePreview
+							};
+							if (ImGui::DragFloat2(paramKey.c_str(), v2.v, 0.1f))
+							{
+								isChanged = true;  // 変更がアタ
+							}
+							updated << YAML::Value << YAML::BeginMap;
+							updated << YAML::Key << "x" << YAML::Value << v2.x;
+							updated << YAML::Key << "y" << YAML::Value << v2.y;
 							updated << YAML::EndMap;
 						}
 						else if (HasKeys(params, { "fileId" }))

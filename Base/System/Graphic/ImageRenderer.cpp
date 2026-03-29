@@ -1,14 +1,15 @@
 #include "ImageRenderer.h"
 #include <Component/Image.h>
-#include <Component/Transform.h>
+#include <Component/Transform2D.h>
 #include "../GameTime.h"
-#include "../TransformCalculator.h"
+#include "../Transform2DCalculator.h"
 #include "../MaterialRegistry.h"
 #include "../MeshRegistry.h"
 #include "../Renderer.h"
 #include "../Direct3D.h"
 #include "../ShaderCompiler.h"
 #include "../TextureRegistry.h"
+#include "../ViewportSwitcher.h"
 
 #include "../../Structure/UI/UIVertex.h"
 
@@ -25,13 +26,14 @@ GameBase::System::ImageRenderer::~ImageRenderer()
 void GameBase::System::ImageRenderer::OnRegisterDependencies(FluentVectorAddOnly<SystemIndex>*_registry)
 {
 	_registry
-		->Add(SystemRegistry::GetSystemIndex<TransformCalculator>())
+		->Add(SystemRegistry::GetSystemIndex<Transform2DCalculator>())
 		->Add(SystemRegistry::GetSystemIndex<MeshRegistry>())
 		->Add(SystemRegistry::GetSystemIndex<MaterialRegistry>())
 		->Add(SystemRegistry::GetSystemIndex<GameTime>())
 		->Add(SystemRegistry::GetSystemIndex<Direct3D>())
 		->Add(SystemRegistry::GetSystemIndex<ShaderCompiler>())
 		->Add(SystemRegistry::GetSystemIndex<TextureRegistry>())
+		->Add(SystemRegistry::GetSystemIndex<ViewportSwitcher>())
 		;
 }
 
@@ -128,7 +130,7 @@ void GameBase::System::ImageRenderer::Initialize()
 
 void GameBase::System::ImageRenderer::Update(EntityRegistry& _registry)
 {
-	using Component::Transform;
+	using Component::Transform2D;
 	using Component::Image;
 
 	if (!Get<GameTime>().IsFrameDue())
@@ -136,15 +138,20 @@ void GameBase::System::ImageRenderer::Update(EntityRegistry& _registry)
 		return;  // 描画タイミング以外は無視
 	}
 
-	auto view{ _registry.GetView<Transform, Image>() };
+	const Vec2 VIEWPORT_SIZE{ Get<ViewportSwitcher>().GetSizeAt(ViewportMode::Gamer) };
+	GB_ASSERT(VIEWPORT_SIZE.x > 0.0f && VIEWPORT_SIZE.y > 0.0f
+		&& "ビューポートサイズが0でゼロ除算発生");
 
-	view.ForEach([this](const Entity _entity, Transform& _transform, Image& _image)
+	auto view{ _registry.GetView<Transform2D, Image>() };
+	view.ForEach([this, &VIEWPORT_SIZE](const Entity _entity, Transform2D& _transform, Image& _image)
 		{
 			Get<Renderer>().Enqueue(RenderItem
 				{
 					&Get<MeshRegistry>().At(hMesh_),
 					&Get<MaterialRegistry>().At(hMaterial_),
-					_transform.GetWorldMatrix(),
+					_transform.GetWorldMatrix()
+					// 最後にビューポートをかける
+						* DirectX::XMMatrixScaling(2.0f / VIEWPORT_SIZE.x, 2.0f / VIEWPORT_SIZE.y, 1.0f),
 					SortKey::Make(SortKey::Layer_UI, 0),
 				});
 		});

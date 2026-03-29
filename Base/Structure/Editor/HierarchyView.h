@@ -2,12 +2,14 @@
 #include "IEditorView.h"
 #include <Component/GameObject.h>
 #include <Component/Transform.h>
+#include <Component/Transform2D.h>
 
 namespace GameBase::Editor
 {
 	class HierarchyView : public IEditorView
 	{
 		using ViewGameObjectTransform = View<Component::GameObject, Component::Transform>;
+		using ViewGameObjectTransform2D = View<Component::GameObject, Component::Transform2D>;
 
 		struct Object
 		{
@@ -54,12 +56,7 @@ namespace GameBase::Editor
 
 	private:
 		void ShowNodeTree(ViewGameObjectTransform& _view, const Object& _obj);
-
-		/// <summary>
-		/// ImGUIでオブジェクトツリーを表示する
-		/// </summary>
-		/// <param name="obj"></param>
-		void ShowObjectTree(ViewGameObjectTransform& _view, const Object& obj);
+		void ShowNodeTree(ViewGameObjectTransform2D& _view, const Object& _obj);
 
 		/// <summary>
 		/// オブジェクト作成のモーダルダイアログを表示

@@ -34,6 +34,13 @@ namespace GameBase::System
 		/// <param name="_mode">描画先</param>
 		/// <param name="_callback">コールバック関数</param>
 		virtual void RefAt(const ViewportMode _mode, const std::function<void(const RenderSurface&)>& _callback) = 0;
+
+		/// <summary>
+		/// 解像度を取得する
+		/// </summary>
+		/// <param name="_mode">ビューポートの種類</param>
+		/// <returns>解像度</returns>
+		virtual Vec2Int GetSizeAt(const ViewportMode _mode) = 0;
 	};
 
 	/// <summary>
@@ -65,6 +72,11 @@ namespace GameBase::System
 
 		void Switch(const ViewportMode _mode) override;
 		void RefAt(const ViewportMode _mode, const std::function<void(const RenderSurface&)>& _callback) override;
+
+		Vec2Int GetSizeAt(const ViewportMode _mode) override;
+
+	private:
+		RenderSurface& RenderSurfaceAt(const ViewportMode _mode);
 
 	private:
 		ViewportMode currentMode_;  // 現在のモード

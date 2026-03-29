@@ -1,0 +1,181 @@
+%YAML 1.1
+%TAG !gbc! GameBase::Component::
+%TAG !gb! GameBase::
+
+--- !gb!Scene
+Scene:
+  gameObjects:
+    - gameObject:
+        fileId: 1
+    - gameObject:
+        fileId: 2
+    - gameObject:
+        fileId: 3
+    - gameObject:
+        fileId: 4
+    - gameObject:
+        fileId: 5
+
+--- !gb!GameObject
+Id: 1
+GameObject:
+  name: Main Camera
+  components:
+    - component:
+        fileId: 6
+    - component:
+        fileId: 7
+
+--- !gb!GameObject
+Id: 2
+GameObject:
+  name: Sub Camera
+  components:
+    - component:
+        fileId: 8
+
+--- !gb!GameObject
+Id: 3
+GameObject:
+  name: Player
+  components:
+    - component:
+        fileId: 9
+
+--- !gb!GameObject
+Id: 4
+GameObject:
+  name: TestImage
+  components:
+    - component:
+        fileId: 10
+    - component:
+        fileId: 11
+
+--- !gb!GameObject
+Id: 5
+GameObject:
+  name: TestImageSub
+  components:
+    - component:
+        fileId: 12
+    - component:
+        fileId: 13
+
+--- !gbc!Camera
+Id: 6
+Camera:
+  near: 1000
+  far: 0.1
+  fov: 0.7853982
+
+--- !gbc!Transform
+Id: 7
+Transform:
+  position:
+    x: 0
+    y: 0
+    z: -10
+  rotation:
+    x: -0
+    y: 0
+    z: 0
+  scale:
+    x: 1
+    y: 1
+    z: 1
+  parent:
+    fileId: 0
+
+--- !gbc!Transform
+Id: 8
+Transform:
+  position:
+    x: 0
+    y: 0
+    z: 0
+  rotation:
+    x: -0
+    y: 0
+    z: 0
+  scale:
+    x: 1
+    y: 1
+    z: 1
+  parent:
+    fileId: 1
+
+--- !gbc!Transform
+Id: 9
+Transform:
+  position:
+    x: 0
+    y: 0
+    z: 0
+  rotation:
+    x: -0
+    y: 0
+    z: 0
+  scale:
+    x: 1
+    y: 1
+    z: 1
+  parent:
+    fileId: 0
+
+--- !gbc!Image
+Id: 10
+Image:
+  color:
+    r: 0
+    g: 0.59733343
+    b: 0.93333334
+    a: 1
+
+--- !gbc!Transform2D
+Id: 11
+Transform2D:
+  parent:
+    fileId: 0
+  position:
+    x: -124.2
+    y: 0
+  angle: -0.861
+  scale:
+    x: 187.9
+    y: 102.3
+  anchorPoint:
+    x: 0.5
+    y: 0.5
+  pivotPoint:
+    x: 0.5
+    y: 0.5
+
+--- !gbc!Image
+Id: 12
+Image:
+  color:
+    r: 0
+    g: 0
+    b: 0
+    a: 1
+
+--- !gbc!Transform2D
+Id: 13
+Transform2D:
+  parent:
+    fileId: 4
+  position:
+    x: 59
+    y: 10.6
+  angle: -1.816
+  scale:
+    x: 59.6
+    y: 242.4
+  anchorPoint:
+    x: 0.5
+    y: 0.5
+  pivotPoint:
+    x: 0.5
+    y: 0.5
+

@@ -2,7 +2,8 @@
 
 
 GameBase::System::TransformCalculator::TransformCalculator() :
-	checked_{}
+	checked_{},
+	calculationQueue_{}
 {}
 
 GameBase::System::TransformCalculator::~TransformCalculator()

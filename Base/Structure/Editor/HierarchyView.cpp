@@ -1,5 +1,6 @@
 #include "HierarchyView.h"
 #include <System/TransformCalculator.h>
+#include <System/Transform2DCalculator.h>
 #include <System/SceneManager.h>
 #include <System/SceneSaver.h>
 #include "SelectedEvent.h"
@@ -108,35 +109,71 @@ bool GameBase::Editor::HierarchyView::OnGUI(EntityRegistry& _registry)
 
 #pragma endregion
 
-#pragma region ノードツリー
-	objects_.clear();
-
-	ViewGameObjectTransform view{ _registry.GetView<Component::GameObject, Component::Transform>() };
-	for (const Entity entity : Get<System::TransformCalculator>().CalculationQueue())
+#pragma region ノードツリー 3D
 	{
-		auto [g, t]{view.At(entity) };
+		objects_.clear();
 
-		objects_.emplace(entity, entity);
-
-		if (t.parent != INVALID_ENTITY)
+		ViewGameObjectTransform view{ _registry.GetView<Component::GameObject, Component::Transform>() };
+		for (const Entity entity : Get<System::TransformCalculator>().CalculationQueue())
 		{
-			auto itr{ objects_.find(t.parent) };
-			GB_ASSERT(itr != objects_.end()
-				&& "順番が不正のため親子関係の登録に失敗");
+			auto [g, t]{view.At(entity) };
 
-			auto& [keyEntity, parentObj]{ *itr };
-			parentObj.childs.push_back(entity);
-			objects_[entity].parent = keyEntity;
+			objects_.emplace(entity, entity);
+
+			if (t.parent != INVALID_ENTITY)
+			{
+				auto itr{ objects_.find(t.parent) };
+				GB_ASSERT(itr != objects_.end()
+					&& "順番が不正のため親子関係の登録に失敗");
+
+				auto& [keyEntity, parentObj]{ *itr };
+				parentObj.childs.push_back(entity);
+				objects_[entity].parent = keyEntity;
+			}
+		}
+
+		for (const auto& [entity, obj] : objects_)
+		{
+			if (obj.parent)
+			{
+				continue;  // 親がいるオブジェクトが現れたら以降は全部親あり
+			}
+			ShowNodeTree(view, obj);
 		}
 	}
+#pragma endregion
 
-	for (const auto& [entity, obj] : objects_)
+#pragma region ノードツリー 2D
 	{
-		if (obj.parent)
+		objects_.clear();
+
+		ViewGameObjectTransform2D view{ _registry.GetView<Component::GameObject, Component::Transform2D>() };
+		for (const Entity entity : Get<System::Transform2DCalculator>().CalculationQueue())
 		{
-			continue;  // 親がいるオブジェクトが現れたら以降は全部親あり
+			auto [g, t] {view.At(entity) };
+
+			objects_.emplace(entity, entity);
+
+			if (t.parent != INVALID_ENTITY)
+			{
+				auto itr{ objects_.find(t.parent) };
+				GB_ASSERT(itr != objects_.end()
+					&& "順番が不正のため親子関係の登録に失敗");
+
+				auto& [keyEntity, parentObj] { *itr };
+				parentObj.childs.push_back(entity);
+				objects_[entity].parent = keyEntity;
+			}
 		}
-		ShowNodeTree(view, obj);
+
+		for (const auto& [entity, obj] : objects_)
+		{
+			if (obj.parent)
+			{
+				continue;  // 親がいるオブジェクトが現れたら以降は全部親あり
+			}
+			ShowNodeTree(view, obj);
+		}
 	}
 #pragma endregion
 
@@ -158,6 +195,43 @@ void GameBase::Editor::HierarchyView::OnSelected(EntityRegistry& _registry, Sele
 }
 
 void GameBase::Editor::HierarchyView::ShowNodeTree(ViewGameObjectTransform& _view, const Object& _obj)
+{
+	ImGuiTreeNodeFlags flags
+	{
+		ImGuiTreeNodeFlags_OpenOnArrow |
+		ImGuiTreeNodeFlags_OpenOnDoubleClick |
+		ImGuiTreeNodeFlags_SpanAvailWidth
+	};
+
+	if (_obj.childs.empty())  // 子がないなら開けない
+	{
+		flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+	}
+
+	auto [g, t] { _view.At(_obj.entity) };
+
+	bool isOpen
+	{
+		ImGui::TreeNodeEx(std::to_string(_obj.entity).c_str(), flags, "%s", g.name.data())
+	};
+
+	if (ImGui::IsItemClicked())
+	{
+		selectedEntity_ = _obj.entity;
+		onSelectedEvent_ = true;
+	}
+
+	if (isOpen && !_obj.childs.empty())
+	{
+		for (Entity child : _obj.childs)
+		{
+			ShowNodeTree(_view, objects_[child]);
+		}
+		ImGui::TreePop();
+	}
+}
+
+void GameBase::Editor::HierarchyView::ShowNodeTree(ViewGameObjectTransform2D& _view, const Object& _obj)
 {
 	ImGuiTreeNodeFlags flags
 	{

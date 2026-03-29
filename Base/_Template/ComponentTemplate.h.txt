@@ -10,7 +10,7 @@ namespace GameBase::Component
 	struct XXX : ComponentBase<XXX>
 	{
 		XXX();
-		void OnLoad(const YAML::Node& _node, SchemaLoadBundle& _bundle) override;
-		void OnSave(YAML::Emitter& _emitter, SchemaLoadBundle& _bundle) override;
+		void OnLoad(const YAML::Node& _node, const SchemaLoadBundle& _bundle) override;
+		void OnSave(YAML::Emitter& _emitter, const SchemaLoadBundle& _bundle) override;
 	};
 }

@@ -33,30 +33,27 @@ void GameBase::System::ViewportSwitcher::Release()
 
 void GameBase::System::ViewportSwitcher::Switch(const ViewportMode _mode)
 {
-	switch (_mode)
-	{
-	case ViewportMode::Gamer:
-		Get<Presenter>().SetRenderSurface(&renderSurface_.gamer);
-		break;
-	case ViewportMode::Editor:
-		Get<Presenter>().SetRenderSurface(&renderSurface_.editor);
-		break;
-	default:
-		GB_ASSERT(false && "他のモードは指定できない");
-		break;
-	}
+	Get<Presenter>().SetRenderSurface(&RenderSurfaceAt(_mode));
 }
 
 void GameBase::System::ViewportSwitcher::RefAt(const ViewportMode _mode, const std::function<void(const RenderSurface&)>& _callback)
 {
+	_callback(RenderSurfaceAt(_mode));
+}
+
+GameBase::Vec2Int GameBase::System::ViewportSwitcher::GetSizeAt(const ViewportMode _mode)
+{
+	return RenderSurfaceAt(_mode).size;
+}
+
+GameBase::RenderSurface& GameBase::System::ViewportSwitcher::RenderSurfaceAt(const ViewportMode _mode)
+{
 	switch (_mode)
 	{
 	case ViewportMode::Gamer:
-		_callback(renderSurface_.gamer);
-		break;
+		return renderSurface_.gamer;
 	case ViewportMode::Editor:
-		_callback(renderSurface_.editor);
-		break;
+		return renderSurface_.editor;
 	default:
 		GB_ASSERT(false && "他のモードは指定できない");
 		break;
