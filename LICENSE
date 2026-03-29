@@ -47,3 +47,7 @@ This software uses the following third-party libraries:
 - yaml-cpp (https://github.com/jbeder/yaml-cpp)
   Copyright (c) 2008-2015 Jesse Beder.
   Licensed under the MIT License
+
+- DirectXTex (https://github.com/Microsoft/DirectXTex)
+  Copyright (c) Microsoft Corporation.
+  Licensed under the MIT License
