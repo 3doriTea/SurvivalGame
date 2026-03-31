@@ -45,6 +45,83 @@ bool GameBase::Editor::InspectorView::OnGUI(EntityRegistry& _registry)
 				
 			}
 		}
+
+#pragma region コンポーネントの編集
+		if (ImGui::Button("コンポーネントの編集"))
+		{
+			OpenModalEditComponent();
+		}
+
+		ImVec2 center{ ImGui::GetMainViewport()->GetCenter() };
+		ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+		if (ImGui::BeginPopupModal("新規オブジェクト", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+		{
+			if (ImGui::IsWindowAppearing())
+			{
+				ImGui::SetKeyboardFocusHere();
+			}
+
+			const char* types[]{ "空っぽ", "3Dオブジェクト", "UIオブジェクト" };
+			if (ImGui::Combo("タイプ", &createOptionsBuffer.selected, types, IM_ARRAYSIZE(types)))
+			{
+				ApplyRequiredCreateObjectComponentFlags();
+			}
+
+			ImGui::BeginChild("機能要素の選択", ImVec2{ 0, 150 }, true);
+			{
+				for (ComponentIndex i = 0; i < ComponentRegistry::IndexCounter(); i++)
+				{
+					const std::string_view typeName{ ComponentRegistry::ComponentTypeNames()[i] };
+
+					uint32_t* pFlags{};
+					uint64_t offset{ 0ULL };
+					if (i >= 32U)
+					{
+						pFlags = &createOptionsBuffer.componentFlags.upper;
+						offset = 32ULL;
+					}
+					else
+					{
+						pFlags = &createOptionsBuffer.componentFlags.lower;
+					}
+
+					if (ImGui::CheckboxFlags(typeName.data(), pFlags, 1U << (i - offset)))
+					{
+						ApplyRequiredCreateObjectComponentFlags();
+					}
+				}
+			}
+			ImGui::EndChild();
+
+			ImGui::Separator();
+
+			ImGui::BeginDisabled(IsInvalidCreateName());
+			if (ImGui::Button("作成 (Enter)", ImVec2{ 120, 0 }))
+			{
+				CreateEntity(_registry);
+
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::EndDisabled();
+
+			ImGui::SetItemDefaultFocus();
+			ImGui::SameLine();
+
+			if (ImGui::Button("キャンセル (Esc)", ImVec2{ 120, 0 }))
+			{
+				ImGui::CloseCurrentPopup();
+			}
+
+			if (ImGui::IsKeyPressed(ImGuiKey_Enter) && !IsInvalidCreateName())
+			{
+				CreateEntity(_registry);
+				ImGui::CloseCurrentPopup();
+			}
+
+			ImGui::EndPopup();
+		}
+#pragma endregion
 	}
 
 	#if 0
@@ -94,8 +171,8 @@ bool GameBase::Editor::InspectorView::OnGUI(EntityRegistry& _registry)
 	#endif
 
 	ImGui::Text("Components...");
-	ImGui::End();
 
+	ImGui::End();
 	return false;
 }
 
@@ -119,4 +196,9 @@ void GameBase::Editor::InspectorView::OnSelected(EntityRegistry& _registry, Sele
 	})) return;
 
 	mode_ = Mode::None;
+}
+
+void GameBase::Editor::InspectorView::OpenModalEditComponent()
+{
+	ImGui::OpenPopup("コンポーネントの編集");
 }

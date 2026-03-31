@@ -13,8 +13,6 @@ Scene:
         fileId: 3
     - gameObject:
         fileId: 4
-    - gameObject:
-        fileId: 5
 
 --- !gb!GameObject
 Id: 1
@@ -22,9 +20,9 @@ GameObject:
   name: Main Camera
   components:
     - component:
-        fileId: 6
+        fileId: 5
     - component:
-        fileId: 7
+        fileId: 6
 
 --- !gb!GameObject
 Id: 2
@@ -32,7 +30,7 @@ GameObject:
   name: Sub Camera
   components:
     - component:
-        fileId: 8
+        fileId: 7
 
 --- !gb!GameObject
 Id: 3
@@ -40,37 +38,27 @@ GameObject:
   name: Player
   components:
     - component:
-        fileId: 9
+        fileId: 8
 
 --- !gb!GameObject
 Id: 4
 GameObject:
-  name: TestImagePhoenix
+  name: PhoenixObj
   components:
+    - component:
+        fileId: 9
     - component:
         fileId: 10
-    - component:
-        fileId: 11
-
---- !gb!GameObject
-Id: 5
-GameObject:
-  name: TestImageSub
-  components:
-    - component:
-        fileId: 12
-    - component:
-        fileId: 13
 
 --- !gbc!Camera
-Id: 6
+Id: 5
 Camera:
   near: 1000
   far: 0.1
   fov: 0.7853982
 
 --- !gbc!Transform
-Id: 7
+Id: 6
 Transform:
   position:
     x: 0
@@ -88,7 +76,7 @@ Transform:
     fileId: 0
 
 --- !gbc!Transform
-Id: 8
+Id: 7
 Transform:
   position:
     x: 0
@@ -106,7 +94,7 @@ Transform:
     fileId: 1
 
 --- !gbc!Transform
-Id: 9
+Id: 8
 Transform:
   position:
     x: 0
@@ -124,58 +112,30 @@ Transform:
     fileId: 0
 
 --- !gbc!Image
-Id: 10
+Id: 9
 Image:
   color:
-    r: 0.057777762
-    g: 0.66080034
-    b: 1
+    r: 0
+    g: 0.59733343
+    b: 0.93333334
     a: 1
 
 --- !gbc!Transform2D
-Id: 11
+Id: 10
 Transform2D:
   parent:
     fileId: 0
   position:
-    x: -191.8
-    y: 73.4
-  angle: -1.461
+    x: 0
+    y: 0
+  angle: -2.817
   scale:
-    x: 187.9
-    y: 102.3
+    x: 82.3
+    y: 75.4
   anchorPoint:
     x: 0.5
     y: 0.5
   pivotPoint:
     x: 0.5
-    y: 0.5
-
---- !gbc!Image
-Id: 12
-Image:
-  color:
-    r: 0.08888888
-    g: 0.79348147
-    b: 1
-    a: 1
-
---- !gbc!Transform2D
-Id: 13
-Transform2D:
-  parent:
-    fileId: 4
-  position:
-    x: 59
-    y: 10.6
-  angle: 0.467
-  scale:
-    x: 59.6
-    y: 242.4
-  anchorPoint:
-    x: 0.5
-    y: 0.5
-  pivotPoint:
-    x: 0.5
-    y: 0.5
+    y: 0.6
 

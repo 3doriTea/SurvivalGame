@@ -281,29 +281,6 @@ bool GameBase::Editor::HierarchyView::IsInvalidCreateName()
 	return createOptionsBuffer.name[0] == '\0';
 }
 
-void GameBase::Editor::HierarchyView::ApplyRequiredCreateObjectComponentFlags()
-{
-	createOptionsBuffer.componentFlags.full |=
-		1ULL << ComponentRegistry::GetComponentIndex<Component::GameObject>();
-	switch (createOptionsBuffer.selected)
-	{
-	case CreateObjectType::Empty:
-		break;
-	case CreateObjectType::_3D:
-		createOptionsBuffer.componentFlags.full |=
-			1ULL << ComponentRegistry::GetComponentIndex<Component::Transform>();
-		break;
-	case CreateObjectType::UI:
-		createOptionsBuffer.componentFlags.full |=
-			1ULL << ComponentRegistry::GetComponentIndex<Component::Transform>() |
-			1ULL << ComponentRegistry::GetComponentIndex<Component::Image>();
-		break;
-	default:
-		GB_ASSERT(false && "未実装の新規オブジェクトタイプ");
-		break;
-	}
-}
-
 void GameBase::Editor::HierarchyView::CreateEntity(EntityRegistry& _registry)
 {
 	ApplyRequiredCreateObjectComponentFlags();

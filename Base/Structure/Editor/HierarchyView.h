@@ -3,6 +3,7 @@
 #include <Component/GameObject.h>
 #include <Component/Transform.h>
 #include <Component/Transform2D.h>
+#include "Common/ComponentSelector.h"
 
 namespace GameBase::Editor
 {
@@ -29,12 +30,7 @@ namespace GameBase::Editor
 			std::vector<Entity> childs;
 		};
 
-		enum CreateObjectType : int
-		{
-			Empty,
-			_3D,
-			UI
-		};
+		
 
 	public:
 		HierarchyView();
@@ -84,12 +80,7 @@ namespace GameBase::Editor
 		struct
 		{
 			std::array<char, Component::GAME_OBJECT_NAME_BUFFER_SIZE> name;
-			int selected;
-			union
-			{
-				struct { uint32_t lower; uint32_t upper; };
-				uint64_t full;
-			} componentFlags;
+			ComponentSelector componentSelector;  // コンポーネント選択
 		} createOptionsBuffer;
 	};
 }

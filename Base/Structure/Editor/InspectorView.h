@@ -30,6 +30,12 @@ namespace GameBase::Editor
 		void OnSelected(EntityRegistry& _registry, SelectedEvent& _event) override;
 
 	private:
+		/// <summary>
+		/// コンポーネントを編集するモーダルダイアログを表示
+		/// </summary>
+		void OpenModalEditComponent();
+
+	private:
 		Entity selectedEntity_;  // 選択されたエンティティ
 		std::vector<Inspector::Component> components_;  // 選択されたエンティティのコンポーネント
 
