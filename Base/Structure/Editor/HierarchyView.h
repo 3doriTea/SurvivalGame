@@ -65,11 +65,6 @@ namespace GameBase::Editor
 		/// <returns>無効 true / false</returns>
 		bool IsInvalidCreateName();
 
-		/// <summary>
-		/// 必須フラグを適用する
-		/// </summary>
-		void ApplyRequiredCreateObjectComponentFlags();
-
 		void CreateEntity(EntityRegistry& _registry);
 
 	private:

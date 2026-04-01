@@ -1,6 +1,7 @@
 #pragma once
 #include "IEditorView.h"
 #include "Inspector/Component.h"
+#include "Common/ComponentSelector.h"
 
 namespace GameBase::Editor
 {
@@ -29,6 +30,8 @@ namespace GameBase::Editor
 		/// <param name="_event"></param>
 		void OnSelected(EntityRegistry& _registry, SelectedEvent& _event) override;
 
+		void EditComponent(EntityRegistry& _registry);
+
 	private:
 		/// <summary>
 		/// コンポーネントを編集するモーダルダイアログを表示
@@ -38,6 +41,8 @@ namespace GameBase::Editor
 	private:
 		Entity selectedEntity_;  // 選択されたエンティティ
 		std::vector<Inspector::Component> components_;  // 選択されたエンティティのコンポーネント
+
+		ComponentSelector componentSelector_;  // コンポーネント選択する
 
 		Mode mode_;  // 選択中のモード
 	};

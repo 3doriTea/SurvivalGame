@@ -47,37 +47,7 @@ bool GameBase::Editor::HierarchyView::OnGUI(EntityRegistry& _registry)
 
 		ImGui::InputText("名前", createOptionsBuffer.name.data(), createOptionsBuffer.name.size());
 
-		const char* types[]{ "空っぽ", "3Dオブジェクト" };
-		if (ImGui::Combo("タイプ", &createOptionsBuffer.selected, types, IM_ARRAYSIZE(types)))
-		{
-			ApplyRequiredCreateObjectComponentFlags();
-		}
-
-		ImGui::BeginChild("機能要素の選択", ImVec2{ 0, 150 }, true);
-		{
-			for (ComponentIndex i = 0; i < ComponentRegistry::IndexCounter(); i++)
-			{
-				const std::string_view typeName{ ComponentRegistry::ComponentTypeNames()[i] };
-
-				uint32_t* pFlags{};
-				uint64_t offset{ 0ULL };
-				if (i >= 32U)
-				{
-					pFlags = &createOptionsBuffer.componentFlags.upper;
-					offset = 32ULL;
-				}
-				else
-				{
-					pFlags = &createOptionsBuffer.componentFlags.lower;
-				}
-
-				if (ImGui::CheckboxFlags(typeName.data(), pFlags, 1U << (i - offset)))
-				{
-					ApplyRequiredCreateObjectComponentFlags();
-				}
-			}
-		}
-		ImGui::EndChild();
+		createOptionsBuffer.componentSelector.OnGUI();
 
 		ImGui::Separator();
 
@@ -271,8 +241,7 @@ void GameBase::Editor::HierarchyView::ShowNodeTree(ViewGameObjectTransform2D& _v
 void GameBase::Editor::HierarchyView::OpenModalCreateObject()
 {
 	createOptionsBuffer.name.fill(0);
-	createOptionsBuffer.componentFlags.full = 0;
-	ApplyRequiredCreateObjectComponentFlags();
+	createOptionsBuffer.componentSelector.ApplyRequiredCreateObjectComponentFlags();
 	ImGui::OpenPopup("新規オブジェクト");
 }
 
@@ -283,11 +252,11 @@ bool GameBase::Editor::HierarchyView::IsInvalidCreateName()
 
 void GameBase::Editor::HierarchyView::CreateEntity(EntityRegistry& _registry)
 {
-	ApplyRequiredCreateObjectComponentFlags();
+	createOptionsBuffer.componentSelector.ApplyRequiredCreateObjectComponentFlags();
 
 	Entity entity{ _registry.CreateEntity() };
 
-	_registry.AddComponents(entity, createOptionsBuffer.componentFlags.full);
+	_registry.AddComponents(entity, createOptionsBuffer.componentSelector.GetComponentFlags());
 
 	auto& gameObject{ _registry.GetComponent<Component::GameObject>(entity) };
 	gameObject.SetName(createOptionsBuffer.name.data());

@@ -24,7 +24,7 @@ public:
 
 	void ApplyRequiredCreateObjectComponentFlags();
 
-
+	inline uint64_t GetComponentFlags() const { return componentFlags_.full; }
 
 private:
 	int selected_;  // 選択中のテンプレート

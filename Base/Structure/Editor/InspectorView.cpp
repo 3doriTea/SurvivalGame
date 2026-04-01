@@ -55,55 +55,16 @@ bool GameBase::Editor::InspectorView::OnGUI(EntityRegistry& _registry)
 		ImVec2 center{ ImGui::GetMainViewport()->GetCenter() };
 		ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
 
-		if (ImGui::BeginPopupModal("新規オブジェクト", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+		if (ImGui::BeginPopupModal("コンポーネント編集", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 		{
 			if (ImGui::IsWindowAppearing())
 			{
 				ImGui::SetKeyboardFocusHere();
 			}
 
-			const char* types[]{ "空っぽ", "3Dオブジェクト", "UIオブジェクト" };
-			if (ImGui::Combo("タイプ", &createOptionsBuffer.selected, types, IM_ARRAYSIZE(types)))
-			{
-				ApplyRequiredCreateObjectComponentFlags();
-			}
-
-			ImGui::BeginChild("機能要素の選択", ImVec2{ 0, 150 }, true);
-			{
-				for (ComponentIndex i = 0; i < ComponentRegistry::IndexCounter(); i++)
-				{
-					const std::string_view typeName{ ComponentRegistry::ComponentTypeNames()[i] };
-
-					uint32_t* pFlags{};
-					uint64_t offset{ 0ULL };
-					if (i >= 32U)
-					{
-						pFlags = &createOptionsBuffer.componentFlags.upper;
-						offset = 32ULL;
-					}
-					else
-					{
-						pFlags = &createOptionsBuffer.componentFlags.lower;
-					}
-
-					if (ImGui::CheckboxFlags(typeName.data(), pFlags, 1U << (i - offset)))
-					{
-						ApplyRequiredCreateObjectComponentFlags();
-					}
-				}
-			}
-			ImGui::EndChild();
+			componentSelector_.OnGUI();
 
 			ImGui::Separator();
-
-			ImGui::BeginDisabled(IsInvalidCreateName());
-			if (ImGui::Button("作成 (Enter)", ImVec2{ 120, 0 }))
-			{
-				CreateEntity(_registry);
-
-				ImGui::CloseCurrentPopup();
-			}
-			ImGui::EndDisabled();
 
 			ImGui::SetItemDefaultFocus();
 			ImGui::SameLine();
@@ -113,9 +74,9 @@ bool GameBase::Editor::InspectorView::OnGUI(EntityRegistry& _registry)
 				ImGui::CloseCurrentPopup();
 			}
 
-			if (ImGui::IsKeyPressed(ImGuiKey_Enter) && !IsInvalidCreateName())
+			if (ImGui::IsKeyPressed(ImGuiKey_Enter))
 			{
-				CreateEntity(_registry);
+				EditComponent(_registry);
 				ImGui::CloseCurrentPopup();
 			}
 
@@ -123,52 +84,6 @@ bool GameBase::Editor::InspectorView::OnGUI(EntityRegistry& _registry)
 		}
 #pragma endregion
 	}
-
-	#if 0
-	Get<System::EditorBase>().RefSelectedEvent([&_registry](SelectedEvent& _event)
-		{
-			if (_event.TryGetEvent<HierarchyView>([&_registry](HierarchyView& _view)
-			{
-				Entity selectedEntity{ _view.GetSelectedEntity() };
-
-				std::vector<ComponentIndex> componentIndices
-				{
-					_registry.GetComponentIndices(selectedEntity)
-				};
-
-				SchemaLoadBundle loadBundle{};
-				for (ComponentIndex index : componentIndices)
-				{
-					YAML::Emitter emitter{};
-					emitter << YAML::BeginMap;
-					_registry.GetComponent(selectedEntity, index).OnSave(emitter, loadBundle);
-					emitter << YAML::EndMap;
-
-					Schema::GameComponent schema{};
-
-					std::string yamlStr{ emitter.c_str() };
-					schema.node = YAML::Load(yamlStr);
-					static const std::string_view HEAD{ "struct " };
-					schema.tag = ComponentRegistry::ComponentTypeNames().at(index).substr(HEAD.size());
-
-					std::string build{ YamlBuilder{ loadBundle }.Write(schema).Build() };
-
-					//schema.node
-					//ImGui::Selectable(build.c_str());
-					static char text[4096]{};
-					memset(text, 0, sizeof(text));
-					memcpy(text, build.c_str(), build.size());
-
-					ImGui::PushStyleColor(ImGuiCol_FrameBg, {});
-					ImGui::PushStyleColor(ImGuiCol_Border, {});
-					ImGui::InputTextMultiline(std::format("##{}", schema.tag).c_str(), text, sizeof(text),
-						ImVec2{ -FLT_MIN, ImGui::GetTextLineHeight() * 10 }, ImGuiInputTextFlags_ReadOnly);
-					ImGui::PopStyleColor(2);
-				}
-
-			})) return;
-		});
-	#endif
 
 	ImGui::Text("Components...");
 
@@ -198,7 +113,27 @@ void GameBase::Editor::InspectorView::OnSelected(EntityRegistry& _registry, Sele
 	mode_ = Mode::None;
 }
 
+void GameBase::Editor::InspectorView::EditComponent(EntityRegistry& _registry)
+{
+	Signature current{ _registry.GetComponentsMask(selectedEntity_) };
+	Signature request{ componentSelector_.GetComponentFlags() };
+	Signature toRemove{ current & ~request };
+	Signature toAdd{ ~current & request };
+
+	for (ComponentIndex index = 0; index < ComponentRegistry::IndexCounter(); index++)
+	{
+		if (toRemove.test(index))
+		{
+			_registry.RemoveComponent(selectedEntity_, index);
+		}
+		if (toAdd.test(index))
+		{
+			_registry.AddComponent(selectedEntity_, index);
+		}
+	}
+}
+
 void GameBase::Editor::InspectorView::OpenModalEditComponent()
 {
-	ImGui::OpenPopup("コンポーネントの編集");
+	ImGui::OpenPopup("コンポーネント編集");
 }

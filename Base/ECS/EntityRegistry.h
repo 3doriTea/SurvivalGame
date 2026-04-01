@@ -81,6 +81,13 @@ namespace GameBase
 		bool HasComponent(const Entity _entity, const ComponentIndex _type) const;
 
 		/// <summary>
+		/// コンポーネントのビットマスクを取得する
+		/// </summary>
+		/// <param name="_entity"></param>
+		/// <returns></returns>
+		inline Signature GetComponentsMask(const Entity _entity) const { return entitySignatures_[GetIndex(_entity)]; }
+
+		/// <summary>
 		/// コンポーネントマスクに一致するか
 		/// </summary>
 		/// <param name="_entity">エンティティ</param>
