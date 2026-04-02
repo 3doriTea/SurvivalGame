@@ -213,7 +213,7 @@
     <ClCompile Include="Base\ECS\IComponentPool.cpp" />
     <ClCompile Include="Base\ECS\View.cpp" />
     <ClCompile Include="Base\ECS\World.cpp" />
-    <ClCompile Include="Base\GameBase.cpp" />
+    <ClCompile Include="Base\Game.cpp" />
     <ClCompile Include="Base\GameEvent.cpp" />
     <ClCompile Include="Base\Library\imgui\imgui.cpp" />
     <ClCompile Include="Base\Library\imgui\imgui_demo.cpp" />
@@ -425,6 +425,7 @@
     <ClInclude Include="Base\ECS\Signature.h" />
     <ClInclude Include="Base\ECS\View.h" />
     <ClInclude Include="Base\ECS\World.h" />
+    <ClInclude Include="Base\Game.h" />
     <ClInclude Include="Base\GameBase.h" />
     <ClInclude Include="Base\GameEvent.h" />
     <ClInclude Include="Base\GameEvent\ChangeRunMode.h" />

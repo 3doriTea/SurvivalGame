@@ -1,11 +1,10 @@
 #pragma once
-#include <ScriptBase.h>
+#include <GameBase.h>
 
-using namespace GameBase;
 
 struct PlayerControllerData
 {
-	Entity player;
+	float moveSpeed = 30.0f;
 };
 
 struct PlayerController : ScriptBase<PlayerController, PlayerControllerData>

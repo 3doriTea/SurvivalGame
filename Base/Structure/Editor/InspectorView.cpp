@@ -49,7 +49,7 @@ bool GameBase::Editor::InspectorView::OnGUI(EntityRegistry& _registry)
 #pragma region コンポーネントの編集
 		if (ImGui::Button("コンポーネントの編集"))
 		{
-			OpenModalEditComponent();
+			OpenModalEditComponent(_registry);
 		}
 
 		ImVec2 center{ ImGui::GetMainViewport()->GetCenter() };
@@ -67,6 +67,13 @@ bool GameBase::Editor::InspectorView::OnGUI(EntityRegistry& _registry)
 			ImGui::Separator();
 
 			ImGui::SetItemDefaultFocus();
+
+			if (ImGui::Button("変更 (Enter)", ImVec2{ 120, 0 }))
+			{
+				EditComponent(_registry);
+				ImGui::CloseCurrentPopup();
+			}
+
 			ImGui::SameLine();
 
 			if (ImGui::Button("キャンセル (Esc)", ImVec2{ 120, 0 }))
@@ -120,6 +127,11 @@ void GameBase::Editor::InspectorView::EditComponent(EntityRegistry& _registry)
 	Signature toRemove{ current & ~request };
 	Signature toAdd{ ~current & request };
 
+	if ((toRemove | toAdd).any())
+	{
+		return;  // 変更無しのため何もしない
+	}
+
 	for (ComponentIndex index = 0; index < ComponentRegistry::IndexCounter(); index++)
 	{
 		if (toRemove.test(index))
@@ -133,7 +145,9 @@ void GameBase::Editor::InspectorView::EditComponent(EntityRegistry& _registry)
 	}
 }
 
-void GameBase::Editor::InspectorView::OpenModalEditComponent()
+void GameBase::Editor::InspectorView::OpenModalEditComponent(EntityRegistry& _registry)
 {
+	componentSelector_.SetComponentFlags(_registry.GetComponentsMask(selectedEntity_));
+
 	ImGui::OpenPopup("コンポーネント編集");
 }

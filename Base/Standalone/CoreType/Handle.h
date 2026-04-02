@@ -31,4 +31,9 @@ namespace GameBase
 	/// メッシュのハンドル
 	/// </summary>
 	using MeshHandle = uint32_t;
+
+	/// <summary>
+	/// スクリプトのハンドル
+	/// </summary>
+	using ScriptHandle = uint32_t;
 }

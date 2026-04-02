@@ -241,7 +241,7 @@ void GameBase::Editor::HierarchyView::ShowNodeTree(ViewGameObjectTransform2D& _v
 void GameBase::Editor::HierarchyView::OpenModalCreateObject()
 {
 	createOptionsBuffer.name.fill(0);
-	createOptionsBuffer.componentSelector.ApplyRequiredCreateObjectComponentFlags();
+	createOptionsBuffer.componentSelector.ApplySetTemplateComponentFlags();
 	ImGui::OpenPopup("新規オブジェクト");
 }
 
@@ -252,7 +252,7 @@ bool GameBase::Editor::HierarchyView::IsInvalidCreateName()
 
 void GameBase::Editor::HierarchyView::CreateEntity(EntityRegistry& _registry)
 {
-	createOptionsBuffer.componentSelector.ApplyRequiredCreateObjectComponentFlags();
+	createOptionsBuffer.componentSelector.ApplyAddRequiredComponentFlags();
 
 	Entity entity{ _registry.CreateEntity() };
 

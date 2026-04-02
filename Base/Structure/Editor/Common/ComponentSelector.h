@@ -1,36 +1,47 @@
 #pragma once
+#include "../../../ECS/Signature.h"
 
-
-/// <summary>
-/// コンポーネント選択
-/// </summary>
-class ComponentSelector
+namespace GameBase
 {
-	enum CreateObjectType : int
-	{
-		Empty,
-		_3D,
-		UI
-	};
-
-public:
-	ComponentSelector();
-	~ComponentSelector() = default;
-
 	/// <summary>
-	/// 表示する
+	/// コンポーネント選択
 	/// </summary>
-	void OnGUI();
-
-	void ApplyRequiredCreateObjectComponentFlags();
-
-	inline uint64_t GetComponentFlags() const { return componentFlags_.full; }
-
-private:
-	int selected_;  // 選択中のテンプレート
-	union
+	class ComponentSelector
 	{
-		struct { uint32_t lower; uint32_t upper; };
-		uint64_t full;
-	} componentFlags_;  // コンポーネントのフラグ
-};
+		enum CreateObjectType : int
+		{
+			Empty,
+			_3D,
+			UI
+		};
+	
+	public:
+		ComponentSelector();
+		~ComponentSelector() = default;
+	
+		/// <summary>
+		/// 表示する
+		/// </summary>
+		void OnGUI();
+	
+		/// <summary>
+		/// テンプレートのフラグ設定にする
+		/// </summary>
+		void ApplySetTemplateComponentFlags();
+		/// <summary>
+		/// 必要なフラグを追加する
+		/// </summary>
+		void ApplyAddRequiredComponentFlags();
+	
+		inline uint64_t GetComponentFlags() const { return componentFlags_.full; }
+		inline void SetComponentFlags(const Signature _flags) { componentFlags_.full = _flags.to_ullong(); }
+	
+	private:
+		int selected_;  // 選択中のテンプレート
+		union
+		{
+			struct { uint32_t lower; uint32_t upper; };
+			uint64_t full;
+		} componentFlags_;  // コンポーネントのフラグ
+	};
+}

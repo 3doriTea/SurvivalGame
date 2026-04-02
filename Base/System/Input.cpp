@@ -132,18 +132,18 @@ void GameBase::System::Input::Release()
 {
 }
 
-bool GameBase::System::Input::IsPress(const KeyCode _keyCode)
+bool GameBase::System::Input::IsPress(const KeyCode _keyCode) const
 {
 	return keyBoard_.stateCurr[static_cast<uint32_t>(_keyCode)];
 }
 
-bool GameBase::System::Input::IsPressDown(const KeyCode _keyCode)
+bool GameBase::System::Input::IsPressDown(const KeyCode _keyCode) const
 {
 	return keyBoard_.stateCurr[static_cast<uint32_t>(_keyCode)]
 		&& !keyBoard_.statePrev[static_cast<uint32_t>(_keyCode)];
 }
 
-bool GameBase::System::Input::IsPressUp(const KeyCode _keyCode)
+bool GameBase::System::Input::IsPressUp(const KeyCode _keyCode) const
 {
 	return !keyBoard_.stateCurr[static_cast<uint32_t>(_keyCode)]
 		&& keyBoard_.statePrev[static_cast<uint32_t>(_keyCode)];

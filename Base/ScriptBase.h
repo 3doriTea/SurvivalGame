@@ -1,5 +1,7 @@
 #pragma once
 #include "ECS/Entity.h"
+#include "ECS/EntityRegistry.h"
+#include "SystemBase.h"
 
 
 namespace GameBase
@@ -9,6 +11,10 @@ namespace GameBase
 	class IScriptBase;
 	template<typename T, typename DataT>
 	class ScriptBase;
+	struct IComponentBase;
+	class ISystemBase;
+
+	class EntityRegistry;
 
 	namespace ScriptRegistry
 	{
@@ -16,15 +22,24 @@ namespace GameBase
 		/// スクリプトのインデクスカウンタ
 		/// </summary>
 		/// <returns></returns>
-		ScriptIndex& IndexCounter();
+		inline ScriptIndex& IndexCounter()
+		{
+			static GameBase::ScriptIndex indexCounter_;  // 型Idを増やすやつ
+		}
 		/// <summary>
 		/// システムのインタフェース格納
 		/// </summary>
-		std::vector<std::weak_ptr<void>>& PScripts();
+		inline std::vector<std::weak_ptr<void>>& PScripts()
+		{
+			static std::vector<std::weak_ptr<void>> pSystems_;
+		}
 		/// <summary>
 		/// コンストラクタ実行後に呼び出される処理
 		/// </summary>
-		std::queue<std::function<void()>>& RegisterQueue();
+		inline std::queue<std::function<void()>>& RegisterQueue()
+		{
+			static std::queue<std::function<void()>> registerQueue_;
+		}
 
 		/// <summary>
 		/// システムインデクスを取得する
@@ -71,7 +86,7 @@ namespace GameBase
 	/// <typeparam name="T">派生構造体</typeparam>
 	/// <typeparam name="DataT">データ構造体</typeparam>
 	template<typename T, typename DataT>
-	class ScriptBase : public IScriptBase, private DataT
+	class ScriptBase : public IScriptBase, protected DataT
 	{
 		/* TODO static_assert(sizeof(T) == sizeof(DataT) + 8,
 			"スクリプトにメンバ変数を書くことはできません。"
@@ -83,11 +98,34 @@ namespace GameBase
 		virtual void Start() override {}
 		virtual void Update() override {}
 
+	protected:
+		template<typename ComponentT>
+		ComponentT& Get() requires std::derived_from<ComponentT, IComponentBase>
+		{
+			GB_ASSERT(pRegistry_ && "レジストリが未指定");
+			if (pRegistry_)
+			{
+				return pRegistry_->GetComponent<ComponentT>(self_);
+			}
+			else
+			{
+				return EntityRegistry::GetComponentNull<ComponentT>();
+			}
+		}
+
+		template<typename SystemT>
+		inline SystemT& Get() requires std::derived_from<SystemT, ISystemBase>
+		{
+			return GameBase::System::Get<SystemT>();
+		}
+
 	private:
+		void InnerStart();
 		void InnerUpdate();
 
 	private:
-		
+		Entity self_;
+		EntityRegistry* pRegistry_;
 		
 	private:  // static
 		static inline std::shared_ptr<T> pInstance_{ std::make_shared<T>() };

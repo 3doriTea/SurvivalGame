@@ -36,7 +36,7 @@ namespace GameBase::Editor
 		/// <summary>
 		/// コンポーネントを編集するモーダルダイアログを表示
 		/// </summary>
-		void OpenModalEditComponent();
+		void OpenModalEditComponent(EntityRegistry& _registry);
 
 	private:
 		Entity selectedEntity_;  // 選択されたエンティティ

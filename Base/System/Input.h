@@ -18,19 +18,19 @@ namespace GameBase::System
 		/// </summary>
 		/// <param name="_keyCode">キーボードのキー</param>
 		/// <returns>押されている true / false</returns>
-		virtual bool IsPress(const KeyCode _keyCode) = 0;
+		virtual bool IsPress(const KeyCode _keyCode) const = 0;
 		/// <summary>
 		/// 押された瞬間のフレームか
 		/// </summary>
 		/// <param name="_keyCode">キーボードのキー</param>
 		/// <returns>押された瞬間 true / false</returns>
-		virtual bool IsPressDown(const KeyCode _keyCode) = 0;
+		virtual bool IsPressDown(const KeyCode _keyCode) const = 0;
 		/// <summary>
 		/// 離された瞬間のフレームか true / false
 		/// </summary>
 		/// <param name="_keyCode">キーボードのキー</param>
 		/// <returns>離された瞬間 true / false</returns>
-		virtual bool IsPressUp(const KeyCode _keyCode) = 0;
+		virtual bool IsPressUp(const KeyCode _keyCode) const = 0;
 	};
 
 	/// <summary>
@@ -61,9 +61,9 @@ namespace GameBase::System
 		/// </summary>
 		void Release() override;
 
-		bool IsPress(const KeyCode _keyCode) override;
-		bool IsPressDown(const KeyCode _keyCode) override;
-		bool IsPressUp(const KeyCode _keyCode) override;
+		bool IsPress(const KeyCode _keyCode) const override;
+		bool IsPressDown(const KeyCode _keyCode) const override;
+		bool IsPressUp(const KeyCode _keyCode) const override;
 	private:
 		// Direct Input 使ういんたフェース
 		ComPtr<IDirectInput8> pDirectInput_;

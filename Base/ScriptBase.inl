@@ -1,4 +1,7 @@
 #include "ScriptBase.h"
+#include "ComponentBase.h"
+#include "ECS/EntityRegistry.h"
+
 
 template<typename T>
 GameBase::ScriptIndex GameBase::ScriptRegistry::GetScriptIndex()
@@ -37,7 +40,33 @@ T& GameBase::Script::Get()
 }
 
 template<typename T, typename DataT>
-inline GameBase::ScriptBase<T, DataT>::ScriptBase()
+inline GameBase::ScriptBase<T, DataT>::ScriptBase() :
+	self_{ INVALID_ENTITY },
+	pRegistry_{ nullptr }
 {
 	// TODO: 登録処理
 }
+
+//template<typename T, typename DataT>
+//template<typename ComponentT>
+//inline ComponentT& GameBase::ScriptBase<T, DataT>::Get()
+//requires std::derived_from<ComponentT, GameBase::IComponentBase>
+//{
+//	GB_ASSERT(pRegistry_ && "レジストリが未指定");
+//	if (pRegistry_)
+//	{
+//		return *pRegistry_;
+//	}
+//	else
+//	{
+//		return ComponentT{};
+//	}
+//}
+
+//template<typename T, typename DataT>
+//template<typename SystemT>
+//inline SystemT& GameBase::ScriptBase<T, DataT>::Get()
+//requires std::derived_from<SystemT, GameBase::ISystemBase>
+//{
+//	return System::Get<T>();
+//}

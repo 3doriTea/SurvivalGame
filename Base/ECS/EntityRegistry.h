@@ -23,6 +23,18 @@ namespace GameBase
 		/// <returns>作成されたエンティティ</returns>
 		Entity CreateEntity();
 
+		/// <summary>
+		/// コンポーネントのnullオブジェクトを取得する
+		/// </summary>
+		/// <typeparam name="T">コンポーネントの型</typeparam>
+		/// <returns>nullオブジェクトの参照ポインタ</returns>
+		template<typename T>
+		static T& GetComponentNull()
+		{
+			static T nullComponent{};
+			return nullComponent;
+		}
+
 		template<typename T>
 		T& GetComponent(const Entity _entity)
 		{
