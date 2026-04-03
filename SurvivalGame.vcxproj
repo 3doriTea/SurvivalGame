@@ -555,6 +555,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
+    <None Include="Assets\Scripts\PlayerController.scri" />
     <None Include="Assets\setting.json" />
     <None Include="Base\ComponentBase.inl" />
     <None Include="Base\ComponentRegistry.inl" />
