@@ -1,0 +1,12 @@
+@Param
+moveSpeed : float = 30
+.range(min=0, max=100)
+
+@using
+INPUT : System.Input
+GAME…TIME : System.GameTime
+
+@start
+
+@update
+INPUT
