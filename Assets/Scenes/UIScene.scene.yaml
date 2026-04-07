@@ -15,6 +15,8 @@ Scene:
         fileId: 4
     - gameObject:
         fileId: 5
+    - gameObject:
+        fileId: 6
 
 --- !gb!GameObject
 Id: 1
@@ -22,9 +24,9 @@ GameObject:
   name: Main Camera
   components:
     - component:
-        fileId: 6
-    - component:
         fileId: 7
+    - component:
+        fileId: 8
 
 --- !gb!GameObject
 Id: 2
@@ -32,7 +34,7 @@ GameObject:
   name: Sub Camera
   components:
     - component:
-        fileId: 8
+        fileId: 9
 
 --- !gb!GameObject
 Id: 3
@@ -40,7 +42,7 @@ GameObject:
   name: Player
   components:
     - component:
-        fileId: 9
+        fileId: 10
 
 --- !gb!GameObject
 Id: 4
@@ -48,9 +50,9 @@ GameObject:
   name: TestImagePhoenix
   components:
     - component:
-        fileId: 10
-    - component:
         fileId: 11
+    - component:
+        fileId: 12
 
 --- !gb!GameObject
 Id: 5
@@ -58,16 +60,19 @@ GameObject:
   name: TestImageSub
   components:
     - component:
-        fileId: 12
-    - component:
         fileId: 13
+    - component:
+        fileId: 14
 
---- !gbc!Camera
+--- !gb!GameObject
 Id: 6
-Camera:
-  near: 1000
-  far: 0.1
-  fov: 0.7853982
+GameObject:
+  name: TestPlane
+  components:
+    - component:
+        fileId: 15
+    - component:
+        fileId: 16
 
 --- !gbc!Transform
 Id: 7
@@ -87,23 +92,12 @@ Transform:
   parent:
     fileId: 0
 
---- !gbc!Transform
+--- !gbc!Camera
 Id: 8
-Transform:
-  position:
-    x: 0
-    y: 0
-    z: 0
-  rotation:
-    x: -0
-    y: 0
-    z: 0
-  scale:
-    x: 1
-    y: 1
-    z: 1
-  parent:
-    fileId: 1
+Camera:
+  near: 1000
+  far: 0.1
+  fov: 0.7853982
 
 --- !gbc!Transform
 Id: 9
@@ -121,10 +115,28 @@ Transform:
     y: 1
     z: 1
   parent:
+    fileId: 1
+
+--- !gbc!Transform
+Id: 10
+Transform:
+  position:
+    x: 0
+    y: 0
+    z: 0
+  rotation:
+    x: -0
+    y: 0
+    z: 0
+  scale:
+    x: 1
+    y: 1
+    z: 1
+  parent:
     fileId: 0
 
 --- !gbc!Image
-Id: 10
+Id: 11
 Image:
   color:
     r: 0.057777762
@@ -133,7 +145,7 @@ Image:
     a: 1
 
 --- !gbc!Transform2D
-Id: 11
+Id: 12
 Transform2D:
   parent:
     fileId: 0
@@ -152,7 +164,7 @@ Transform2D:
     y: 0.5
 
 --- !gbc!Image
-Id: 12
+Id: 13
 Image:
   color:
     r: 0.08888888
@@ -161,7 +173,7 @@ Image:
     a: 1
 
 --- !gbc!Transform2D
-Id: 13
+Id: 14
 Transform2D:
   parent:
     fileId: 4
@@ -178,4 +190,28 @@ Transform2D:
   pivotPoint:
     x: 0.5
     y: 0.5
+
+--- !gbc!Transform
+Id: 15
+Transform:
+  position:
+    x: 0
+    y: 0
+    z: 0
+  rotation:
+    x: -0
+    y: 0
+    z: 0
+  scale:
+    x: 0
+    y: 0
+    z: 0
+  parent:
+    fileId: 0
+
+--- !gbc!ModelRenderable
+Id: 16
+ModelRenderable:
+  hModel:
+    assetId: N:\workhome\SurvivalGame\Assets\Models\TestPlane\TestPlane.fbx
 

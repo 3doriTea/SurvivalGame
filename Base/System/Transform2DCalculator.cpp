@@ -41,6 +41,7 @@ void GameBase::System::Transform2DCalculator::Update(EntityRegistry& _registry)
 	{
 		auto [t] { view.At(entity) };
 
+		#if 0
 		// MEMO: 単位行列
 		//     : 拡縮して
 		//     : それに軸をつけて左上基準に動かして
@@ -81,14 +82,12 @@ void GameBase::System::Transform2DCalculator::Update(EntityRegistry& _registry)
 					(2.0f * t.pivotPoint.y - 1.0f) * t.scale.y,
 					0.0f)
 				* XMMatrixRotationZ(t.angle)
-				* XMMatrixTranslation(offsetX, offsetY, 0.0f)
-				;
+				* XMMatrixTranslation(offsetX, offsetY, 0.0f);
 
 			t.toChildMatrix = XMMatrixIdentity()
 				* XMMatrixRotationZ(t.angle)
 				* XMMatrixTranslation(offsetX, offsetY, 0.0f)
 				* parentT.toChildMatrix;
-			;
 
 			t.worldMatrix = t.localMatrix
 				* parentT.toChildMatrix;

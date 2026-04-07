@@ -47,6 +47,20 @@ inline GameBase::ScriptBase<T, DataT>::ScriptBase() :
 	// TODO: 登録処理
 }
 
+template<typename T, typename DataT>
+inline void GameBase::ScriptBase<T, DataT>::InnerStart(EntityRegistry* _pRegistry, const Entity _self)
+{
+	pRegistry_ = _pRegistry;
+	self_ = _self;
+}
+
+template<typename T, typename DataT>
+inline void GameBase::ScriptBase<T, DataT>::InnerUpdate(EntityRegistry * _pRegistry, const Entity _self)
+{
+	pRegistry_ = _pRegistry;
+	self_ = _self;
+}
+
 //template<typename T, typename DataT>
 //template<typename ComponentT>
 //inline ComponentT& GameBase::ScriptBase<T, DataT>::Get()

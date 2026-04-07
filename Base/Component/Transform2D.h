@@ -37,8 +37,8 @@ namespace GameBase::Component
 		Vec2 pivotPoint;   // どのローカル座標を基準に座標を決めるか
 
 	private:
-		Mat4x4 localMatrix;
-		Mat4x4 worldMatrix;
-		Mat4x4 toChildMatrix;
+		Mat4x4 localMatrix;  // 自分自身の変換
+		Mat4x4 worldMatrix;  // ワールド変換
+		Mat4x4 toChildMatrix;  // 親からの変換
 	};
 }

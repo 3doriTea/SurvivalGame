@@ -120,14 +120,24 @@ namespace GameBase
 		}
 
 	private:
-		void InnerStart();
-		void InnerUpdate();
+		/// <summary>
+		/// 内部で開始時に呼ばれる処理
+		/// </summary>
+		/// <param name="_pRegistry">レジストリのポインタ</param>
+		/// <param name="_self">自分自身のエンティティ</param>
+		void InnerStart(EntityRegistry* _pRegistry, const Entity _self);
+		/// <summary>
+		/// 内部の更新時に呼ばれる処理
+		/// </summary>
+		/// <param name="_pRegistry">レジストリのポインタ</param>
+		/// <param name="_self">自分自身のエンティティ</param>
+		void InnerUpdate(EntityRegistry* _pRegistry, const Entity _self);
 
 	private:
 		Entity self_;
 		EntityRegistry* pRegistry_;
 		
-	private:  // static
+	private:
 		static inline std::shared_ptr<T> pInstance_{ std::make_shared<T>() };
 	};
 }
