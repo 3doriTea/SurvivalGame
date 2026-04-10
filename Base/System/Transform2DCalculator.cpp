@@ -41,7 +41,6 @@ void GameBase::System::Transform2DCalculator::Update(EntityRegistry& _registry)
 	{
 		auto [t] { view.At(entity) };
 
-		#if 0
 		// MEMO: 単位行列
 		//     : 拡縮して
 		//     : それに軸をつけて左上基準に動かして
